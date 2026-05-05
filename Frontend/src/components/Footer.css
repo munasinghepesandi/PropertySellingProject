@@ -1,0 +1,150 @@
+.footer {
+  background: #08306B;
+  color: #ffffff;
+  padding: 80px 20px 30px;
+  border-top: 1px solid #2171B5;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 50px;
+  margin-bottom: 60px;
+}
+
+.footer h3 {
+  color: #ffffff;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer ul li {
+  margin-bottom: 10px;
+}
+
+.footer ul li a {
+  text-decoration: none;
+  color: #dbeafe;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.footer ul li a:hover {
+  color: #2171B5;
+}
+
+/* Brand */
+.brand-logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.logo-icon {
+  background: #2171B5;
+  color: #ffffff;
+  padding: 6px;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.highlight {
+  color: #2171B5;
+}
+
+.footer-brand p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #dbeafe;
+}
+
+.social-icons a {
+  margin-right: 12px;
+  color: #dbeafe;
+  transition: 0.3s;
+}
+
+.social-icons a:hover {
+  color: #2171B5;
+}
+
+/* Newsletter */
+.newsletter-text {
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: #dbeafe;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.newsletter-form input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #2171B5;
+  background: #0a2a5a;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.newsletter-form input:focus {
+  outline: none;
+  border-color: #ffffff;
+}
+
+.newsletter-form button {
+  padding: 10px;
+  background: #2171B5;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.newsletter-form button:hover {
+  background: #1a5da0;
+}
+
+/* Bottom */
+.footer-bottom {
+  border-top: 1px solid #2171B5;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: #cbd5f5;
+}
+
+.payment-methods {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.payment-methods div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
