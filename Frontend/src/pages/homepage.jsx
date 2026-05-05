@@ -1,12 +1,9 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { Search, Home, Building2, KeyRound } from "lucide-react";
 import "../styles/homepage.css";
 
-const homepage = () => {
-  const navigate = useNavigate();
+const Homepage = () => {
 
   return (
     <div>
@@ -15,29 +12,18 @@ const homepage = () => {
       {/* HERO SECTION */}
       <section className="hero">
         <div className="hero-overlay">
-          <h1>Find Your Dream Property in Sri Lanka</h1>
-          <p>
-            Buy, rent, or sell houses, lands, and apartments with ease on
-            LankaPropertyWeb.
-          </p>
+          <h1>Find Your Dream Property in <br/> Sri Lanka</h1>
+
+          <p>Discover the perfect home in Sri Lanka.</p>
 
           <div className="hero-search">
             <Search className="icon" />
             <input
               type="text"
               placeholder="Search city, area, property type..."
+              className="hero-search__input"
             />
-            <button>Search</button>
-          </div>
-
-          <div className="mt-4 flex justify-center">
-            <button
-              type="button"
-              onClick={() => navigate('/sales')}
-              className="rounded-lg border border-white/30 bg-white/10 px-5 py-2 font-semibold text-white transition hover:bg-white/20"
-            >
-              Go to Sales Page
-            </button>
+            <button className="hero-search__button">Search</button>
           </div>
 
           <div className="stats">
@@ -152,4 +138,4 @@ const homepage = () => {
   );
 };
 
-export default homepage;
+export default Homepage;

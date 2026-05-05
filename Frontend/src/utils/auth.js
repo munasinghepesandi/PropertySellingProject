@@ -7,7 +7,7 @@ export const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID'
 export const FACEBOOK_APP_ID = 'YOUR_FACEBOOK_APP_ID'
 
 // API endpoints
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api'
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'
 
 // Login function
 export async function loginUser(email, password) {
@@ -20,11 +20,12 @@ export async function loginUser(email, password) {
       body: JSON.stringify({ email, password }),
     })
     
-    if (!response.ok) {
-      throw new Error('Login failed')
-    }
-    
     const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data?.message || 'Login failed')
+    }
+
     // Store token in localStorage or httpOnly cookie
     localStorage.setItem('authToken', data.token)
     return data
@@ -45,11 +46,12 @@ export async function registerUser(userData) {
       body: JSON.stringify(userData),
     })
     
-    if (!response.ok) {
-      throw new Error('Registration failed')
-    }
-    
     const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data?.message || 'Registration failed')
+    }
+
     return data
   } catch (error) {
     console.error('Registration error:', error)

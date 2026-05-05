@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Search, Home } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -19,21 +19,30 @@ export function Navbar() {
   };
 
   const containerStyle = {
-    maxWidth: "1200px",
+    width: "100%",
     margin: "0 auto",
-    padding: "0 20px",
+    padding: "0 70px",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     height: "80px",
+    gap: "24px",
   };
 
   const logoStyle = {
     fontWeight: "bold",
     fontSize: "24px",
-    display: "flex",
+    display: "inline-flex",
     alignItems: "center",
     cursor: "pointer",
+    marginRight: "15px",
+  };
+
+  const brandStyle = {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    flexShrink: 0,
   };
 
   const logoIconWrapper = {
@@ -46,13 +55,15 @@ export function Navbar() {
   const menuStyle = {
     display: "flex",
     alignItems: "center",
-    gap: "25px",
-    marginLeft: "30px",
+    gap: "28px",
+    flex: 1,
+    justifyContent: "center",
+    minWidth: 0,
   };
 
   const menuItemStyle = {
     cursor: "pointer",
-    fontSize: "14px",
+    fontSize: "16px",
     color: "#cbd5e1",
     transition: "0.3s",
   };
@@ -86,17 +97,18 @@ export function Navbar() {
     border: "1px solid #cbd5e1",
   };
 
-  const registerStyle = {
-    ...buttonStyle,
-    backgroundColor: primary,
-    color: "white",
-  };
-
  const postAdStyle = {
    ...buttonStyle,
    backgroundColor: "#2171B5",
    color: "white",
  };
+
+  const authStyle = {
+    display: "flex",
+    gap: "10px",
+    alignItems: "center",
+    flexShrink: 0,
+  };
 
 
 
@@ -105,29 +117,32 @@ export function Navbar() {
       <div style={containerStyle}>
 
         {/* Logo */}
-        <div style={logoStyle} onClick={() => navigate("/")}>
-          <div style={logoIconWrapper}>
-            <Home style={{ height: "24px", width: "24px", color: "white" }} />
+        <div style={brandStyle} onClick={() => navigate("/")}>
+          <div style={logoStyle}>
+            <div style={logoIconWrapper}>
+              <Home style={{ height: "24px", width: "24px", color: "white" }} />
+            </div>
+            <span>
+              LankaProperty<span style={{ color: primary }}>Web</span>
+            </span>
           </div>
-          <span>
-            LankaProperty<span style={{ color: primary }}>Web</span>
-          </span>
 
           {/* Sales button removed as requested */}
         </div>
 
         {/* Menu */}
         <div style={menuStyle}>
-          <span style={menuItemStyle} onClick={() => navigate("/sales") }>
-            Sales
-          </span>
-
+          
           <span style={menuItemStyle} onClick={() => navigate("/rentals")}> 
             Rentals
           </span>
 
           <span style={menuItemStyle} onClick={() => navigate("/kandy") }>
             Kandy Area
+          </span>
+
+          <span style={menuItemStyle} onClick={() => navigate("/sales") }>
+            Sales
           </span>
 
           <span style={menuItemStyle} onClick={() => navigate("/contact")}>
@@ -171,7 +186,7 @@ export function Navbar() {
         </div>
 
         {/* Auth Buttons */}
-        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+        <div style={authStyle}>
 
           <button
             style={loginStyle}
@@ -180,12 +195,12 @@ export function Navbar() {
             Login
           </button>
 
-          <button
+          {/* <button
             style={registerStyle}
             onClick={() => navigate("/register")}
           >
             Register
-          </button>
+          </button> */}
 
           <button
             style={postAdStyle}
