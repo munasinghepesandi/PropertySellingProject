@@ -8,6 +8,12 @@ import LuxuryPage from './pages/LuxuryPage'
 import LandPage from './pages/LandPage'
 import CommercialPage from './pages/CommercialPage'
 import HomeLoanPage from './pages/HomeLoanPage'
+import SalesSectionPage from './pages/SalesSectionPage'
+import ForeignersGuidePage from './pages/ForeignersGuidePage'
+import PropertyPriceIndexPage from './pages/PropertyPriceIndexPage'
+import OurServicesPage from './pages/OurServicesPage'
+import FindAgentPage from './pages/FindAgentPage'
+import HelpPage from './pages/HelpPage'
 import Login from './components/Login'
 import Register from './components/Register'
 import ForgotPassword from './components/ForgotPassword'
@@ -49,7 +55,11 @@ function App() {
           <Route path="/kandy" element={<KandyPage />} />
           <Route path="/contact" element={<Homepage />} />
           <Route path="/post-ad" element={<Homepage />} />
+          <Route path="/help" element={<HelpPage />} />
           <Route path="/sales" element={<SalesPage />} />
+          <Route path="/sales/house-price-index" element={<PropertyPriceIndexPage />} />
+          <Route path="/sales/land-price-index" element={<PropertyPriceIndexPage />} />
+          <Route path="/sales/:sectionSlug" element={<SalesSectionPage />} />
           <Route path="/rentals" element={<Homepage />} />
           <Route path="/houses" element={<HousesPage />} />
           <Route path="/apartments" element={<ApartmentsPage />} />
@@ -57,6 +67,16 @@ function App() {
           <Route path="/land" element={<LandPage />} />
           <Route path="/commercial" element={<CommercialPage />} />
           <Route path="/home-loans" element={<HomeLoanPage />} />
+          <Route path="/sales/foreigners-guide" element={<ForeignersGuidePage />} />
+          <Route path="/features/property-buying-for-foreigners.php" element={<ForeignersGuidePage />} />
+          <Route path="/features/land-price-index.php" element={<PropertyPriceIndexPage />} />
+          <Route path="/our-services" element={<OurServicesPage />} />
+          <Route path="/find-agent" element={<FindAgentPage />} />
+          <Route path="/invest" element={<Homepage />} />
+          <Route path="/market-insights" element={<Homepage />} />
+          <Route path="/wanted" element={<Homepage />} />
+          <Route path="/find-agent" element={<Homepage />} />
+          <Route path="/more" element={<Homepage />} />
           <Route path="/aboutus" element={<Homepage />} />
           <Route path="/faqs" element={<Homepage />} />
           <Route path="/privacy-policy" element={<Homepage />} />

@@ -88,7 +88,30 @@ import { Footer } from "../components/Footer";
 export default function HomeLoanPage() {
   const [selectedLoan, setSelectedLoan] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
+  const [interestFilter, setInterestFilter] = useState('any');
+  const [loanAmountFilter, setLoanAmountFilter] = useState('any');
+  const [tenureFilter, setTenureFilter] = useState('any');
+  const [loanAmount, setLoanAmount] = useState('');
+  const [loanInterest, setLoanInterest] = useState('');
+  const [loanTenure, setLoanTenure] = useState('');
+  const [emiResult, setEmiResult] = useState('');
   const closeModal = () => setSelectedLoan(null);
+
+  const handleCalculateEmi = () => {
+    const principal = Number(loanAmount);
+    const annualRate = Number(loanInterest);
+    const years = Number(loanTenure);
+
+    if (!principal || !annualRate || !years) {
+      setEmiResult('Enter loan amount, interest rate, and tenure first.');
+      return;
+    }
+
+    const monthlyRate = annualRate / 100 / 12;
+    const months = years * 12;
+    const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+    setEmiResult(`Estimated EMI: Rs. ${Math.round(emi).toLocaleString('en-LK')} per month`);
+  };
 
   // Filtering logic
   const filteredLoans = loanProducts.filter((loan) => {
@@ -98,7 +121,29 @@ export default function HomeLoanPage() {
     if (activeCategory === 'quick') return loan.features.some(f => f.toLowerCase().includes('quick') || f.toLowerCase().includes('fast') || f.toLowerCase().includes('instant'));
     if (activeCategory === 'low-monthly') return parseInt(loan.monthlyPayment) <= 45000;
     return true;
+  }).filter((loan) => {
+    const matchesInterest = interestFilter === 'any' ||
+      (interestFilter === 'below-75' && parseFloat(loan.interestRate) <= 7.5) ||
+      (interestFilter === '75-to-8' && parseFloat(loan.interestRate) > 7.5 && parseFloat(loan.interestRate) <= 8) ||
+      (interestFilter === 'above-8' && parseFloat(loan.interestRate) > 8);
+
+    const matchesAmount = loanAmountFilter === 'any' ||
+      (loanAmountFilter === 'up-to-25' && /25M|40M/.test(loan.loanAmount)) ||
+      (loanAmountFilter === '25-to-50' && /40M|50M/.test(loan.loanAmount)) ||
+      (loanAmountFilter === '50-to-75' && /60M|70M/.test(loan.loanAmount)) ||
+      (loanAmountFilter === 'above-75' && loan.loanAmount.includes('80M'));
+
+    const matchesTenure = tenureFilter === 'any' ||
+      (tenureFilter === '10-15' && loan.tenure.includes('10-15')) ||
+      (tenureFilter === '15-20' && loan.tenure.includes('15-20')) ||
+      (tenureFilter === '20-plus' && loan.tenure.includes('20-30'));
+
+    return matchesInterest && matchesAmount && matchesTenure;
   });
+
+  const handleApplyFilters = () => {
+    document.getElementById('loan-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
@@ -134,13 +179,18 @@ export default function HomeLoanPage() {
             <div className="rounded-[2rem] bg-white/95 p-5 text-slate-900 shadow-2xl backdrop-blur-sm">
               <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#2171B5]">Quick Calculator</p>
               <div className="mt-4 grid gap-3">
-                <input className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Loan amount (Rs.)" />
-                <input className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Interest rate (%)" />
-                <input className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Tenure (years)" />
+                <input value={loanAmount} onChange={(e) => setLoanAmount(e.target.value)} className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Loan amount (Rs.)" />
+                <input value={loanInterest} onChange={(e) => setLoanInterest(e.target.value)} className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Interest rate (%)" />
+                <input value={loanTenure} onChange={(e) => setLoanTenure(e.target.value)} className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Tenure (years)" />
               </div>
-              <button className="mt-4 w-full rounded-xl bg-[#2171B5] px-4 py-3 font-bold text-white transition hover:bg-[#08306B]">
+              <button type="button" onClick={handleCalculateEmi} className="mt-4 w-full rounded-xl bg-[#2171B5] px-4 py-3 font-bold text-white transition hover:bg-[#08306B]">
                 Calculate EMI
               </button>
+              {emiResult && (
+                <div className="mt-3 rounded-xl border border-[#d9e8f6] bg-[#f8fbff] px-4 py-3 text-sm font-semibold text-[#08306B]">
+                  {emiResult}
+                </div>
+              )}
               <div className="mt-4 grid grid-cols-2 gap-3 text-center text-sm">
                 <div className="rounded-xl bg-slate-50 p-3">
                   <p className="text-xl font-black text-[#08306B]">50+</p>
@@ -182,32 +232,32 @@ export default function HomeLoanPage() {
           <div className="mt-6 space-y-5">
             <div>
               <label className="mb-2 block text-sm font-bold text-slate-700">Interest Rate</label>
-              <select className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]">
-                <option>Any</option>
-                <option>Below 7.5%</option>
-                <option>7.5% - 8%</option>
-                <option>Above 8%</option>
+              <select value={interestFilter} onChange={(e) => setInterestFilter(e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]">
+                <option value="any">Any</option>
+                <option value="below-75">Below 7.5%</option>
+                <option value="75-to-8">7.5% - 8%</option>
+                <option value="above-8">Above 8%</option>
               </select>
             </div>
 
             <div>
               <label className="mb-2 block text-sm font-bold text-slate-700">Loan Amount</label>
-              <select className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]">
-                <option>Any</option>
-                <option>Up to Rs. 25M</option>
-                <option>Rs. 25M - 50M</option>
-                <option>Rs. 50M - 75M</option>
-                <option>Above Rs. 75M</option>
+              <select value={loanAmountFilter} onChange={(e) => setLoanAmountFilter(e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]">
+                <option value="any">Any</option>
+                <option value="up-to-25">Up to Rs. 25M</option>
+                <option value="25-to-50">Rs. 25M - 50M</option>
+                <option value="50-to-75">Rs. 50M - 75M</option>
+                <option value="above-75">Above Rs. 75M</option>
               </select>
             </div>
 
             <div>
               <label className="mb-2 block text-sm font-bold text-slate-700">Tenure</label>
-              <select className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]">
-                <option>Any</option>
-                <option>10-15 years</option>
-                <option>15-20 years</option>
-                <option>20+ years</option>
+              <select value={tenureFilter} onChange={(e) => setTenureFilter(e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]">
+                <option value="any">Any</option>
+                <option value="10-15">10-15 years</option>
+                <option value="15-20">15-20 years</option>
+                <option value="20-plus">20+ years</option>
               </select>
             </div>
 
@@ -222,7 +272,7 @@ export default function HomeLoanPage() {
               </div>
             </div>
 
-            <button className="w-full rounded-xl bg-gradient-to-r from-[#2171B5] to-[#08306B] px-4 py-3 font-bold text-white transition hover:scale-[1.02]">
+            <button type="button" onClick={handleApplyFilters} className="w-full rounded-xl bg-gradient-to-r from-[#2171B5] to-[#08306B] px-4 py-3 font-bold text-white transition hover:scale-[1.02]">
               Apply Filters
             </button>
           </div>
@@ -237,7 +287,7 @@ export default function HomeLoanPage() {
             <p className="text-sm text-slate-500">Showing {filteredLoans.length} products</p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-2">
+          <div id="loan-results" className="grid gap-6 md:grid-cols-2 xl:grid-cols-2">
             {filteredLoans.map((loan) => (
               <article
                 key={loan.id}
@@ -281,7 +331,7 @@ export default function HomeLoanPage() {
                     ))}
                   </div>
 
-                  <button className="mt-4 w-full rounded-lg bg-gradient-to-r from-[#2171B5] to-[#08306B] px-3 py-2 font-bold text-white transition hover:scale-[1.02]">
+                  <button type="button" onClick={(event) => { event.stopPropagation(); setSelectedLoan(loan); }} className="mt-4 w-full rounded-lg bg-gradient-to-r from-[#2171B5] to-[#08306B] px-3 py-2 font-bold text-white transition hover:scale-[1.02]">
                     View Details
                   </button>
                 </div>

@@ -1,7 +1,6 @@
 import React from "react";
-import SalesPage from "./SalesPage";
+import SalesSectionPage from "./SalesSectionPage";
 
 export default function LuxuryPage() {
-  // Filter for luxury
-  return <SalesPage filterType="Luxury" />;
+  return <SalesSectionPage sectionSlug="luxury-apartments" />;
 }

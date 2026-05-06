@@ -1,7 +1,6 @@
 import React from "react";
-import SalesPage from "./SalesPage";
+import SalesSectionPage from "./SalesSectionPage";
 
 export default function CommercialPage() {
-  // Filter for commercial
-  return <SalesPage filterType="Commercial" />;
+  return <SalesSectionPage sectionSlug="commercial" />;
 }

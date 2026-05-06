@@ -23,8 +23,8 @@ const kandyListings = [
   },
   {
     id: 3,
-    title: 'Land for Sale in Peradeniya',
-    location: 'Peradeniya, Kandy',
+    title: 'Land for Sale in Kandy Town',
+    location: 'Kandy Town',
     price: 'Rs. 7,800,000',
     beds: 'N/A',
     baths: 'N/A',
@@ -34,14 +34,25 @@ const kandyListings = [
   },
   {
     id: 4,
-    title: 'Modern House in Katugastota',
-    location: 'Katugastota, Kandy',
+    title: 'Modern House in Asgiriya',
+    location: 'Asgiriya, Kandy',
     price: 'Rs. 21,250,000',
     beds: '4 Beds',
     baths: '2 Baths',
     area: '2,000 sqft',
     image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80&auto=format&fit=crop',
     badge: 'New',
+  },
+  {
+    id: 5,
+    title: 'Family Home in Kandy City',
+    location: 'Kandy City',
+    price: 'Rs. 19,900,000',
+    beds: '4 Beds',
+    baths: '2 Baths',
+    area: '1,850 sqft',
+    image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1200&q=80&auto=format&fit=crop',
+    badge: 'Featured',
   },
 ]
 
@@ -57,14 +68,14 @@ export default function KandyPage() {
         />
 
         <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-          <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-bold uppercase tracking-[0.22em] backdrop-blur">
-            Kandy Area Only
+            <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-bold uppercase tracking-[0.22em] backdrop-blur">
+            Kandy Only
           </span>
           <h1 className="mt-5 max-w-3xl text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">
-            Properties in Kandy city and surrounding areas.
+            Properties in Kandy city only.
           </h1>
           <p className="mt-4 max-w-2xl text-base text-white/85 sm:text-lg">
-            Browse houses, apartments, and land in Heerassagala, Peradeniya, Katugastota, Kandy Town and nearby areas.
+            Browse houses, apartments, and land in Heerassagala, Kandy Town, Asgiriya, and Kandy City.
           </p>
         </div>
       </section>

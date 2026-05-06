@@ -1,7 +1,6 @@
 import React from "react";
-import SalesPage from "./SalesPage";
+import SalesSectionPage from "./SalesSectionPage";
 
 export default function LandPage() {
-  // Filter for land
-  return <SalesPage filterType="Land" />;
+  return <SalesSectionPage sectionSlug="land" />;
 }

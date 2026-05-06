@@ -12,6 +12,12 @@ import {
 } from "lucide-react";
 
 export function Footer() {
+  const handleSubscribe = (event) => {
+    event.preventDefault();
+    event.currentTarget.reset();
+    window.alert('Thanks for subscribing to LankaPropertyWeb updates.');
+  };
+
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -74,7 +80,7 @@ export function Footer() {
               <li><Mail size={16} /> info@lankapropertyweb.com</li>
             </ul>
 
-            <form className="newsletter-form">
+            <form className="newsletter-form" onSubmit={handleSubscribe}>
               <input type="email" placeholder="Enter your email" />
               <button type="submit">Subscribe</button>
             </form>
