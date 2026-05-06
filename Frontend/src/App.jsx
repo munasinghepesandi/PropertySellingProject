@@ -25,7 +25,7 @@ function LoginRoute() {
 
 function RegisterRoute() {
   const navigate = useNavigate()
-  return <Register onSwitchToLogin={() => navigate('/login')} />
+  return <Register onSwitchToLogin={() => navigate('/login')} onRegistered={() => navigate('/')} />
 }
 
 function ForgotRoute() {

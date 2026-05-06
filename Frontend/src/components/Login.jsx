@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
+import { loginUser } from '../utils/auth'
 
 export default function Login({ onSwitchToRegister, onSwitchToForgot, openProperty }) {
   const [email, setEmail] = useState('')
@@ -7,32 +7,25 @@ export default function Login({ onSwitchToRegister, onSwitchToForgot, openProper
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
     setLoading(true)
     setError('')
-    
-    // Simulate API call
-    setTimeout(() => {
-      console.log('Login:', { email, password })
+
+    try {
+      await loginUser(email, password)
       setLoading(false)
-      // After successful login, open property details (uses sample if no prop passed)
       if (typeof openProperty === 'function') openProperty()
-    }, 1000)
-  }
-
-  const handleGoogleSuccess = (credentialResponse) => {
-    console.log('Google Login Success:', credentialResponse)
-  }
-
-  const handleFacebookLogin = (response) => {
-    console.log('Facebook Login Success:', response)
+    } catch (err) {
+      setLoading(false)
+      setError(err.message || 'Login failed')
+    }
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f]">
+    <div className="relative min-h-screen overflow-hidden bg-linear-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f]">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.08)_0_14%,transparent_14%_100%),linear-gradient(315deg,rgba(255,255,255,0.06)_0_22%,transparent_22%_100%)]"></div>
-      <div className="pointer-events-none absolute -top-24 right-[-6rem] h-[30rem] w-[30rem] rotate-12 rounded-[4rem] bg-white/12 shadow-[0_0_80px_rgba(255,255,255,0.12)]"></div>
+      <div className="pointer-events-none absolute -top-24 right-[-6rem] h-120 w-[30rem] rotate-12 rounded-[4rem] bg-white/12 shadow-[0_0_80px_rgba(255,255,255,0.12)]"></div>
       <div className="pointer-events-none absolute top-32 right-[8rem] h-56 w-[18rem] rotate-12 rounded-[3rem] bg-white/18"></div>
       <div className="pointer-events-none absolute bottom-[-8rem] left-[-6rem] h-[20rem] w-[20rem] rounded-full bg-white/10"></div>
       <div className="pointer-events-none absolute bottom-0 left-0 h-40 w-full bg-gradient-to-r from-white/20 via-white/8 to-transparent"></div>

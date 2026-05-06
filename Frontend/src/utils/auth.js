@@ -9,6 +9,19 @@ export const FACEBOOK_APP_ID = 'YOUR_FACEBOOK_APP_ID'
 // API endpoints
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'
 
+const AUTH_TOKEN_KEY = 'authToken'
+const AUTH_USER_KEY = 'authUser'
+
+function storeSession(data) {
+  if (data?.token) {
+    localStorage.setItem(AUTH_TOKEN_KEY, data.token)
+  }
+
+  if (data?.data) {
+    localStorage.setItem(AUTH_USER_KEY, JSON.stringify(data.data))
+  }
+}
+
 // Login function
 export async function loginUser(email, password) {
   try {
@@ -26,8 +39,7 @@ export async function loginUser(email, password) {
       throw new Error(data?.message || 'Login failed')
     }
 
-    // Store token in localStorage or httpOnly cookie
-    localStorage.setItem('authToken', data.token)
+    storeSession(data)
     return data
   } catch (error) {
     console.error('Login error:', error)
@@ -52,6 +64,7 @@ export async function registerUser(userData) {
       throw new Error(data?.message || 'Registration failed')
     }
 
+    storeSession(data)
     return data
   } catch (error) {
     console.error('Registration error:', error)
@@ -75,7 +88,7 @@ export async function handleGoogleLogin(credentialResponse) {
     }
     
     const data = await response.json()
-    localStorage.setItem('authToken', data.token)
+    storeSession(data)
     return data
   } catch (error) {
     console.error('Google login error:', error)
@@ -99,7 +112,7 @@ export async function handleFacebookLogin(accessToken) {
     }
     
     const data = await response.json()
-    localStorage.setItem('authToken', data.token)
+    storeSession(data)
     return data
   } catch (error) {
     console.error('Facebook login error:', error)
@@ -109,12 +122,18 @@ export async function handleFacebookLogin(accessToken) {
 
 // Logout function
 export function logout() {
-  localStorage.removeItem('authToken')
+  localStorage.removeItem(AUTH_TOKEN_KEY)
+  localStorage.removeItem(AUTH_USER_KEY)
 }
 
 // Get stored token
 export function getAuthToken() {
-  return localStorage.getItem('authToken')
+  return localStorage.getItem(AUTH_TOKEN_KEY)
+}
+
+export function getAuthUser() {
+  const value = localStorage.getItem(AUTH_USER_KEY)
+  return value ? JSON.parse(value) : null
 }
 
 // Check if user is authenticated

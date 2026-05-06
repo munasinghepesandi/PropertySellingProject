@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { registerUser } from '../utils/auth'
 
-export default function Register({ onSwitchToLogin }) {
+export default function Register({ onSwitchToLogin, onRegistered }) {
   const [userType, setUserType] = useState('owner')
   const [formData, setFormData] = useState({
     fullName: '',
@@ -51,6 +51,12 @@ export default function Register({ onSwitchToLogin }) {
         acceptTerms: false,
         newsletter: false,
       })
+
+      if (typeof onRegistered === 'function') {
+        onRegistered()
+      } else if (typeof onSwitchToLogin === 'function') {
+        onSwitchToLogin()
+      }
     } catch (err) {
       setError(err.message || 'Registration failed')
     } finally {

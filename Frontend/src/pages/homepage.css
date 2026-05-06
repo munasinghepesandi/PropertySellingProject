@@ -1,9 +1,9 @@
 /* HERO SECTION */
 .hero {
-  background-image: url("https://images.unsplash.com/photo-1568605114967-8130f3a36994");
+  background-image: var(--hero-bg);
   background-size: cover;
   background-position: center;
-  height: 90vh;
+  height: 60vh;
   position: relative;
   display: flex;
   align-items: center;
@@ -115,8 +115,8 @@
 
 /* CATEGORY CARD */
 .category-card {
-  background: white;
-  padding: 30px;
+  background: rgb(206, 82, 82);
+  padding: 0px;
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
   transition: 0.3s ease;

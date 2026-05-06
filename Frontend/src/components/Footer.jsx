@@ -1,4 +1,3 @@
-import React from "react";
 import "./Footer.css";
 
 import {
@@ -13,7 +12,7 @@ import {
 
 export function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer ">
       <div className="footer-container">
 
         <div className="footer-grid">
