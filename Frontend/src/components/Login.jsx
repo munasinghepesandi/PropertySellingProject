@@ -23,12 +23,12 @@ export default function Login({ onSwitchToRegister, onSwitchToForgot, openProper
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-linear-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f]">
+    <div className="relative min-h-screen overflow-hidden bg-linear-to-br from-[#08306B] via-[#2171B5] to-[#08306B]">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.08)_0_14%,transparent_14%_100%),linear-gradient(315deg,rgba(255,255,255,0.06)_0_22%,transparent_22%_100%)]"></div>
-      <div className="pointer-events-none absolute -top-24 right-[-6rem] h-120 w-[30rem] rotate-12 rounded-[4rem] bg-white/12 shadow-[0_0_80px_rgba(255,255,255,0.12)]"></div>
-      <div className="pointer-events-none absolute top-32 right-[8rem] h-56 w-[18rem] rotate-12 rounded-[3rem] bg-white/18"></div>
-      <div className="pointer-events-none absolute bottom-[-8rem] left-[-6rem] h-[20rem] w-[20rem] rounded-full bg-white/10"></div>
-      <div className="pointer-events-none absolute bottom-0 left-0 h-40 w-full bg-gradient-to-r from-white/20 via-white/8 to-transparent"></div>
+      <div className="pointer-events-none absolute -top-24 -right-24 h-120 w-120 rotate-12 rounded-[4rem] bg-white/12 shadow-[0_0_80px_rgba(255,255,255,0.12)]"></div>
+      <div className="pointer-events-none absolute top-32 right-32 h-56 w-[18rem] rotate-12 rounded-[3rem] bg-white/18"></div>
+      <div className="pointer-events-none absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-white/10"></div>
+      <div className="pointer-events-none absolute bottom-0 left-0 h-40 w-full bg-linear-to-r from-white/20 via-white/8 to-transparent"></div>
 
       <div className="relative z-10 flex min-h-screen items-center justify-center px-3 py-3 sm:px-4 sm:py-4">
         <div className="grid w-full max-w-4xl grid-cols-1 items-center gap-4 md:grid-cols-2 md:gap-6">
@@ -38,7 +38,7 @@ export default function Login({ onSwitchToRegister, onSwitchToForgot, openProper
             <p className="mb-8 text-lg text-white/80 lg:text-xl">Find your perfect home with us. Sign in to explore amazing properties.</p>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-1">
+                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0 mt-1">
                   <svg className="w-5 h-5" fill="white" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
@@ -46,7 +46,7 @@ export default function Login({ onSwitchToRegister, onSwitchToForgot, openProper
                 <span className="text-white/90">Browse thousands of properties</span>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-1">
+                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0 mt-1">
                   <svg className="w-5 h-5" fill="white" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
@@ -54,7 +54,7 @@ export default function Login({ onSwitchToRegister, onSwitchToForgot, openProper
                 <span className="text-white/90">Connect with property experts</span>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-1">
+                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0 mt-1">
                   <svg className="w-5 h-5" fill="white" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
@@ -118,7 +118,7 @@ export default function Login({ onSwitchToRegister, onSwitchToForgot, openProper
                 <button
                   type="submit"
                   disabled={loading}
-                  className="mt-4 w-full rounded-lg bg-gradient-to-r from-[#2171B5] to-[#08306B] py-2.5 font-bold text-white transition hover:shadow-lg hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="mt-4 w-full rounded-lg bg-linear-to-r from-[#2171B5] to-[#08306B] py-2.5 font-bold text-white transition hover:shadow-lg hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {loading ? 'SIGNING IN...' : 'CLICK TO LOGIN'}
                 </button>
@@ -141,8 +141,8 @@ export default function Login({ onSwitchToRegister, onSwitchToForgot, openProper
                   Google
                 </button>
 
-                <button className="flex w-full items-center justify-center gap-3 rounded-lg border-2 border-gray-300 bg-white py-2.5 font-semibold text-gray-700 transition hover:border-[#1877F2]">
-                  <svg className="w-6 h-6" fill="#1877F2" viewBox="0 0 24 24">
+                <button className="flex w-full items-center justify-center gap-3 rounded-lg border-2 border-gray-300 bg-white py-2.5 font-semibold text-gray-700 transition hover:border-[#2171B5]">
+                  <svg className="w-6 h-6" fill="#2171B5" viewBox="0 0 24 24">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                   </svg>
                   Facebook

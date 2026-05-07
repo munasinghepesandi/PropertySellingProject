@@ -97,7 +97,7 @@ export default function SalesPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f] text-white">
+      <section className="relative overflow-hidden bg-linear-to-br from-[#08306B] via-[#2171B5] to-[#08306B] text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.18),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.15),transparent_22%),linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0))]" />
         <img
           src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&q=80&auto=format&fit=crop"
@@ -124,7 +124,7 @@ export default function SalesPage() {
               </div>
             </div>
 
-            <div className="rounded-[2rem] bg-white/95 p-5 text-slate-900 shadow-2xl backdrop-blur-sm">
+            <div className="rounded-4xl bg-white/95 p-5 text-slate-900 shadow-2xl backdrop-blur-sm">
               <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#2171B5]">Quick Search</p>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 <input className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="City or area" />
@@ -216,7 +216,7 @@ export default function SalesPage() {
               </div>
             </div>
 
-            <button className="w-full rounded-xl bg-gradient-to-r from-[#2171B5] to-[#08306B] px-4 py-3 font-bold text-white transition hover:scale-[1.02]">
+            <button className="w-full rounded-xl bg-linear-to-r from-[#2171B5] to-[#08306B] px-4 py-3 font-bold text-white transition hover:scale-[1.02]">
               Apply Filters
             </button>
           </div>
@@ -312,7 +312,7 @@ export default function SalesPage() {
             </div>
           )}
 
-          <div className="mt-8 rounded-[1.75rem] bg-gradient-to-r from-[#08306B] to-[#2171B5] p-6 text-white shadow-xl">
+          <div className="mt-8 rounded-[1.75rem] bg-linear-to-r from-[#08306B] to-[#2171B5] p-6 text-white shadow-xl">
             <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
               <div>
                 <p className="text-sm font-bold uppercase tracking-[0.2em] text-white/70">Need help selling?</p>

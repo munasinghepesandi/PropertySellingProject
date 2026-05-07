@@ -74,8 +74,8 @@ export function Navbar() {
     padding: "8px 12px 8px 36px",
     borderRadius: "999px",
     border: `1px solid ${primary}`,
-    backgroundColor: "#0b2a4a",
-    color: "#e2e8f0",
+    backgroundColor: dark,
+    color: "#ffffff",
     outline: "none",
     width: "240px",
     fontSize: "14px",
@@ -94,7 +94,7 @@ export function Navbar() {
     ...buttonStyle,
     backgroundColor: "transparent",
     color: "white",
-    border: "1px solid #cbd5e1",
+    border: "1px solid rgba(255,255,255,0.35)",
   };
 
  const postAdStyle = {
@@ -164,7 +164,7 @@ export function Navbar() {
               left: "10px",
               top: "50%",
               transform: "translateY(-50%)",
-              color: "#94a3b8",
+              color: "rgba(255,255,255,0.72)",
               width: "16px",
               height: "16px",
             }}

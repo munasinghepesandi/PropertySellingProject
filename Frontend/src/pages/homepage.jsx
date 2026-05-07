@@ -1,6 +1,6 @@
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
-import { Search, MapPin, BadgePlus, House, PiggyBank, Building } from "lucide-react";
+import { Search, MapPin, BadgePlus, House, PiggyBank, Building, Trophy, Zap, Layers, Shield } from "lucide-react";
 import "../styles/homepage.css";
 
 const Homepage = () => {
@@ -252,7 +252,54 @@ const Homepage = () => {
         </div>
       </section>
 
-      
+      {/* WHY CHOOSE US SECTION */}
+      <section className="why-choose-us">
+        <div className="why-choose-us-container">
+          <div className="section-header">
+            <h2 className="font-bold">Why Choose Us</h2>
+            <p>Discover why thousands of customers trust us for their property needs</p>
+          </div>
+
+          <div className="why-choose-us-grid">
+            <div className="why-choose-us-card">
+              <div className="why-choose-us-icon">
+                <Trophy size={40} />
+              </div>
+              <h3>Expert Team</h3>
+              <p>Our experienced professionals are dedicated to finding you the perfect property with personalized guidance.</p>
+            </div>
+
+            <div className="why-choose-us-card">
+              <div className="why-choose-us-icon">
+                <Zap size={40} />
+              </div>
+              <h3>Fast Process</h3>
+              <p>Quick and streamlined property search, verification, and transaction processes to save your time.</p>
+            </div>
+
+            <div className="why-choose-us-card">
+              <div className="why-choose-us-icon">
+                <Layers size={40} />
+              </div>
+              <h3>Wide Selection</h3>
+              <p>Access to thousands of verified properties across Sri Lanka, from apartments to luxury estates.</p>
+            </div>
+
+            <div className="why-choose-us-card">
+              <div className="why-choose-us-icon">
+                <Shield size={40} />
+              </div>
+              <h3>Secure & Safe</h3>
+              <p>All transactions are secured with complete verification and transparent pricing with no hidden costs.</p>
+            </div>
+          </div>
+
+          <div className="why-choose-us-footer">
+            <p>Join 2,000+ happy customers who found their dream properties with us</p>
+            <button className="why-choose-us-cta">Start Your Journey</button>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>

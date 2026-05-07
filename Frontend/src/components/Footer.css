@@ -66,7 +66,7 @@
 }
 
 .highlight {
-  color: #8ec5ff;
+  color: #2171b5;
 }
 
 .footer-brand p {
@@ -103,7 +103,7 @@
   padding: 10px;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  background: #0a2a5a;
+  background: #08306b;
   color: #ffffff;
   font-size: 14px;
 }
@@ -125,7 +125,7 @@
 }
 
 .newsletter-form button:hover {
-  background: #1a5da0;
+  background: #08306b;
 }
 
 /* Bottom */
@@ -136,7 +136,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   font-size: 13px;
-  color: #cbd5f5;
+  color: #dbeafe;
 }
 
 .payment-methods {
@@ -170,11 +170,11 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  background: #0a2a5a;
+  background: #08306b;
 }
 
 .social-icons a:hover {
-  background: #1a5da0;
+  background: #2171b5;
 }
 
 @media (max-width: 900px) {

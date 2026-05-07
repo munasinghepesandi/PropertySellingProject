@@ -48,7 +48,7 @@ const kandyListings = [
 export default function KandyPage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f] text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#08306B] text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.18),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.15),transparent_22%),linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0))]" />
         <img
           src="https://images.unsplash.com/photo-1505691723518-36a6f14f4f29?w=1600&q=80&auto=format&fit=crop"
