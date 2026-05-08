@@ -1,0 +1,135 @@
+<%
+  title = "Featured Ads";
+  page  = "featured";
+%>
+
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+  <div class="page-title" style="margin-bottom:0;">Featured Ads</div>
+</div>
+
+<!-- Stats row -->
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;">
+  <div class="stat-card">
+    <div class="stat-label">Active Featured</div>
+    <div class="stat-val"><%= featuredStats.active %></div>
+    <div class="stat-change">Currently live</div>
+  </div>
+  <div class="stat-card c2">
+    <div class="stat-label">Expiring Soon</div>
+    <div class="stat-val"><%= featuredStats.expiringSoon %></div>
+    <div class="stat-change down">Within 7 days</div>
+  </div>
+  <div class="stat-card c3">
+    <div class="stat-label">Total Impressions</div>
+    <div class="stat-val"><%= (featuredStats.impressions || 0).toLocaleString() %></div>
+    <div class="stat-change">This month</div>
+  </div>
+</div>
+
+<!-- Featured listings table -->
+<div class="card" style="margin-bottom:16px;">
+  <div class="card-title">Active Featured Listings</div>
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Property</th>
+        <th>Owner</th>
+        <th>Package</th>
+        <th>Start Date</th>
+        <th>Expiry Date</th>
+        <th>Impressions</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% if(featuredListings && featuredListings.length > 0) { %>
+      <% featuredListings.forEach(function(f, i) { %>
+      <tr>
+        <td style="color:#6BAED6;"><%= i+1 %></td>
+        <td>
+          <div style="font-weight:600;color:#083068;font-size:12.5px;"><%= f.propertyTitle %></div>
+          <div style="font-size:11px;color:#6BAED6;">
+            <%= f.district %> &nbsp;
+            <span class="tag <%= f.listingType %>"><%= f.listingType %></span>
+          </div>
+        </td>
+        <td style="font-size:12px;color:#08519C;"><%= f.ownerName %></td>
+        <td>
+          <% var pkgBg = f.package==='premium' ? '#fef9c3' : '#DEEBF7'; %>
+          <% var pkgColor = f.package==='premium' ? '#854d0e' : '#08519C'; %>
+          <span class="tag" style="background:<%= pkgBg %>;color:<%= pkgColor %>">
+            <%= f.package.charAt(0).toUpperCase()+f.package.slice(1) %>
+          </span>
+        </td>
+        <td style="font-size:11px;color:#6BAED6;"><%= f.startDate %></td>
+        <td style="font-size:11px;color:<%= f.daysLeft<=7 ? '#ef4444' : '#6BAED6' %>;">
+          <%= f.expiryDate %>
+          <% if(f.daysLeft<=7) { %>
+            <span style="font-size:10px;color:#ef4444;">(<%= f.daysLeft %>d)</span>
+          <% } %>
+        </td>
+        <td style="color:#2171B5;font-weight:600;text-align:center;">
+          <%= (f.impressions || 0).toLocaleString() %>
+        </td>
+        <td>
+          <span class="status <%= f.status %>">
+            <%= f.status.charAt(0).toUpperCase()+f.status.slice(1) %>
+          </span>
+        </td>
+        <td>
+          <div style="display:flex;gap:6px;">
+            <form method="POST" action="/admin/featured/<%= f.id %>/extend" style="display:inline;">
+              <button class="btn-outline" style="padding:4px 10px;">Extend</button>
+            </form>
+            <form method="POST" action="/admin/featured/<%= f.id %>/remove"
+              style="display:inline;"
+              onsubmit="return confirm('Remove featured status?')">
+              <button class="btn-blue" style="padding:4px 10px;background:#ef4444;">Remove</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    <% } else { %>
+      <tr>
+        <td colspan="9" style="text-align:center;padding:40px;color:#6BAED6;">
+          No featured listings found
+        </td>
+      </tr>
+    <% } %>
+    </tbody>
+  </table>
+</div>
+
+<!-- Promote a Listing -->
+<div class="card">
+  <div class="card-title">Promote a Listing</div>
+  <form method="POST" action="/admin/featured"
+    style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
+    <div style="flex:2;min-width:200px;">
+      <label class="form-label">Property</label>
+      <select class="form-select" name="propertyId" required>
+        <option value="">Select a property…</option>
+        <% if(properties && properties.length > 0) { %>
+          <% properties.forEach(function(p) { %>
+            <option value="<%= p.id %>"><%= p.title %> — <%= p.district %></option>
+          <% }) %>
+        <% } %>
+      </select>
+    </div>
+    <div style="width:140px;">
+      <label class="form-label">Package</label>
+      <select class="form-select" name="package" required>
+        <option value="basic">Basic (7 days)</option>
+        <option value="standard">Standard (14 days)</option>
+        <option value="premium">Premium (30 days)</option>
+      </select>
+    </div>
+    <div>
+      <button class="btn-blue" type="submit">Promote</button>
+    </div>
+  </form>
+</div>
+

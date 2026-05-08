@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lanka Property – Admin</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #F7FBFF; color: #083068; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      position: fixed; top: 0; left: 0; bottom: 0; width: 195px;
+      background: #083068; display: flex; flex-direction: column; z-index: 100;
+    }
+    .sb-logo { padding: 18px 16px 14px; border-bottom: 1px solid #08519C; }
+    .sb-brand { color: #fff; font-size: 14px; font-weight: 600; }
+    .sb-sub   { color: #6BAED6; font-size: 11px; margin-top: 2px; }
+    .sb-nav   { padding: 10px 0; flex: 1; overflow-y: auto; }
+    .sb-label { padding: 10px 16px 4px; font-size: 10px; color: #6BAED6;
+                letter-spacing: 1.2px; text-transform: uppercase; }
+    .sb-item  {
+      display: flex; align-items: center; gap: 9px;
+      padding: 9px 16px; color: #C6DBEF; font-size: 12.5px;
+      cursor: pointer; border-left: 3px solid transparent;
+      text-decoration: none;
+    }
+    .sb-item.active { background: rgba(109,174,214,.15); color: #fff; border-left-color: #6BAED6; }
+    .sb-item:hover  { background: rgba(255,255,255,.05); color: #fff; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: #6BAED6; flex-shrink: 0; }
+    .dot.orange { background: #f59e0b; }
+    .dot.green  { background: #22c55e; }
+    .dot.red    { background: #ef4444; }
+
+    /* ── Main area ── */
+    .main { margin-left: 195px; display: flex; flex-direction: column; min-height: 100vh; }
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: #fff; border-bottom: 1px solid #DEEBF7;
+      padding: 0 20px; height: 50px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .tb-title  { font-size: 14px; font-weight: 600; color: #083068; }
+    .tb-right  { display: flex; align-items: center; gap: 10px; }
+    .tb-badge  { background: #DEEBF7; color: #08519C; font-size: 11px;
+                 padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+    .avatar    { width: 30px; height: 30px; border-radius: 50%; background: #2171B5;
+                 color: #fff; font-size: 11px; font-weight: 600;
+                 display: flex; align-items: center; justify-content: center; }
+    .content   { padding: 20px; flex: 1; }
+    .page-title { font-size: 16px; font-weight: 600; color: #083068; margin-bottom: 18px; }
+
+    /* ── Shared components ── */
+    .card { background: #fff; border: 1px solid #DEEBF7; border-radius: 10px; padding: 16px; }
+    .card-title {
+      font-size: 13px; font-weight: 600; color: #083068;
+      margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #DEEBF7;
+    }
+    .btn-blue {
+      background: #2171B5; color: #fff; border: none;
+      padding: 6px 14px; border-radius: 6px; font-size: 12px; cursor: pointer;
+    }
+    .btn-blue:hover { background: #1a5c96; }
+    .btn-outline {
+      background: transparent; color: #2171B5; border: 1px solid #2171B5;
+      padding: 6px 14px; border-radius: 6px; font-size: 12px; cursor: pointer;
+    }
+    .tag { font-size: 10px; padding: 2px 8px; border-radius: 12px; font-weight: 600; }
+    .tag.sale { background: #DEEBF7; color: #08519C; }
+    .tag.rent { background: #dcfce7; color: #166534; }
+    .tag.land { background: #fef9c3; color: #854d0e; }
+    .tag.commercial { background: #fce7f3; color: #9d174d; }
+
+    /* ── Table ── */
+    .tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .tbl th {
+      text-align: left; padding: 9px 12px; font-size: 11px; font-weight: 600;
+      color: #2171B5; background: #F7FBFF; border-bottom: 1px solid #DEEBF7;
+      text-transform: uppercase; letter-spacing: 0.6px;
+    }
+    .tbl td { padding: 10px 12px; border-bottom: 0.5px solid #DEEBF7; color: #083068; }
+    .tbl tr:last-child td { border-bottom: none; }
+    .tbl tr:hover td { background: #F7FBFF; }
+
+    /* ── Form ── */
+    .form-group { margin-bottom: 14px; }
+    .form-label { display: block; font-size: 11px; font-weight: 600; color: #08519C;
+                  text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 5px; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%; padding: 8px 12px; border: 1px solid #DEEBF7;
+      border-radius: 7px; font-size: 13px; color: #083068;
+      background: #fff; outline: none; font-family: inherit;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: #2171B5; box-shadow: 0 0 0 3px rgba(33,113,181,.1);
+    }
+    .form-textarea { resize: vertical; min-height: 90px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+    /* ── Stats ── */
+    .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 18px; }
+    .stat-card {
+      background: #fff; border: 1px solid #DEEBF7; border-radius: 10px;
+      padding: 14px 16px; border-top: 3px solid #2171B5;
+    }
+    .stat-card.c2 { border-top-color: #08519C; }
+    .stat-card.c3 { border-top-color: #6BAED6; }
+    .stat-card.c4 { border-top-color: #083068; }
+    .stat-label { font-size: 11px; color: #2171B5; font-weight: 600;
+                  text-transform: uppercase; letter-spacing: 0.8px; }
+    .stat-val    { font-size: 22px; font-weight: 600; color: #083068; margin: 4px 0 2px; }
+    .stat-change { font-size: 11px; color: #22c55e; }
+    .stat-change.down { color: #ef4444; }
+
+    /* ── Bar chart ── */
+    .bar-wrap { margin-top: 6px; }
+    .bar-row  { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .bar-label { font-size: 11px; color: #083068; width: 80px; flex-shrink: 0; }
+    .bar-bg   { flex: 1; height: 8px; background: #DEEBF7; border-radius: 4px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 4px; background: #2171B5; }
+    .bar-val  { font-size: 11px; color: #08519C; width: 34px; text-align: right; flex-shrink: 0; }
+
+    /* ── Status badges ── */
+    .status { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; }
+    .status::before { content:''; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .status.active::before  { background: #22c55e; }
+    .status.pending::before { background: #f59e0b; }
+    .status.inactive::before{ background: #ef4444; }
+    .status.active  { color: #166534; }
+    .status.pending { color: #92400e; }
+    .status.inactive{ color: #991b1b; }
+
+    /* ── Avatar initials ── */
+    .av { width: 30px; height: 30px; border-radius: 50%; background: #08519C;
+          color: #C6DBEF; font-size: 10px; font-weight: 600;
+          display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    /* ── Pagination ── */
+    .pagination { display: flex; align-items: center; gap: 6px; margin-top: 16px; justify-content: flex-end; }
+    .page-btn {
+      width: 28px; height: 28px; border-radius: 6px; border: 1px solid #DEEBF7;
+      background: #fff; color: #083068; font-size: 12px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .page-btn.active { background: #2171B5; color: #fff; border-color: #2171B5; }
+    .page-btn:hover:not(.active) { background: #F7FBFF; }
+  </style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-brand">Lanka Property</div>
+    <div class="sb-sub">Admin Panel</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-label">Main</div>
+    <a class="sb-item <%= page==='dashboard'?'active':'' %>" href="/admin/dashboard">
+      <div class="dot"></div> Dashboard
+    </a>
+    <a class="sb-item <%= page==='properties'?'active':'' %>" href="/admin/properties">
+      <div class="dot"></div> Properties
+    </a>
+    <a class="sb-item <%= page==='inquiries'?'active':'' %>" href="/admin/inquiries">
+      <div class="dot"></div> Inquiries
+    </a>
+    <a class="sb-item <%= page==='users'?'active':'' %>" href="/admin/users">
+      <div class="dot"></div> Users
+    </a>
+    <div class="sb-label">Management</div>
+    <a class="sb-item <%= page==='agents'?'active':'' %>" href="/admin/agents">
+      <div class="dot"></div> Agents
+    </a>
+    <a class="sb-item <%= page==='districts'?'active':'' %>" href="/admin/districts">
+      <div class="dot"></div> Districts
+    </a>
+    <a class="sb-item <%= page==='featured'?'active':'' %>" href="/admin/featured">
+      <div class="dot orange"></div> Featured Ads
+    </a>
+    <a class="sb-item <%= page==='reports'?'active':'' %>" href="/admin/reports">
+      <div class="dot"></div> Reports
+    </a>
+    <div class="sb-label">System</div>
+    <a class="sb-item <%= page==='settings'?'active':'' %>" href="/admin/settings">
+      <div class="dot"></div> Settings
+    </a>
+    <a class="sb-item" href="/admin/logout">
+      <div class="dot red"></div> Logout
+    </a>
+  </nav>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="tb-title"><%- title %></div>
+    <div class="tb-right">
+      <div class="tb-badge">3 New Inquiries</div>
+      <div class="tb-badge">5 Pending</div>
+      <div class="avatar">AD</div>
+    </div>
+  </div>
+  <div class="content">
+    <%- body %>
+  </div>
+</div>
+
+</body>
+</html>

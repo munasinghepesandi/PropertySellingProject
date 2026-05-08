@@ -1,0 +1,164 @@
+<%
+var title = title || 'Districts';
+var page  = page  || 'districts';
+%>
+<%
+var _body = '<style>' +
+  '.dst-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}' +
+  '.dst-title{font-size:22px;font-weight:700;color:#083068;}' +
+  '.dst-wrap{display:grid;grid-template-columns:1fr 380px;gap:16px;align-items:start;}' +
+  '.dst-card{background:#fff;border:1px solid #DEEBF7;border-radius:14px;overflow:hidden;}' +
+  '.dst-card-body{padding:20px 22px;}' +
+  '.dst-card-title{font-size:13px;font-weight:700;color:#083068;padding:14px 18px;border-bottom:1px solid #F0F6FF;letter-spacing:.3px;}' +
+  '.dst-tbl{width:100%;border-collapse:collapse;}' +
+  '.dst-tbl thead tr{background:#F0F6FF;border-bottom:2px solid #DEEBF7;}' +
+  '.dst-tbl th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#4a6380;}' +
+  '.dst-tbl tbody tr{border-bottom:1px solid #F0F6FF;transition:background .12s;}' +
+  '.dst-tbl tbody tr:last-child{border-bottom:none;}' +
+  '.dst-tbl tbody tr:hover{background:#F8FBFF;}' +
+  '.dst-tbl td{padding:11px 14px;font-size:13px;color:#083068;vertical-align:middle;}' +
+  '.dst-num{color:#6BAED6;font-weight:600;font-size:12px;}' +
+  '.dst-name{font-weight:600;color:#083068;}' +
+  '.dst-province{color:#08519C;font-size:12px;}' +
+  '.dst-count{color:#2171B5;font-weight:700;font-size:14px;text-align:center;}' +
+  '.dst-badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;background:#EEF6FF;color:#2171B5;}' +
+  '.dbtn{padding:5px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;border:none;transition:.12s;}' +
+  '.dbtn-edit{background:#EEF6FF;color:#083068;border:1.5px solid #DEEBF7;}' +
+  '.dbtn-edit:hover{background:#DEEBF7;}' +
+  '.dbtn-del{background:#FEE2E2;color:#DC2626;border:1.5px solid #FECACA;}' +
+  '.dbtn-del:hover{background:#FECACA;}' +
+  '.dbtn-del:disabled{opacity:.4;cursor:not-allowed;}' +
+  '.dst-fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}' +
+  '.dst-label{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#4a6380;}' +
+  '.dst-label span{color:#ef4444;margin-left:2px;}' +
+  '.dst-input,.dst-select{padding:9px 12px;border:1.5px solid #DEEBF7;border-radius:8px;font-size:13px;color:#083068;background:#F0F6FF;outline:none;font-family:inherit;width:100%;}' +
+  '.dst-input:focus,.dst-select:focus{border-color:#6BAED6;background:#fff;box-shadow:0 0 0 3px rgba(107,174,214,.1);}' +
+  '.dst-actions{display:flex;gap:8px;margin-top:4px;}' +
+  '.dst-btn-add{padding:9px 20px;background:#083068;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}' +
+  '.dst-btn-add:hover{background:#08519C;}' +
+  '.dst-btn-reset{padding:9px 16px;background:#fff;color:#083068;border:1.5px solid #DEEBF7;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}' +
+  '.dst-btn-reset:hover{background:#F0F6FF;}' +
+  '.dst-form-editing{border-top:3px solid #f59e0b !important;}' +
+  '.dst-edit-badge{display:inline-block;background:#FEF3C7;color:#92400E;font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;margin-left:8px;}' +
+'</style>';
+%>
+
+<%-  _body %>
+
+<div class="dst-header">
+  <div class="dst-title">Districts</div>
+</div>
+
+<div class="dst-wrap">
+
+  <!-- Districts Table -->
+  <div class="dst-card">
+    <div class="dst-card-title">
+      All Districts <span class="dst-badge"><%= districts.length %> total</span>
+    </div>
+    <table class="dst-tbl">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>District</th>
+          <th>Province</th>
+          <th style="text-align:center;">Listings</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (districts.length === 0) { %>
+          <tr>
+            <td colspan="5" style="text-align:center;padding:40px;color:#6BAED6;">No districts found</td>
+          </tr>
+        <% } else { %>
+          <% districts.forEach(function(d, i) { %>
+            <tr>
+              <td class="dst-num"><%= i + 1 %></td>
+              <td class="dst-name"><%= d.name %></td>
+              <td class="dst-province"><%= d.province || '—' %></td>
+              <td class="dst-count"><%= d.listingCount %></td>
+              <td>
+                <div style="display:flex;gap:6px;">
+                  <button class="dbtn dbtn-edit"
+                    onclick='editDistrict(<%- JSON.stringify(d) %>)'>✏️ Edit</button>
+                  <form method="POST" action="/admin/districts/<%= d.id %>/delete"
+                    style="display:inline;"
+                    onsubmit="return confirm('Delete <%= d.name %>?')">
+                    <button class="dbtn dbtn-del" type="submit"
+                      <%= d.listingCount > 0 ? 'disabled title="Has listings"' : '' %>>🗑️ Del</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          <% }) %>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Add / Edit Form -->
+  <div class="dst-card" id="districtFormCard">
+    <div class="dst-card-title" id="districtFormTitle">Add District</div>
+    <div class="dst-card-body">
+      <form method="POST" id="districtForm" action="/admin/districts">
+        <input type="hidden" name="_method"  id="districtMethod" value=""/>
+        <input type="hidden" name="id"       id="districtId"     value=""/>
+
+        <div class="dst-fg">
+          <label class="dst-label">District Name <span>*</span></label>
+          <input class="dst-input" type="text" name="name" id="districtName"
+            required placeholder="e.g. Colombo"/>
+        </div>
+
+        <div class="dst-fg">
+          <label class="dst-label">Province <span>*</span></label>
+          <select class="dst-select" name="province" id="districtProvince" required>
+            <option value="">— Select Province —</option>
+            <option value="Western">Western</option>
+            <option value="Central">Central</option>
+            <option value="Southern">Southern</option>
+            <option value="Northern">Northern</option>
+            <option value="Eastern">Eastern</option>
+            <option value="North Western">North Western</option>
+            <option value="North Central">North Central</option>
+            <option value="Uva">Uva</option>
+            <option value="Sabaragamuwa">Sabaragamuwa</option>
+          </select>
+        </div>
+
+        <div class="dst-actions">
+          <button class="dst-btn-add" type="submit" id="districtSubmitBtn">➕ Add District</button>
+          <button class="dst-btn-reset" type="button" onclick="resetDistrictForm()">Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function editDistrict(d) {
+  document.getElementById('districtFormTitle').innerHTML = 'Edit District <span class="dst-edit-badge">Editing</span>';
+  document.getElementById('districtForm').action = '/admin/districts/' + d.id;
+  document.getElementById('districtMethod').value = 'PUT';
+  document.getElementById('districtId').value = d.id;
+  document.getElementById('districtName').value = d.name;
+  document.getElementById('districtProvince').value = d.province;
+  document.getElementById('districtSubmitBtn').textContent = '💾 Update District';
+  document.getElementById('districtFormCard').classList.add('dst-form-editing');
+  document.getElementById('districtFormCard').scrollIntoView({behavior:'smooth'});
+}
+function resetDistrictForm() {
+  document.getElementById('districtFormTitle').textContent = 'Add District';
+  document.getElementById('districtForm').action = '/admin/districts';
+  document.getElementById('districtMethod').value = '';
+  document.getElementById('districtId').value = '';
+  document.getElementById('districtName').value = '';
+  document.getElementById('districtProvince').value = '';
+  document.getElementById('districtSubmitBtn').textContent = '➕ Add District';
+  document.getElementById('districtFormCard').classList.remove('dst-form-editing');
+}
+</script>
+
+<%- include('layout', { title: title, page: page, body: _body }) %>
