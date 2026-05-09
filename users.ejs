@@ -1,0 +1,128 @@
+<%
+  title = title || "Users";
+  page  = page  || "users";
+%>
+
+<style>
+  .usr-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+  .usr-title{font-size:22px;font-weight:700;color:#083068;}
+  .usr-filter{background:#fff;border:1px solid #DEEBF7;border-radius:14px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;}
+  .usr-fg{display:flex;flex-direction:column;gap:5px;}
+  .usr-fg label{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#4a6380;}
+  .usr-input{padding:8px 12px;border:1.5px solid #DEEBF7;border-radius:8px;font-size:13px;color:#083068;background:#F0F6FF;outline:none;font-family:inherit;}
+  .usr-input:focus{border-color:#6BAED6;background:#fff;}
+  .ubtn{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;display:inline-flex;align-items:center;gap:5px;}
+  .ubtn-primary{background:#083068;color:#fff;} .ubtn-primary:hover{background:#08519C;}
+  .ubtn-sm{padding:5px 14px;font-size:12px;}
+  .ubtn-toggle{background:#FEF3C7;color:#92400E;border:1.5px solid #FDE68A;} .ubtn-toggle:hover{background:#FDE68A;}
+  .ubtn-toggle.active{background:#D1FAE5;color:#065F46;border-color:#6EE7B7;}
+  .usr-card{background:#fff;border:1px solid #DEEBF7;border-radius:14px;overflow:hidden;}
+  .usr-tbl{width:100%;border-collapse:collapse;}
+  .usr-tbl thead tr{background:#F0F6FF;border-bottom:2px solid #DEEBF7;}
+  .usr-tbl th{padding:12px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#4a6380;}
+  .usr-tbl tbody tr{border-bottom:1px solid #F0F6FF;transition:background .12s;}
+  .usr-tbl tbody tr:last-child{border-bottom:none;}
+  .usr-tbl tbody tr:hover{background:#F8FBFF;}
+  .usr-tbl td{padding:11px 14px;font-size:13px;color:#083068;vertical-align:middle;}
+  .unum{color:#6BAED6;font-weight:600;font-size:12px;}
+  .uav{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#083068,#2171B5);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .utag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
+  .utag-active{background:#D1FAE5;color:#065F46;}
+  .utag-pending{background:#FEF3C7;color:#92400E;}
+  .utag-suspended{background:#FEE2E2;color:#DC2626;}
+  .usr-empty{text-align:center;padding:48px 20px;color:#6BAED6;font-size:14px;}
+  .usr-pgn{display:flex;gap:6px;justify-content:center;padding:16px 0 4px;}
+  .usr-pgbtn{width:34px;height:34px;border-radius:8px;border:1.5px solid #DEEBF7;background:#fff;color:#083068;font-size:13px;font-weight:600;cursor:pointer;}
+  .usr-pgbtn:hover{background:#F0F6FF;}
+  .usr-pgbtn.active{background:#083068;color:#fff;border-color:#083068;}
+</style>
+
+<div class="usr-header">
+  <div class="usr-title">Users</div>
+</div>
+
+<div class="usr-filter">
+  <form method="GET" action="/admin/users" style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;width:100%;">
+    <div class="usr-fg" style="flex:1;min-width:160px;">
+      <label>Search</label>
+      <input class="usr-input" type="text" name="q"
+             placeholder="Name or email…" value="<%= filters.q || '' %>"/>
+    </div>
+    <div class="usr-fg">
+      <label>Status</label>
+      <select class="usr-input" name="status" style="width:140px;">
+        <option value="">All</option>
+        <option value="active"    <%= filters.status==='active'    ? 'selected':'' %>>Active</option>
+        <option value="pending"   <%= filters.status==='pending'   ? 'selected':'' %>>Pending</option>
+        <option value="suspended" <%= filters.status==='suspended' ? 'selected':'' %>>Suspended</option>
+      </select>
+    </div>
+    <div class="usr-fg">
+      <label>&nbsp;</label>
+      <button class="ubtn ubtn-primary" type="submit">Filter</button>
+    </div>
+  </form>
+</div>
+
+<div class="usr-card">
+  <table class="usr-tbl">
+    <thead>
+      <tr>
+        <th>ID</th><th>User</th><th>Phone</th>
+        <th>Listings</th><th>Status</th><th>Joined</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if(!users || users.length === 0) { %>
+        <tr>
+          <td colspan="7">
+            <div class="usr-empty">
+              <div style="font-size:36px;margin-bottom:8px;">👥</div>
+              <div>No users found.</div>
+            </div>
+          </td>
+        </tr>
+      <% } else { %>
+        <% users.forEach(function(u, i) { %>
+        <tr>
+          <td class="unum"><%= (currentPage-1)*perPage + i+1 %></td>
+          <td>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div class="uav"><%= u.initials %></div>
+              <div>
+                <div style="font-weight:600;color:#083068;font-size:13px;"><%= u.name %></div>
+                <div style="font-size:11px;color:#6BAED6;"><%= u.email %></div>
+              </div>
+            </div>
+          </td>
+          <td style="font-size:12px;color:#4a6380;"><%= u.phone || '—' %></td>
+          <td style="font-weight:600;color:#2171B5;"><%= u.listingCount || 0 %></td>
+          <td>
+            <span class="utag <%= u.status==='active' ? 'utag-active' : u.status==='suspended' ? 'utag-suspended' : 'utag-pending' %>">
+              <%= (u.status||'pending').charAt(0).toUpperCase()+(u.status||'pending').slice(1) %>
+            </span>
+          </td>
+          <td style="font-size:11.5px;color:#6BAED6;"><%= u.createdAt %></td>
+          <td>
+            <form method="POST" action="/admin/users/<%= u.id %>/toggle" style="display:inline;">
+              <button class="ubtn ubtn-toggle ubtn-sm <%= u.status==='active' ? 'active' : '' %>" type="submit">
+                <%= u.status==='active' ? '⏸ Suspend' : '▶ Activate' %>
+              </button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+
+  <% if(totalPages > 1) { %>
+    <div class="usr-pgn">
+      <% for(var i = 1; i <= totalPages; i++) { %>
+        <a href="?page=<%= i %>&q=<%= filters.q||'' %>&status=<%= filters.status||'' %>">
+          <button class="usr-pgbtn <%= i===currentPage ? 'active' : '' %>"><%= i %></button>
+        </a>
+      <% } %>
+    </div>
+  <% } %>
+</div>
