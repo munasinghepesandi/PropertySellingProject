@@ -6,7 +6,21 @@ const router = express.Router();
 // Get all properties
 router.get('/', async (req, res) => {
   try {
-    const properties = await Property.findAll();
+    const properties = await Property.findAll({
+      order: [['createdAt', 'DESC']]
+    });
+    res.json({ success: true, data: properties });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// Get properties by type
+router.get('/type/:type', async (req, res) => {
+  try {
+    const properties = await Property.findAll({
+      where: { type: req.params.type }
+    });
     res.json({ success: true, data: properties });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -26,24 +40,15 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Get properties by type
-router.get('/type/:type', async (req, res) => {
-  try {
-    const properties = await Property.findAll({
-      where: { type: req.params.type }
-    });
-    res.json({ success: true, data: properties });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-});
-
 // Create new property
 router.post('/', async (req, res) => {
+  console.log('Received POST /api/properties with body:', req.body);
   try {
     const property = await Property.create(req.body);
+    console.log('Property created with id:', property.id);
     res.status(201).json({ success: true, data: property });
   } catch (error) {
+    console.error('Error creating property:', error.message);
     res.status(400).json({ success: false, message: error.message });
   }
 });

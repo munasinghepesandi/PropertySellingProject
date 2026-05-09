@@ -1,3 +1,5 @@
+import { Navbar } from "../components/Navbar"
+
 const kandyListings = [
   {
     id: 1,
@@ -47,13 +49,15 @@ const kandyListings = [
 
 export default function KandyPage() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#08306B] text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.18),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.15),transparent_22%),linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0))]" />
+    <div className="min-h-screen  text-slate-900">
+      <Navbar/>
+      <section className="relative overflow-hidden text-white min-h-[36vh]">
+        <div className="absolute inset-0 bg-black/40 " />
         <img
-          src="https://images.unsplash.com/photo-1505691723518-36a6f14f4f29?w=1600&q=80&auto=format&fit=crop"
+          src="https://www.johnkeellsproperties.com/_next/image?url=https%3A%2F%2Fd348s9iu5fkczb.cloudfront.net%2F0d02a111-09e3-4fd4-914a-c81ba65c485d.jpg&w=2048&q=75"
           alt="Kandy banner"
-          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-35"
+          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-100"
+          loading="lazy"
         />
 
         <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">

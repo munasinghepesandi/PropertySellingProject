@@ -11,6 +11,7 @@ import HomeLoanPage from './pages/HomeLoanPage'
 import Login from './components/Login'
 import Register from './components/Register'
 import ForgotPassword from './components/ForgotPassword'
+import { PostAd } from './pages/PostAd'
 
 function LoginRoute() {
   const navigate = useNavigate()
@@ -48,7 +49,7 @@ function App() {
           <Route path="/properties" element={<SalesPage />} />
           <Route path="/kandy" element={<KandyPage />} />
           <Route path="/contact" element={<Homepage />} />
-          <Route path="/post-ad" element={<Homepage />} />
+          <Route path="/post-ad" element={<PostAd />} />
           <Route path="/sales" element={<SalesPage />} />
           <Route path="/rentals" element={<Homepage />} />
           <Route path="/houses" element={<HousesPage />} />

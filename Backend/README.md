@@ -53,6 +53,12 @@ Backend API for the LankaProperty real estate web application using Node.js, Exp
 - `DELETE /api/properties/:id` — Delete property
 - `GET /api/health` — Health check
 
+### Sales Listings
+
+- `GET /api/sales/listings` — Get sale-ready property listings for the frontend sales page
+- `GET /api/sales/listings/:id` — Get a single sales listing
+- Optional filters: `category`, `type`, `location`, `search`, `minPrice`, `maxPrice`, `limit`
+
 ## Project Structure
 
 ```

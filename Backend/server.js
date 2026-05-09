@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import sequelize from './config/database.js';
 import propertiesRouter from './routes/properties.js';
+import salesRouter from './routes/sales.js';
+import loansRouter from './routes/loans.js';
 import authRouter from './routes/auth.js';
 import User from './models/User.js';
 import UType from './models/UType.js';
@@ -24,6 +26,8 @@ app.get('/api/health', (req, res) => {
 
 // Routes
 app.use('/api/properties', propertiesRouter);
+app.use('/api/sales', salesRouter);
+app.use('/api/loans', loansRouter);
 app.use('/api/auth', authRouter);
 
 // Error handling middleware
@@ -45,15 +49,15 @@ const initializeServer = async () => {
 
     await sequelize.query('ALTER TABLE `user` MODIFY `password` VARCHAR(255) NOT NULL');
     console.log('✓ Ensured `user.password` supports hashed passwords');
-
-    app.listen(PORT, () => {
-      console.log(`✓ Backend server running on http://localhost:${PORT}`);
-      console.log(`✓ Health check: http://localhost:${PORT}/api/health`);
-    });
   } catch (error) {
-    console.error('✗ Database connection failed:', error.message);
-    process.exit(1);
+    console.error('✗ Database connection failed (continuing to start server for dev):', error.message);
+    console.error('  - If you expected the DB to be available, verify your .env DB settings and that MySQL is running.');
   }
+
+  app.listen(PORT, () => {
+    console.log(`✓ Backend server running on http://localhost:${PORT}`);
+    console.log(`✓ Health check: http://localhost:${PORT}/api/health`);
+  });
 };
 
 initializeServer();

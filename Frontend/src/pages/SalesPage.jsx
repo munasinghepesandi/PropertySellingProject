@@ -1,72 +1,3 @@
-const saleListings = [
-  {
-    id: 1,
-    title: 'Luxury Family House in Kandy',
-    location: 'Heerassagala, Kandy',
-    price: 'Rs. 18,500,000',
-    beds: '4 Beds',
-    baths: '3 Baths',
-    area: '2,300 sqft',
-    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80&auto=format&fit=crop',
-    badge: 'Featured',
-  },
-  {
-    id: 2,
-    title: 'Modern Apartment for Sale',
-    location: 'Colombo 05',
-    price: 'Rs. 25,000,000',
-    beds: '3 Beds',
-    baths: '2 Baths',
-    area: '1,450 sqft',
-    image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=80&auto=format&fit=crop',
-    badge: 'Hot Deal',
-  },
-  {
-    id: 3,
-    title: 'Commercial Land for Sale',
-    location: 'Peradeniya, Kandy',
-    price: 'Rs. 7,800,000',
-    beds: 'N/A',
-    baths: 'N/A',
-    area: '12 Perches',
-    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80&auto=format&fit=crop',
-    badge: 'Land',
-  },
-  {
-    id: 4,
-    title: 'Luxury Villa with Pool',
-    location: 'Negombo',
-    price: 'Rs. 32,500,000',
-    beds: '5 Beds',
-    baths: '4 Baths',
-    area: '3,800 sqft',
-    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80&auto=format&fit=crop',
-    badge: 'Premium',
-  },
-  {
-    id: 5,
-    title: 'Affordable Starter Home',
-    location: 'Kottawa',
-    price: 'Rs. 12,250,000',
-    beds: '3 Beds',
-    baths: '2 Baths',
-    area: '1,600 sqft',
-    image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1200&q=80&auto=format&fit=crop',
-    badge: 'New',
-  },
-  {
-    id: 6,
-    title: 'Apartment Near the City',
-    location: 'Nugegoda',
-    price: 'Rs. 21,750,000',
-    beds: '2 Beds',
-    baths: '2 Baths',
-    area: '1,200 sqft',
-    image: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=1200&q=80&auto=format&fit=crop',
-    badge: 'Popular',
-  },
-]
-
 const filterChips = [
   { label: 'All', value: 'all' },
   { label: 'Houses', value: 'house' },
@@ -76,33 +7,189 @@ const filterChips = [
   { label: 'Luxury', value: 'luxury' },
 ];
 
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+import { Navbar } from "../components/Navbar";
+import { API_BASE_URL } from "../utils/auth";
 
-export default function SalesPage() {
+const DEFAULT_FILTERS = {
+  location: '',
+  propertyType: '',
+  maxPrice: '',
+  bedrooms: '',
+  priceRange: '',
+};
+
+function mapFilterTypeToCategory(filterType) {
+  const normalized = (filterType || '').toLowerCase();
+
+  if (normalized.includes('house')) return 'house';
+  if (normalized.includes('apartment')) return 'apartment';
+  if (normalized.includes('land')) return 'land';
+  if (normalized.includes('commercial')) return 'commercial';
+  if (normalized.includes('luxury')) return 'luxury';
+  return 'all';
+}
+
+function normalizePropertyType(value) {
+  const normalized = value.trim().toLowerCase();
+
+  if (normalized === 'houses' || normalized === 'house' || normalized === 'villa' || normalized === 'villas') {
+    return 'house';
+  }
+
+  if (normalized === 'apartments' || normalized === 'apartment') {
+    return 'apartment';
+  }
+
+  if (normalized === 'land' || normalized === 'lands') {
+    return 'land';
+  }
+
+  if (normalized === 'commercial' || normalized === 'commercials') {
+    return 'commercial';
+  }
+
+  if (normalized === 'luxury' || normalized === 'luxurious' || normalized === 'premium') {
+    return 'luxury';
+  }
+
+  return normalized;
+}
+
+function parseCurrency(value) {
+  const numeric = Number(String(value).replace(/[^\d]/g, ''));
+  return Number.isNaN(numeric) || numeric <= 0 ? '' : numeric;
+}
+
+function getPriceBounds(range) {
+  switch (range) {
+    case 'under-10m':
+      return { maxPrice: 10000000 };
+    case '10m-25m':
+      return { minPrice: 10000000, maxPrice: 25000000 };
+    case '25m-50m':
+      return { minPrice: 25000000, maxPrice: 50000000 };
+    case '50m-plus':
+      return { minPrice: 50000000 };
+    default:
+      return {};
+  }
+}
+
+function normalizeListing(listing) {
+  return {
+    ...listing,
+    title: listing.title || 'Property Listing',
+    location: listing.location || 'Sri Lanka',
+    price: listing.price || 'Price on request',
+    beds: listing.beds || 'N/A',
+    baths: listing.baths || 'N/A',
+    area: listing.area || 'N/A',
+    image: listing.image || 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=80&auto=format&fit=crop',
+    badge: listing.badge || 'Featured',
+  };
+}
+
+export default function SalesPage({ filterType }) {
   const [selectedListing, setSelectedListing] = useState(null);
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState(() => mapFilterTypeToCategory(filterType));
+  const [filters, setFilters] = useState(DEFAULT_FILTERS);
+  const [listings, setListings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const closeModal = () => setSelectedListing(null);
 
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchListings = async () => {
+      setLoading(true);
+      setError('');
+
+      try {
+        const params = new URLSearchParams();
+
+        if (activeCategory !== 'all') {
+          params.set('category', activeCategory);
+        }
+
+        if (filters.location.trim()) {
+          params.set('location', filters.location.trim());
+        }
+
+        if (filters.propertyType.trim()) {
+          params.set('type', normalizePropertyType(filters.propertyType));
+        }
+
+        if (filters.bedrooms.trim()) {
+          const bedrooms = Number(filters.bedrooms);
+          if (!Number.isNaN(bedrooms) && bedrooms > 0) {
+            params.set('bedrooms', String(bedrooms));
+          }
+        }
+
+        if (filters.maxPrice.trim()) {
+          const parsedMaxPrice = parseCurrency(filters.maxPrice);
+          if (parsedMaxPrice) {
+            params.set('maxPrice', String(parsedMaxPrice));
+          }
+        }
+
+        if (filters.priceRange) {
+          const selectedRange = getPriceBounds(filters.priceRange);
+
+          if (selectedRange.minPrice) {
+            params.set('minPrice', String(selectedRange.minPrice));
+          }
+
+          if (selectedRange.maxPrice) {
+            params.set('maxPrice', String(selectedRange.maxPrice));
+          }
+        }
+
+        const query = params.toString();
+        const response = await fetch(`${API_BASE_URL}/sales/listings${query ? `?${query}` : ''}`);
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data?.message || 'Failed to load sales listings');
+        }
+
+        if (!cancelled) {
+          setListings((Array.isArray(data.data) ? data.data : []).map(normalizeListing));
+        }
+      } catch (fetchError) {
+        if (!cancelled) {
+          setListings([]);
+          setError(fetchError.message || 'Failed to load sales listings');
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchListings();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [activeCategory, filters]);
+
   // Filtering logic
-  const filteredListings = saleListings.filter((listing) => {
-    if (activeCategory === 'all') return true;
-    const title = listing.title.toLowerCase();
-    if (activeCategory === 'house') return title.includes('house') || title.includes('villa') || title.includes('home');
-    if (activeCategory === 'apartment') return title.includes('apartment');
-    if (activeCategory === 'land') return title.includes('land');
-    if (activeCategory === 'commercial') return title.includes('commercial');
-    if (activeCategory === 'luxury') return title.includes('luxury') || listing.badge?.toLowerCase().includes('premium');
-    return true;
-  });
+  const filteredListings = listings;
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      <section className="relative overflow-hidden bg-linear-to-br from-[#08306B] via-[#2171B5] to-[#08306B] text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.18),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.15),transparent_22%),linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0))]" />
+    <div className="min-h-screen  text-slate-900">
+      <Navbar/>
+      <section className="relative min-h-[36vh] overflow-hidden text-white">
+        <div className="absolute inset-0 bg-black/40 " />
         <img
-          src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&q=80&auto=format&fit=crop"
+          src="https://d348s9iu5fkczb.cloudfront.net/0d02a111-09e3-4fd4-914a-c81ba65c485d.jpg"
           alt="Sales banner"
-          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-35"
+          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-100"
+          loading="lazy"
         />
 
         <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
@@ -112,10 +199,10 @@ export default function SalesPage() {
                 Lanka Property Sales
               </span>
               <h1 className="max-w-3xl text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">
-                Buy properties with a clean, premium sales page.
+                Buy Your Dream Property Today
               </h1>
               <p className="max-w-2xl text-base text-white/85 sm:text-lg">
-                Search houses, apartments, land, and commercial spaces across Sri Lanka with a layout inspired by leading property portals.
+                Explore verified listings of houses, apartments, land, and commercial properties across Sri Lanka. Find your perfect home or investment with ease.
               </p>
               <div className="flex flex-wrap gap-3 text-sm font-semibold">
                 <span className="rounded-full bg-white/12 px-4 py-2 backdrop-blur">Verified Listings</span>
@@ -127,17 +214,40 @@ export default function SalesPage() {
             <div className="rounded-4xl bg-white/95 p-5 text-slate-900 shadow-2xl backdrop-blur-sm">
               <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#2171B5]">Quick Search</p>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                <input className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="City or area" />
-                <input className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Property type" />
-                <input className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Max price" />
-                <input className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Bedrooms" />
+                <input
+                  className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]"
+                  placeholder="City or area"
+                  value={filters.location}
+                  onChange={(event) => setFilters((current) => ({ ...current, location: event.target.value }))}
+                />
+                <input
+                  className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]"
+                  placeholder="Property type"
+                  value={filters.propertyType}
+                  onChange={(event) => setFilters((current) => ({ ...current, propertyType: event.target.value }))}
+                />
+                <input
+                  className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]"
+                  placeholder="Max price"
+                  value={filters.maxPrice}
+                  onChange={(event) => setFilters((current) => ({ ...current, maxPrice: event.target.value }))}
+                />
+                <input
+                  className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]"
+                  placeholder="Bedrooms"
+                  value={filters.bedrooms}
+                  onChange={(event) => setFilters((current) => ({ ...current, bedrooms: event.target.value }))}
+                />
               </div>
-              <button className="mt-4 w-full rounded-xl bg-[#2171B5] px-4 py-3 font-bold text-white transition hover:bg-[#08306B]">
+              <button
+                className="mt-4 w-full rounded-xl bg-[#2171B5] px-4 py-3 font-bold text-white transition hover:bg-[#08306B]"
+                type="button"
+              >
                 Search Sales Listings
               </button>
               <div className="mt-4 grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="rounded-xl bg-slate-50 p-3">
-                  <p className="text-xl font-black text-[#08306B]">1.2k+</p>
+                  <p className="text-xl font-black text-[#08306B]">{loading ? '...' : `${filteredListings.length}`}</p>
                   <p className="text-slate-500">Listings</p>
                 </div>
                 <div className="rounded-xl bg-slate-50 p-3">
@@ -180,28 +290,42 @@ export default function SalesPage() {
           <div className="mt-6 space-y-5">
             <div>
               <label className="mb-2 block text-sm font-bold text-slate-700">Location</label>
-              <input className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Kandy, Colombo, Galle..." />
+              <input
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]"
+                placeholder="Kandy, Colombo, Galle..."
+                value={filters.location}
+                onChange={(event) => setFilters((current) => ({ ...current, location: event.target.value }))}
+              />
             </div>
 
             <div>
               <label className="mb-2 block text-sm font-bold text-slate-700">Property Type</label>
-              <select className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]">
-                <option>Any</option>
-                <option>House</option>
-                <option>Apartment</option>
-                <option>Land</option>
-                <option>Commercial</option>
+              <select
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]"
+                value={filters.propertyType}
+                onChange={(event) => setFilters((current) => ({ ...current, propertyType: event.target.value }))}
+              >
+                <option value="">Any</option>
+                <option value="house">House</option>
+                <option value="apartment">Apartment</option>
+                <option value="land">Land</option>
+                <option value="commercial">Commercial</option>
+                <option value="luxury">Luxury</option>
               </select>
             </div>
 
             <div>
               <label className="mb-2 block text-sm font-bold text-slate-700">Price Range</label>
-              <select className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]">
-                <option>Any</option>
-                <option>Under Rs. 10M</option>
-                <option>Rs. 10M - Rs. 25M</option>
-                <option>Rs. 25M - Rs. 50M</option>
-                <option>Rs. 50M+</option>
+              <select
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]"
+                value={filters.priceRange}
+                onChange={(event) => setFilters((current) => ({ ...current, priceRange: event.target.value }))}
+              >
+                <option value="">Any</option>
+                <option value="under-10m">Under Rs. 10M</option>
+                <option value="10m-25m">Rs. 10M - Rs. 25M</option>
+                <option value="25m-50m">Rs. 25M - Rs. 50M</option>
+                <option value="50m-plus">Rs. 50M+</option>
               </select>
             </div>
 
@@ -216,7 +340,10 @@ export default function SalesPage() {
               </div>
             </div>
 
-            <button className="w-full rounded-xl bg-linear-to-r from-[#2171B5] to-[#08306B] px-4 py-3 font-bold text-white transition hover:scale-[1.02]">
+            <button
+              className="w-full rounded-xl bg-linear-to-r from-[#2171B5] to-[#08306B] px-4 py-3 font-bold text-white transition hover:scale-[1.02]"
+              type="button"
+            >
               Apply Filters
             </button>
           </div>
@@ -228,10 +355,22 @@ export default function SalesPage() {
               <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#2171B5]">Sales Listings</p>
               <h2 className="mt-2 text-3xl font-black text-slate-800">Recommended properties</h2>
             </div>
-            <p className="text-sm text-slate-500">Showing {filteredListings.length} properties</p>
+            <p className="text-sm text-slate-500">Showing {loading ? '...' : filteredListings.length} properties</p>
           </div>
 
+          {error && (
+            <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+              {error}
+            </div>
+          )}
+
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-2">
+            {!loading && filteredListings.length === 0 && !error && (
+              <div className="col-span-full rounded-3xl border border-slate-200 bg-white px-6 py-10 text-center text-slate-500 shadow-sm">
+                No listings match the current filters.
+              </div>
+            )}
+
             {filteredListings.map((listing) => (
               <article
                 key={listing.id}
@@ -297,6 +436,9 @@ export default function SalesPage() {
                   <span className="rounded bg-[#2171B5] px-3 py-1 text-xs font-bold text-white">{selectedListing.badge}</span>
                   <span className="rounded bg-[#08306B] px-3 py-1 text-xs font-bold text-white">{selectedListing.price}</span>
                 </div>
+                {selectedListing.description && (
+                  <p className="mb-3 text-sm leading-6 text-slate-600">{selectedListing.description}</p>
+                )}
                 <div className="grid grid-cols-3 gap-2 mb-4 text-center text-sm">
                   <div className="rounded-xl bg-slate-50 px-3 py-3 font-semibold text-slate-600 ring-1 ring-slate-200">{selectedListing.beds}</div>
                   <div className="rounded-xl bg-slate-50 px-3 py-3 font-semibold text-slate-600 ring-1 ring-slate-200">{selectedListing.baths}</div>

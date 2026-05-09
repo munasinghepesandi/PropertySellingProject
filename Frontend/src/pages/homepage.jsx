@@ -1,13 +1,155 @@
+import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { Search, MapPin, BadgePlus, House, PiggyBank, Building, Trophy, Zap, Layers, Shield } from "lucide-react";
+import { API_BASE_URL } from "../utils/auth";
 import "../styles/homepage.css";
 
+const fallbackProperties = [
+  {
+    id: "fallback-1",
+    title: "Modern Family House",
+    location: "Colombo 05",
+    price: 45000000,
+    bedrooms: 4,
+    bathrooms: 3,
+    area: 2800,
+    type: "house",
+    image_url: "https://cdn.mistert.lk/property/sales/5883_1_1774420187.jpeg",
+  },
+  {
+    id: "fallback-2",
+    title: "Luxury Villa",
+    location: "Galle",
+    price: 85000000,
+    bedrooms: 5,
+    bathrooms: 4,
+    area: 4100,
+    type: "villa",
+    image_url: "https://www.lankaislandproperties.com/wp-content/uploads/2025/08/1-400x263.jpg",
+  },
+  {
+    id: "fallback-3",
+    title: "Beachfront Apartment",
+    location: "Mount Lavinia",
+    price: 25000000,
+    bedrooms: 3,
+    bathrooms: 2,
+    area: 1950,
+    type: "apartment",
+    image_url: "https://apartments.lk/wp-content/uploads/2023/05/IMG-20230405-WA0015-1600x790.jpg",
+  },
+  {
+    id: "fallback-4",
+    title: "Contemporary Townhouse",
+    location: "Nugegoda",
+    price: 39500000,
+    bedrooms: 4,
+    bathrooms: 3,
+    area: 2350,
+    type: "house",
+    image_url: "https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "fallback-5",
+    title: "Hillside Bungalow",
+    location: "Kandy",
+    price: 31000000,
+    bedrooms: 3,
+    bathrooms: 3,
+    area: 2100,
+    type: "house",
+    image_url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "fallback-6",
+    title: "City View Penthouse",
+    location: "Colombo 02",
+    price: 92000000,
+    bedrooms: 4,
+    bathrooms: 4,
+    area: 3200,
+    type: "apartment",
+    image_url: "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80",
+  },
+];
+
+function formatPrice(price) {
+  if (!price) return "Price on request";
+  return `Rs. ${new Intl.NumberFormat("en-LK").format(price)}`;
+}
+
+function getBadge(type) {
+  if (type === "villa") return "Premium";
+  if (type === "land") return "Land";
+  if (type === "commercial") return "Commercial";
+  return "For Sale";
+}
+
 const Homepage = () => {
+  const location = useLocation();
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadFeaturedProperties = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/properties`);
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data?.message || "Failed to load featured properties");
+        }
+
+        const backendProperties = Array.isArray(data?.data) ? data.data : [];
+
+        if (!cancelled) {
+          setProperties(backendProperties.slice(0, 6));
+        }
+      } catch {
+        if (!cancelled) {
+          setProperties(fallbackProperties);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadFeaturedProperties();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const featuredProperties = useMemo(() => {
+    if (properties.length > 0) {
+      return properties;
+    }
+    return fallbackProperties;
+  }, [properties]);
+
+  const justPosted = useMemo(() => {
+    const queryParams = new URLSearchParams(location.search);
+    return queryParams.get("posted") === "1";
+  }, [location.search]);
 
   return (
     <div>
       <Navbar />
+
+      {justPosted && (
+        <div className="mx-auto mt-4 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800">
+            Your ad has been posted successfully and is now visible in featured listings.
+          </div>
+        </div>
+      )}
 
       {/* HERO SECTION */}
       <section
@@ -111,144 +253,33 @@ const Homepage = () => {
           <p>Hand-picked properties just for you</p>
         </div>
 
+        {loading && <p className="text-sm font-semibold text-slate-500">Loading latest listings...</p>}
+
         <div className="property-grid">
-          <div className="property-card">
-            <div className="property-media">
-              <img
-                src="https://cdn.mistert.lk/property/sales/5883_1_1774420187.jpeg"
-                alt="house"
-              />
-              <span className="property-chip">For Sale</span>
-            </div>
-            <div className="property-info">
-              <p className="property-location">Colombo 05</p>
-              <h3>Modern Family House</h3>
-              <div className="property-meta">
-                <span>4 Beds</span>
-                <span>3 Baths</span>
-                <span>2,800 sqft</span>
+          {featuredProperties.map((property) => (
+            <div key={property.id} className="property-card">
+              <div className="property-media">
+                <img
+                  src={property.image_url || "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=80&auto=format&fit=crop"}
+                  alt={property.title}
+                />
+                <span className="property-chip">{getBadge(property.type)}</span>
               </div>
-              <div className="property-price-row">
-                <span className="property-price">Rs. 45,000,000</span>
-                <button className="property-link" type="button">View Details</button>
-              </div>
-            </div>
-          </div>
-
-          <div className="property-card">
-            <div className="property-media">
-              <img
-                src="https://www.lankaislandproperties.com/wp-content/uploads/2025/08/1-400x263.jpg"
-                alt="villa"
-              />
-              <span className="property-chip">Premium</span>
-            </div>
-            <div className="property-info">
-              <p className="property-location">Galle</p>
-              <h3>Luxury Villa</h3>
-              <div className="property-meta">
-                <span>5 Beds</span>
-                <span>4 Baths</span>
-                <span>4,100 sqft</span>
-              </div>
-              <div className="property-price-row">
-                <span className="property-price">Rs. 85,000,000</span>
-                <button className="property-link" type="button">View Details</button>
+              <div className="property-info">
+                <p className="property-location">{property.location}</p>
+                <h3>{property.title}</h3>
+                <div className="property-meta">
+                  <span>{property.bedrooms ? `${property.bedrooms} Beds` : "N/A"}</span>
+                  <span>{property.bathrooms ? `${property.bathrooms} Baths` : "N/A"}</span>
+                  <span>{property.area ? `${property.area} sqft` : "N/A"}</span>
+                </div>
+                <div className="property-price-row">
+                  <span className="property-price">{formatPrice(property.price)}</span>
+                  <button className="property-link" type="button">View Details</button>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="property-card">
-            <div className="property-media">
-              <img
-                src="https://apartments.lk/wp-content/uploads/2023/05/IMG-20230405-WA0015-1600x790.jpg"
-                alt="apartment"
-              />
-              <span className="property-chip">New Listing</span>
-            </div>
-            <div className="property-info">
-              <p className="property-location">Mount Lavinia</p>
-              <h3>Beachfront Apartment</h3>
-              <div className="property-meta">
-                <span>3 Beds</span>
-                <span>2 Baths</span>
-                <span>1,950 sqft</span>
-              </div>
-              <div className="property-price-row">
-                <span className="property-price">Rs. 25,000,000</span>
-                <button className="property-link" type="button">View Details</button>
-              </div>
-            </div>
-          </div>
-
-          <div className="property-card">
-            <div className="property-media">
-              <img
-                src="https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?auto=format&fit=crop&w=1200&q=80"
-                alt="townhouse"
-              />
-              <span className="property-chip">Hot Deal</span>
-            </div>
-            <div className="property-info">
-              <p className="property-location">Nugegoda</p>
-              <h3>Contemporary Townhouse</h3>
-              <div className="property-meta">
-                <span>4 Beds</span>
-                <span>3 Baths</span>
-                <span>2,350 sqft</span>
-              </div>
-              <div className="property-price-row">
-                <span className="property-price">Rs. 39,500,000</span>
-                <button className="property-link" type="button">View Details</button>
-              </div>
-            </div>
-          </div>
-
-          <div className="property-card">
-            <div className="property-media">
-              <img
-                src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80"
-                alt="bungalow"
-              />
-              <span className="property-chip">Exclusive</span>
-            </div>
-            <div className="property-info">
-              <p className="property-location">Kandy</p>
-              <h3>Hillside Bungalow</h3>
-              <div className="property-meta">
-                <span>3 Beds</span>
-                <span>3 Baths</span>
-                <span>2,100 sqft</span>
-              </div>
-              <div className="property-price-row">
-                <span className="property-price">Rs. 31,000,000</span>
-                <button className="property-link" type="button">View Details</button>
-              </div>
-            </div>
-          </div>
-
-          <div className="property-card">
-            <div className="property-media">
-              <img
-                src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
-                alt="penthouse"
-              />
-              <span className="property-chip">For Sale</span>
-            </div>
-            <div className="property-info">
-              <p className="property-location">Colombo 02</p>
-              <h3>City View Penthouse</h3>
-              <div className="property-meta">
-                <span>4 Beds</span>
-                <span>4 Baths</span>
-                <span>3,200 sqft</span>
-              </div>
-              <div className="property-price-row">
-                <span className="property-price">Rs. 92,000,000</span>
-                <button className="property-link" type="button">View Details</button>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
