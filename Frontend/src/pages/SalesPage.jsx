@@ -164,7 +164,7 @@ const filterChips = [
   { label: 'Luxury', value: 'luxury' },
 ];
 
-const TOTAL_LISTINGS = 50000;
+const TOTAL_LISTINGS = 50;
 
 const expandedSaleListings = Array.from({ length: TOTAL_LISTINGS }, (_, index) => {
   const template = saleListings[index % saleListings.length];

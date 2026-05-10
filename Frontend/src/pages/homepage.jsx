@@ -55,16 +55,6 @@ const homepage = () => {
             <button type="submit">Search</button>
           </form>
 
-          <div className="mt-4 flex justify-center">
-            <button
-              type="button"
-              onClick={() => navigate('/post-ad')}
-              className="rounded-lg border border-white/30 bg-white/10 px-5 py-2 font-semibold text-white transition hover:bg-white/20"
-            >
-              Post Your Ad
-            </button>
-          </div>
-
           <div className="mt-4 flex flex-wrap justify-center gap-3">
             <a href="#about-us" className="inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2 font-semibold text-[#08306B] transition hover:bg-slate-100">
               About Us

@@ -25,7 +25,6 @@ const salesSections = {
     [
       { title: 'Luxury Villa in Colombo', price: 'Rs. 45M+', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&q=80', badge: 'Premium' },
       { title: 'Modern City Apartment', price: 'Rs. 25M+', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80', badge: 'Hot' },
-      { title: 'Commercial Space', price: 'Rs. 15M+', image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80', badge: 'Investment' },
     ]
   ),
   houses: createSection(
@@ -38,7 +37,6 @@ const salesSections = {
     [
       { title: 'Spacious Family House - Colombo', price: 'Rs. 18.5M', image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=500&q=80', badge: 'Featured' },
       { title: 'Villa with Garden - Kandy', price: 'Rs. 12.8M', image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&q=80', badge: 'Popular' },
-      { title: 'Modern Bungalow - Negombo', price: 'Rs. 22.5M', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&q=80', badge: 'New' },
     ]
   ),
   apartments: createSection(
@@ -51,7 +49,6 @@ const salesSections = {
     [
       { title: 'Modern City Apartment - Colombo 05', price: 'Rs. 25M', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80', badge: 'Hot Deal' },
       { title: 'Luxury Tower Unit - Colombo 03', price: 'Rs. 35M', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&q=80', badge: 'Premium' },
-      { title: 'Compact Apartment - Nugegoda', price: 'Rs. 14.5M', image: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=500&q=80', badge: 'Value' },
     ]
   ),
   commercial: createSection(
@@ -64,7 +61,6 @@ const salesSections = {
     [
       { title: 'Prime Office Space - Fort', price: 'Rs. 28M', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&q=80', badge: 'Prime' },
       { title: 'Retail Shop - Colombo 07', price: 'Rs. 12M', image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80', badge: 'Retail' },
-      { title: 'Warehouse - Industrial Zone', price: 'Rs. 8.5M', image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80', badge: 'Investment' },
     ]
   ),
   bungalows: createSection(
@@ -77,7 +73,6 @@ const salesSections = {
     [
       { title: 'Classic Bungalow - Kandy', price: 'Rs. 9.5M', image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&q=80', badge: 'Popular' },
       { title: 'Garden Bungalow - Galle', price: 'Rs. 11.2M', image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=500&q=80', badge: 'Peaceful' },
-      { title: 'Spacious Bungalow - Matara', price: 'Rs. 8.8M', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&q=80', badge: 'Value' },
     ]
   ),
   villas: createSection(
@@ -90,7 +85,6 @@ const salesSections = {
     [
       { title: 'Luxury Villa with Pool', price: 'Rs. 32.5M', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&q=80', badge: 'Premium' },
       { title: 'Modern Villa - Negombo', price: 'Rs. 28M', image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=500&q=80', badge: 'Luxury' },
-      { title: 'Beachfront Villa - Mirissa', price: 'Rs. 45M', image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&q=80', badge: 'Exclusive' },
     ]
   ),
   'studio-bedsit': createSection(
@@ -103,7 +97,6 @@ const salesSections = {
     [
       { title: 'Studio - Colombo 04', price: 'Rs. 6.5M', image: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=500&q=80', badge: 'Budget' },
       { title: 'Bedsit - Wellawatta', price: 'Rs. 5.2M', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80', badge: 'Affordable' },
-      { title: 'Compact Studio - Galle Road', price: 'Rs. 7M', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&q=80', badge: 'City' },
     ]
   ),
   'luxury-apartments': createSection(
@@ -116,7 +109,6 @@ const salesSections = {
     [
       { title: 'Penthouse - Colombo 03', price: 'Rs. 42M', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&q=80', badge: 'Exclusive' },
       { title: 'Luxury Tower - Colombo 07', price: 'Rs. 38M', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80', badge: 'Premium' },
-      { title: 'Upscale Unit - Mount Lavinia', price: 'Rs. 35M', image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&q=80', badge: 'Luxury' },
     ]
   ),
   'beachfront-properties': createSection(
@@ -129,7 +121,6 @@ const salesSections = {
     [
       { title: 'Beachfront Villa - Mirissa', price: 'Rs. 52M', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80', badge: 'Exclusive' },
       { title: 'Beach House - Unawatuna', price: 'Rs. 38M', image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=500&q=80', badge: 'Popular' },
-      { title: 'Coastal Apartment - Colombo Beach', price: 'Rs. 28M', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80', badge: 'Premium' },
     ]
   ),
   'new-developments': createSection(
@@ -142,7 +133,6 @@ const salesSections = {
     [
       { title: 'New Mixed-Use Complex', price: 'From Rs. 12M', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&q=80', badge: 'Launch' },
       { title: 'Planned Apartment Tower', price: 'From Rs. 18M', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80', badge: 'Coming' },
-      { title: 'New Villa Community', price: 'From Rs. 22M', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&q=80', badge: 'New' },
     ]
   ),
   'warehouse': createSection(
@@ -155,7 +145,6 @@ const salesSections = {
     [
       { title: 'Industrial Warehouse - Katunayake', price: 'Rs. 24M', image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80', badge: 'Industrial' },
       { title: 'Storage Facility - Peliyagoda', price: 'Rs. 18M', image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80', badge: 'Logistics' },
-      { title: 'Distribution Center', price: 'Rs. 35M', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&q=80', badge: 'Prime' },
     ]
   ),
 }
@@ -180,7 +169,6 @@ const buildDynamicSection = (slug) => {
     [
       { title: `${label} Opportunity 1`, price: 'From Rs. 12M', image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&q=80', badge: 'Featured' },
       { title: `${label} Opportunity 2`, price: 'From Rs. 18M', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80', badge: 'Popular' },
-      { title: `${label} Opportunity 3`, price: 'From Rs. 24M', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&q=80', badge: 'Premium' },
     ]
   )
 }
@@ -488,4 +476,3 @@ export default function SalesSectionPage({ sectionSlug: sectionSlugProp } = {}) 
     </div>
   )
 }
-

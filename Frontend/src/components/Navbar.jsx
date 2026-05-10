@@ -5,8 +5,16 @@ import { useNavigate } from "react-router-dom";
 export function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [salesMenuOpen, setSalesMenuOpen] = useState(false);
+  const [ourServicesMenuOpen, setOurServicesMenuOpen] = useState(false);
+  const [homeLoansMenuOpen, setHomeLoansMenuOpen] = useState(false);
+  const [marketInsightsMenuOpen, setMarketInsightsMenuOpen] = useState(false);
+  const [agentMenuOpen, setAgentMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSalesOpen, setMobileSalesOpen] = useState(false);
+  const [mobileOurServicesOpen, setMobileOurServicesOpen] = useState(false);
+  const [mobileHomeLoansOpen, setMobileHomeLoansOpen] = useState(false);
+  const [mobileMarketInsightsOpen, setMobileMarketInsightsOpen] = useState(false);
+  const [mobileAgentOpen, setMobileAgentOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
 
@@ -19,17 +27,6 @@ export function Navbar() {
     window.addEventListener("resize", updateViewport);
 
     return () => window.removeEventListener("resize", updateViewport);
-  }, []);
-
-  useEffect(() => {
-    const handleDocumentClick = (event) => {
-      if (!event.target.closest?.("[data-sales-dropdown]")) {
-        setSalesMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("click", handleDocumentClick);
-    return () => document.removeEventListener("click", handleDocumentClick);
   }, []);
 
   const primary = "#2171B5";
@@ -143,14 +140,23 @@ export function Navbar() {
     { label: "Rentals", to: "/rentals" },
     { label: "Land", to: "/land" },
     { label: "Apartment Finder", to: "/contact", badge: "New" },
-    { label: "Our Services", to: "/our-services" },
     { label: "Invest", to: "/invest" },
-    { label: "Home Loans", to: "/home-loans" },
-    { label: "Market Insights", to: "/market-insights" },
     { label: "Wanted", to: "/wanted" },
-    { label: "Find Agent", to: "/find-agent" },
     { label: "More", to: "/more" },
   ];
+
+  const navItemOrder = {
+    Rentals: 1,
+    Land: 2,
+    "Apartment Finder": 3,
+    "Our Services": 4,
+    Invest: 5,
+    "Home Loans": 6,
+    "Market Insights": 7,
+    Wanted: 8,
+    "Find Agent": 9,
+    More: 10,
+  };
 
   const megaMenuColumns = useMemo(
     () => [
@@ -204,6 +210,102 @@ export function Navbar() {
     []
   );
 
+  const ourServicesMenuColumns = useMemo(
+    () => [
+      {
+        title: "Buyer & Seller Assistance",
+        items: [
+          { label: "Property Valuations", to: "/our-services/property-valuations" },
+          { label: "Legal Assistance", to: "/our-services/legal-assistance" },
+          { label: "Document preparation & submission", to: "/our-services/document-preparation" },
+          { label: "Mortgage Advice", to: "/our-services/mortgage-advice" },
+          { label: "Fees & taxes payment", to: "/our-services/fees-taxes-payment" },
+          { label: "Personal Assistance", to: "/our-services/personal-assistance" },
+          { label: "Other Servicess", to: "/our-services/other-services" },
+        ],
+      },
+      {
+        title: "Market Research and Advisory",
+        items: [
+          { label: "Advisory", to: "/our-services/advisory" },
+          { label: "Property Buying Advisory", to: "/our-services/property-buying-advisory" },
+          { label: "Business Buying or Selling Advisory", to: "/our-services/business-advisory" },
+          { label: "Property Buying Assistance for Foreigners", to: "/our-services/foreigners-buying-assistance" },
+          { label: "Advisory on Investing in Sri Lanka", to: "/our-services/investing-in-sri-lanka" },
+        ],
+      },
+      {
+        title: "Home Needs",
+        items: [
+          { label: "House Construction", to: "/our-services/house-construction" },
+          { label: "Packers & Movers", to: "/our-services/packers-movers" },
+          { label: "Solar Panels", to: "/our-services/solar-panels" },
+        ],
+      },
+    ],
+    []
+  );
+
+  const homeLoansMenuItems = useMemo(
+    () => [
+      {
+        label: "Home Loan Rates",
+        to: "/home-loans/rates",
+        description: "Compare current bank offers and headline rates.",
+      },
+      {
+        label: "Home Loan Calculator",
+        to: "/home-loans/calculator",
+        description: "Estimate monthly repayments before you apply.",
+      },
+      {
+        label: "Home Loan Comparison",
+        to: "/home-loans/comparison",
+        description: "Compare banks by rate, tenure, fees, and features.",
+      },
+    ],
+    []
+  );
+
+  const marketInsightsMenuColumns = useMemo(
+    () => [
+      {
+        title: "Insights and Guides",
+        items: [
+          { label: "Market Insights", to: "/market-insights" },
+          { label: "Price Meter", to: "/sales/house-price-index" },
+          { label: "Property Buying Guide", to: "/features/property-buying-for-foreigners.php" },
+          { label: "Foreign Buyers' Guide", to: "/features/property-buying-for-foreigners.php" },
+          { label: "Capital Gains Tax", to: "/features/property-buying-for-foreigners.php#taxes" },
+        ],
+      },
+      {
+        title: "Price Indices",
+        items: [
+          { label: "Sri Lanka House Price Index", to: "/sales/house-price-index" },
+          { label: "Sri Lanka Land Price Index", to: "/sales/land-price-index" },
+          { label: "Membership Benefits", to: "/our-services" },
+          { label: "Market Outlook Report", to: "/market-insights" },
+          { label: "News & Guides", to: "/more" },
+        ],
+      },
+    ],
+    []
+  );
+
+  const agentMenuItems = useMemo(
+    () => [
+      { label: "Find Agents / Agents Directory", to: "/find-agent" },
+      { label: "View All Agents / Agents Directory", to: "/agents-directory" },
+      { label: "Become an Agent", to: "/register" },
+      { label: "Residential sales", to: "/sales" },
+      { label: "Letting Agents", to: "/rentals" },
+      { label: "Commercial property agents", to: "/commercial" },
+      { label: "Land Sales", to: "/land" },
+    ],
+    []
+  );
+
   const searchWrapper = { position: "relative" };
 
   const searchInputStyle = {
@@ -242,8 +344,8 @@ export function Navbar() {
  const postAdStyle = {
    ...buttonStyle,
    backgroundColor: primary,
-   color: "white",
- };
+    color: "white",
+  };
 
   const topLinkStyle = {
     fontSize: "14px",
@@ -305,9 +407,6 @@ export function Navbar() {
             <button type="button" style={topLinkStyle} onClick={() => navigate("/help")}>
               Help
             </button>
-            <button type="button" style={postAdStyle} onClick={() => navigate("/post-ad")}>
-              Post Your Ad
-            </button>
           </div>
         </div>
       </div>
@@ -322,39 +421,27 @@ export function Navbar() {
       >
         {/* Desktop Menu */}
         <div style={{ ...menuStyle, display: isMobile ? "none" : "flex", flex: 1 }}>
-          <div style={{ position: "relative" }} data-sales-dropdown>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
-              <button
-                type="button"
-                style={{ ...menuLinkStyle, paddingRight: "0", fontSize: "15px" }}
-                onClick={() => {
-                  setSalesMenuOpen(false);
-                  navigate("/sales");
-                }}
-              >
-                Sales
-              </button>
-
-              <button
-                type="button"
-                aria-label="Open sales dropdown"
-                style={{
-                  ...menuLinkStyle,
-                  padding: "12px 2px",
-                  width: "30px",
-                  justifyContent: "center",
-                }}
-                onClick={() => setSalesMenuOpen((value) => !value)}
-              >
-                <ChevronDown style={{ width: "15px", height: "15px" }} />
-              </button>
-            </div>
+          <div
+            style={{ position: "relative" }}
+            onMouseEnter={() => setSalesMenuOpen(true)}
+            onMouseLeave={() => setSalesMenuOpen(false)}
+          >
+            <button
+              type="button"
+              style={{ ...menuLinkStyle, fontSize: "15px" }}
+              onClick={() => {
+                setSalesMenuOpen(false);
+                navigate("/sales");
+              }}
+            >
+              Sales
+            </button>
 
             {salesMenuOpen && (
               <div
                 style={{
                   position: "absolute",
-                  top: "calc(100% + 12px)",
+                  top: "100%",
                   left: 0,
                   minWidth: "1080px",
                   backgroundColor: "#ffffff",
@@ -422,11 +509,327 @@ export function Navbar() {
             )}
           </div>
 
+          <div
+            style={{ position: "relative", order: navItemOrder["Our Services"] }}
+            onMouseEnter={() => setOurServicesMenuOpen(true)}
+            onMouseLeave={() => setOurServicesMenuOpen(false)}
+          >
+            <button
+              type="button"
+              style={{ ...menuLinkStyle, fontSize: "15px" }}
+              onClick={() => {
+                setOurServicesMenuOpen(false);
+                navigate("/our-services");
+              }}
+            >
+              Our Services
+            </button>
+
+            {ourServicesMenuOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "100%",
+                  left: 0,
+                  minWidth: "820px",
+                  backgroundColor: "#ffffff",
+                  color: "#0f172a",
+                  borderRadius: "20px",
+                  boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
+                  padding: "22px 24px 24px",
+                  display: "grid",
+                  gridTemplateColumns: "1.2fr 1.2fr 0.8fr",
+                  gap: "22px",
+                  border: "1px solid rgba(148, 163, 184, 0.18)",
+                }}
+              >
+                {ourServicesMenuColumns.map((column) => (
+                  <div key={column.title}>
+                    <div
+                      style={{
+                        fontSize: "11px",
+                        fontWeight: "800",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.16em",
+                        color: "#0f172a",
+                        paddingBottom: "8px",
+                        marginBottom: "12px",
+                        borderBottom: "1px solid #d7dee8",
+                      }}
+                    >
+                      {column.title}
+                    </div>
+
+                    <div style={{ display: "grid", gap: "10px" }}>
+                      {column.items.map((item) => (
+                        <button
+                          key={item.label}
+                          type="button"
+                          onClick={() => {
+                            setOurServicesMenuOpen(false);
+                            navigate(item.to);
+                          }}
+                          style={{
+                            textAlign: "left",
+                            border: "none",
+                            background: "transparent",
+                            padding: "0",
+                            fontSize: "14px",
+                            lineHeight: "1.35",
+                            color: "#334155",
+                            cursor: "pointer",
+                            fontWeight: 500,
+                          }}
+                          onMouseEnter={(event) => {
+                            event.currentTarget.style.color = primary;
+                          }}
+                          onMouseLeave={(event) => {
+                            event.currentTarget.style.color = "#334155";
+                          }}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div
+            style={{ position: "relative", order: navItemOrder["Home Loans"] }}
+            onMouseEnter={() => setHomeLoansMenuOpen(true)}
+            onMouseLeave={() => setHomeLoansMenuOpen(false)}
+          >
+            <button
+              type="button"
+              style={{ ...menuLinkStyle, fontSize: "15px" }}
+              onClick={() => {
+                setHomeLoansMenuOpen(false);
+                navigate("/home-loans");
+              }}
+            >
+              Home Loans
+            </button>
+
+            {homeLoansMenuOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "100%",
+                  left: 0,
+                  width: "360px",
+                  backgroundColor: "#ffffff",
+                  color: "#0f172a",
+                  borderRadius: "18px",
+                  boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
+                  padding: "16px",
+                  display: "grid",
+                  gap: "10px",
+                  border: "1px solid rgba(148, 163, 184, 0.18)",
+                }}
+              >
+                {homeLoansMenuItems.map((item) => (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() => {
+                      setHomeLoansMenuOpen(false);
+                      navigate(item.to);
+                    }}
+                    style={{
+                      textAlign: "left",
+                      border: "none",
+                      background: "transparent",
+                      borderRadius: "12px",
+                      padding: "10px 12px",
+                      color: "#334155",
+                      cursor: "pointer",
+                    }}
+                    onMouseEnter={(event) => {
+                      event.currentTarget.style.backgroundColor = "#f1f5f9";
+                      event.currentTarget.style.color = primary;
+                    }}
+                    onMouseLeave={(event) => {
+                      event.currentTarget.style.backgroundColor = "transparent";
+                      event.currentTarget.style.color = "#334155";
+                    }}
+                  >
+                    <span style={{ display: "block", fontSize: "14px", fontWeight: 800 }}>{item.label}</span>
+                    <span style={{ display: "block", marginTop: "4px", fontSize: "12px", lineHeight: 1.4, color: "#64748b" }}>
+                      {item.description}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div
+            style={{ position: "relative", order: navItemOrder["Market Insights"] }}
+            onMouseEnter={() => setMarketInsightsMenuOpen(true)}
+            onMouseLeave={() => setMarketInsightsMenuOpen(false)}
+          >
+            <button
+              type="button"
+              style={{ ...menuLinkStyle, fontSize: "15px" }}
+              onClick={() => {
+                setMarketInsightsMenuOpen(false);
+                navigate("/market-insights");
+              }}
+            >
+              Market Insights
+            </button>
+
+            {marketInsightsMenuOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "100%",
+                  left: 0,
+                  minWidth: "760px",
+                  backgroundColor: "#ffffff",
+                  color: "#0f172a",
+                  borderRadius: "20px",
+                  boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
+                  padding: "22px 24px 24px",
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "22px",
+                  border: "1px solid rgba(148, 163, 184, 0.18)",
+                }}
+              >
+                {marketInsightsMenuColumns.map((column) => (
+                  <div key={column.title}>
+                    <div
+                      style={{
+                        fontSize: "11px",
+                        fontWeight: "800",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.16em",
+                        color: "#0f172a",
+                        paddingBottom: "8px",
+                        marginBottom: "12px",
+                        borderBottom: "1px solid #d7dee8",
+                      }}
+                    >
+                      {column.title}
+                    </div>
+
+                    <div style={{ display: "grid", gap: "10px" }}>
+                      {column.items.map((item) => (
+                        <button
+                          key={item.label}
+                          type="button"
+                          onClick={() => {
+                            setMarketInsightsMenuOpen(false);
+                            navigate(item.to);
+                          }}
+                          style={{
+                            textAlign: "left",
+                            border: "none",
+                            background: "transparent",
+                            padding: "0",
+                            fontSize: "14px",
+                            lineHeight: "1.35",
+                            color: "#334155",
+                            cursor: "pointer",
+                            fontWeight: 500,
+                          }}
+                          onMouseEnter={(event) => {
+                            event.currentTarget.style.color = primary;
+                          }}
+                          onMouseLeave={(event) => {
+                            event.currentTarget.style.color = "#334155";
+                          }}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div
+            style={{ position: "relative", order: navItemOrder["Find Agent"] }}
+            onMouseEnter={() => setAgentMenuOpen(true)}
+            onMouseLeave={() => setAgentMenuOpen(false)}
+          >
+            <button
+              type="button"
+              style={{ ...menuLinkStyle, fontSize: "15px" }}
+              onClick={() => {
+                setAgentMenuOpen(false);
+                navigate("/find-agent");
+              }}
+            >
+              Find Agent
+            </button>
+
+            {agentMenuOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "100%",
+                  left: 0,
+                  width: "420px",
+                  backgroundColor: "#ffffff",
+                  color: "#0f172a",
+                  borderRadius: "18px",
+                  boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
+                  padding: "16px",
+                  display: "grid",
+                  gap: "10px",
+                  border: "1px solid rgba(148, 163, 184, 0.18)",
+                }}
+              >
+                {agentMenuItems.map((item) => (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() => {
+                      setAgentMenuOpen(false);
+                      navigate(item.to);
+                    }}
+                    style={{
+                      textAlign: "left",
+                      border: "none",
+                      background: "transparent",
+                      borderRadius: "12px",
+                      padding: "10px 12px",
+                      color: "#334155",
+                      cursor: "pointer",
+                    }}
+                    onMouseEnter={(event) => {
+                      event.currentTarget.style.backgroundColor = "#f1f5f9";
+                      event.currentTarget.style.color = primary;
+                    }}
+                    onMouseLeave={(event) => {
+                      event.currentTarget.style.backgroundColor = "transparent";
+                      event.currentTarget.style.color = "#334155";
+                    }}
+                  >
+                    <span style={{ display: "block", fontSize: "14px", fontWeight: 800 }}>{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
           {topLinks.map((item) => (
-            <button key={item.label} type="button" style={desktopLinkStyle} onClick={() => navigate(item.to)}>
+            <button
+              key={item.label}
+              type="button"
+              style={{ ...desktopLinkStyle, order: navItemOrder[item.label] }}
+              onClick={() => navigate(item.to)}
+            >
               {item.label}
               {item.badge ? (
-                <span style={{ marginLeft: "6px", backgroundColor: "#fb923c", color: "#111827", borderRadius: "999px", padding: "2px 8px", fontSize: "10px", fontWeight: 700 }}>
+                <span style={{ marginLeft: "6px", backgroundColor: "#d9e8f6", color: "#08306B", borderRadius: "999px", padding: "2px 8px", fontSize: "10px", fontWeight: 700 }}>
                   {item.badge}
                 </span>
               ) : null}
@@ -566,11 +969,192 @@ export function Navbar() {
             </div>
           )}
 
+          <div style={{ display: "flex", gap: "8px", alignItems: "center", order: navItemOrder["Our Services"] }}>
+            <button
+              type="button"
+              style={{ ...mobileLinkStyle, flex: 1 }}
+              onClick={() => {
+                navigate("/our-services");
+                setMobileMenuOpen(false);
+              }}
+            >
+              Our Services
+            </button>
+            <button
+              type="button"
+              aria-label="Open our services dropdown"
+              style={{
+                ...mobileLinkStyle,
+                width: "48px",
+                padding: "12px 0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onClick={() => setMobileOurServicesOpen((value) => !value)}
+            >
+              <ChevronDown style={{ width: "16px", height: "16px" }} />
+            </button>
+          </div>
+          {mobileOurServicesOpen && (
+            <div style={{ display: "grid", gap: "8px", paddingLeft: "8px", order: navItemOrder["Our Services"] }}>
+              {ourServicesMenuColumns.flatMap((column) => column.items).map((item) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  style={mobileSubLinkStyle}
+                  onClick={() => {
+                    navigate(item.to);
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div style={{ display: "flex", gap: "8px", alignItems: "center", order: navItemOrder["Home Loans"] }}>
+            <button
+              type="button"
+              style={{ ...mobileLinkStyle, flex: 1 }}
+              onClick={() => {
+                navigate("/home-loans");
+                setMobileMenuOpen(false);
+              }}
+            >
+              Home Loans
+            </button>
+            <button
+              type="button"
+              aria-label="Open home loans dropdown"
+              style={{
+                ...mobileLinkStyle,
+                width: "48px",
+                padding: "12px 0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onClick={() => setMobileHomeLoansOpen((value) => !value)}
+            >
+              <ChevronDown style={{ width: "16px", height: "16px" }} />
+            </button>
+          </div>
+          {mobileHomeLoansOpen && (
+            <div style={{ display: "grid", gap: "8px", paddingLeft: "8px", order: navItemOrder["Home Loans"] }}>
+              {homeLoansMenuItems.map((item) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  style={mobileSubLinkStyle}
+                  onClick={() => {
+                    navigate(item.to);
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div style={{ display: "flex", gap: "8px", alignItems: "center", order: navItemOrder["Market Insights"] }}>
+            <button
+              type="button"
+              style={{ ...mobileLinkStyle, flex: 1 }}
+              onClick={() => {
+                navigate("/market-insights");
+                setMobileMenuOpen(false);
+              }}
+            >
+              Market Insights
+            </button>
+            <button
+              type="button"
+              aria-label="Open market insights dropdown"
+              style={{
+                ...mobileLinkStyle,
+                width: "48px",
+                padding: "12px 0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onClick={() => setMobileMarketInsightsOpen((value) => !value)}
+            >
+              <ChevronDown style={{ width: "16px", height: "16px" }} />
+            </button>
+          </div>
+          {mobileMarketInsightsOpen && (
+            <div style={{ display: "grid", gap: "8px", paddingLeft: "8px", order: navItemOrder["Market Insights"] }}>
+              {marketInsightsMenuColumns.flatMap((column) => column.items).map((item) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  style={mobileSubLinkStyle}
+                  onClick={() => {
+                    navigate(item.to);
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div style={{ display: "flex", gap: "8px", alignItems: "center", order: navItemOrder["Find Agent"] }}>
+            <button
+              type="button"
+              style={{ ...mobileLinkStyle, flex: 1 }}
+              onClick={() => {
+                navigate("/find-agent");
+                setMobileMenuOpen(false);
+              }}
+            >
+              Find Agent
+            </button>
+            <button
+              type="button"
+              aria-label="Open find agent dropdown"
+              style={{
+                ...mobileLinkStyle,
+                width: "48px",
+                padding: "12px 0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onClick={() => setMobileAgentOpen((value) => !value)}
+            >
+              <ChevronDown style={{ width: "16px", height: "16px" }} />
+            </button>
+          </div>
+          {mobileAgentOpen && (
+            <div style={{ display: "grid", gap: "8px", paddingLeft: "8px", order: navItemOrder["Find Agent"] }}>
+              {agentMenuItems.map((item) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  style={mobileSubLinkStyle}
+                  onClick={() => {
+                    navigate(item.to);
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          )}
+
           {topLinks.map((item) => (
+            item.label === "Find Agent" || item.label === "Market Insights" ? null : (
             <button
               key={item.label}
               type="button"
-              style={mobileLinkStyle}
+              style={{ ...mobileLinkStyle, order: navItemOrder[item.label] }}
               onClick={() => {
                 navigate(item.to);
                 setMobileMenuOpen(false);
@@ -578,6 +1162,7 @@ export function Navbar() {
             >
               {item.label}
             </button>
+            )
           ))}
 
           <div style={{ display: "grid", gap: "10px", gridTemplateColumns: "1fr 1fr" }}>
@@ -588,10 +1173,6 @@ export function Navbar() {
               Register
             </button>
           </div>
-
-          <button type="button" style={postAdStyle} onClick={() => { navigate("/post-ad"); setMobileMenuOpen(false); }}>
-            Post Your Ad
-          </button>
 
           <button type="button" style={mobileLinkStyle} onClick={() => { navigate("/help"); setMobileMenuOpen(false); }}>
             Help

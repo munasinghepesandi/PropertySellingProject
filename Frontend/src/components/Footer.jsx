@@ -63,7 +63,6 @@ export function Footer() {
           <div>
             <h3>Services</h3>
             <ul>
-              <li><a href="/post-ad">Post Your Ad</a></li>
               <li><a href="/aboutus">About Us</a></li>
               <li><a href="/contact">Contact Us</a></li>
               <li><a href="/faqs">FAQs</a></li>
