@@ -1,20 +1,119 @@
 @import "tailwindcss";
 
+@media (min-width: 1024px) {
+  main section:has(aside input[placeholder="Kandy, Colombo, Galle..."]) {
+    display: block !important;
+  }
+
+  main section:has(aside input[placeholder="Kandy, Colombo, Galle..."]) > aside {
+    position: static !important;
+    margin-bottom: 24px;
+    display: grid !important;
+    grid-template-columns: 1.1fr 1fr 1fr auto;
+    gap: 14px;
+    align-items: end;
+    border-radius: 16px !important;
+    padding: 18px !important;
+  }
+
+  main section:has(aside input[placeholder="Kandy, Colombo, Galle..."]) > aside > :first-child {
+    grid-column: 1 / -1;
+    margin-bottom: 0 !important;
+  }
+
+  main section:has(aside input[placeholder="Kandy, Colombo, Galle..."]) > aside p,
+  main section:has(aside input[placeholder="Kandy, Colombo, Galle..."]) > aside h2 {
+    margin: 0 !important;
+  }
+
+  main section:has(aside input[placeholder="Kandy, Colombo, Galle..."]) > aside .grid:has(button) {
+    display: flex !important;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  main section:has(aside input[placeholder="Kandy, Colombo, Galle..."]) > aside button {
+    min-height: 44px;
+  }
+}
+
+main section:has(aside input[placeholder="Kandy, Colombo, Galle..."]) {
+  display: block !important;
+}
+
+main section:has(aside input[placeholder="Kandy, Colombo, Galle..."]) > aside {
+  display: none !important;
+}
+
+main article:has(img[alt="Property Valuations"]),
+main article:has(img[alt="Legal Assistance"]),
+main article:has(img[alt="Document preparation & submission"]),
+main article:has(img[alt="Mortgage Advice"]),
+main article:has(img[alt="Fees & taxes payment"]),
+main article:has(img[alt="Personal Assistance"]),
+main article:has(img[alt="Moving and home services"]) {
+  border-color: #d9e8f6 !important;
+}
+
+main article:has(img[alt="Property Valuations"]):hover,
+main article:has(img[alt="Legal Assistance"]):hover,
+main article:has(img[alt="Document preparation & submission"]):hover,
+main article:has(img[alt="Mortgage Advice"]):hover,
+main article:has(img[alt="Fees & taxes payment"]):hover,
+main article:has(img[alt="Personal Assistance"]):hover {
+  border-color: rgba(33, 113, 181, 0.5) !important;
+}
+
+main section:has(img[alt="Market research and advisory"]) {
+  background-color: #f8fbff !important;
+}
+
+main section:has(img[alt="Market research and advisory"]) .bg-slate-50,
+main article:has(img[alt="Moving and home services"]) .bg-slate-50 {
+  background-color: #f4f9ff !important;
+}
+
+main section:has(img[alt="Market research and advisory"]) .text-slate-700 {
+  color: #08306b !important;
+}
+
+main form:has(select) {
+  border-color: #d9e8f6 !important;
+}
+
+main .text-emerald-700,
+main .text-orange-500,
+main .text-orange-600,
+main .text-amber-900,
+main .text-amber-950 {
+  color: #08306b !important;
+}
+
+main .bg-emerald-50,
+main .bg-orange-50,
+main .bg-amber-50 {
+  background-color: #f4f9ff !important;
+}
+
+main .border-amber-200,
+main .border-orange-200,
+main .border-emerald-200 {
+  border-color: #d9e8f6 !important;
+}
+
 :root {
   color-scheme: light;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --color-primary-dark: #08306b;
-  --color-primary: #2171b5;
+  font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background:
-    radial-gradient(circle at top right, rgba(33, 113, 181, 0.12), transparent 30%),
-    radial-gradient(circle at bottom left, rgba(8, 48, 107, 0.08), transparent 26%),
-    linear-gradient(180deg, #ffffff 0%, #f5f9ff 100%);
+    radial-gradient(circle at top right, rgba(248, 250, 252, 0.92), transparent 30%),
+    linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
 }
 
 #root {
