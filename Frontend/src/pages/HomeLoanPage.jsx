@@ -81,7 +81,7 @@ const filterChips = [
   { label: 'Low Monthly', value: 'low-monthly' },
 ];
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 
@@ -149,7 +149,7 @@ export default function HomeLoanPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <Navbar />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f] text-white">
+      <section className="relative overflow-hidden bg-linear-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f] text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.18),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.15),transparent_22%),linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0))]" />
         <img
           src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1600&q=80&auto=format&fit=crop"
@@ -176,7 +176,7 @@ export default function HomeLoanPage() {
               </div>
             </div>
 
-            <div className="rounded-[2rem] bg-white/95 p-5 text-slate-900 shadow-2xl backdrop-blur-sm">
+            <div className="rounded-4xl bg-white/95 p-5 text-slate-900 shadow-2xl backdrop-blur-sm">
               <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#2171B5]">Quick Calculator</p>
               <div className="mt-4 grid gap-3">
                 <input value={loanAmount} onChange={(e) => setLoanAmount(e.target.value)} className="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Loan amount (Rs.)" />
@@ -272,7 +272,7 @@ export default function HomeLoanPage() {
               </div>
             </div>
 
-            <button type="button" onClick={handleApplyFilters} className="w-full rounded-xl bg-gradient-to-r from-[#2171B5] to-[#08306B] px-4 py-3 font-bold text-white transition hover:scale-[1.02]">
+            <button type="button" onClick={handleApplyFilters} className="w-full rounded-xl bg-linear-to-r from-[#2171B5] to-[#08306B] px-4 py-3 font-bold text-white transition hover:scale-[1.02]">
               Apply Filters
             </button>
           </div>
@@ -331,7 +331,7 @@ export default function HomeLoanPage() {
                     ))}
                   </div>
 
-                  <button type="button" onClick={(event) => { event.stopPropagation(); setSelectedLoan(loan); }} className="mt-4 w-full rounded-lg bg-gradient-to-r from-[#2171B5] to-[#08306B] px-3 py-2 font-bold text-white transition hover:scale-[1.02]">
+                  <button type="button" onClick={(event) => { event.stopPropagation(); setSelectedLoan(loan); }} className="mt-4 w-full rounded-lg bg-linear-to-r from-[#2171B5] to-[#08306B] px-3 py-2 font-bold text-white transition hover:scale-[1.02]">
                     View Details
                   </button>
                 </div>

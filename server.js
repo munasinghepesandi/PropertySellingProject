@@ -3,30 +3,27 @@ const cors    = require('cors');
 const helmet  = require('helmet');
 const morgan  = require('morgan');
 const path    = require('path');
-const ejsLayouts = require('express-ejs-layouts');
 
 require('dotenv').config();
 
 // ── Route imports ────────────────────────────────────────────
-const authRoutes     = require('./routes/authRoutes');
-const propertyRoutes = require('./routes/propertyRoutes');
-const userRoutes     = require('./routes/userRoutes');
-const inquiryRoutes  = require('./routes/inquiryRoutes');
-const statsRoutes    = require('./routes/statsRoutes');
-const adminRoutes    = require('./routes/adminRoutes');   // ← ADD
+const authRoutes     = require('./authRoutes');
+const propertyRoutes = require('./propertyRoutes');
+const userRoutes     = require('./userRoutes');
+const inquiryRoutes  = require('./inquiryRoutes');
+const statsRoutes    = require('./statsRoutes');
+const adminRoutes    = require('./adminRoutes');
 
 // ── Error middleware ─────────────────────────────────────────
-const { notFound, errorHandler } = require('./middleware/errorMiddleware');
+const { notFound, errorHandler } = require('./errorMiddleware');
 
 const app = express();
 
 
 
 // ── View Engine (EJS) ────────────────────────────────────────
-app.set('view engine', 'ejs');                                 // ← ADD
-app.set('views', path.join(__dirname, 'views'));   
-app.use(ejsLayouts);                  
-app.set('layout', 'admin/layout');            
+app.set('view engine', 'ejs');
+app.set('views', __dirname);
 
 // ── Core Middleware ──────────────────────────────────────────
 app.use(helmet({ contentSecurityPolicy: false }));             // ← CHANGED (false = allow inline styles/scripts)

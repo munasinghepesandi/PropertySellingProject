@@ -1,6 +1,6 @@
 const express = require('express');
 const router  = express.Router();
-const db      = require('../config/db');
+const db      = require('./db');
 
 // ════════════════════════════════════════
 // DASHBOARD   GET /admin
@@ -69,14 +69,14 @@ router.get('/', async (req, res) => {
       return { initials, name:inq.name||'Unknown', message:(inq.message||'').slice(0,60), time:timeAgo };
     });
 
-    res.render('admin/dashboard', {
+    res.render('dashboard', {
       title:'Dashboard Overview', page:'dashboard',
       stats:{ totalProperties, activeListings, totalUsers, inquiries },
       recentProperties, recentInquiries, byDistrict, byType,
     });
   } catch (err) {
     console.error('Dashboard error:', err.message);
-    res.render('admin/dashboard', blank);
+    res.render('dashboard', blank);
   }
 });
 
@@ -119,7 +119,7 @@ router.get('/properties', async (req, res) => {
       createdAt:   p.created_at ? new Date(p.created_at).toLocaleDateString() : '—',
     }));
 
-    res.render('admin/properties', {
+    res.render('properties', {
       title:'Properties', page:'properties',
       properties:fmtProps, districts,
       filters:{ q, type, listing_type, district, status },
@@ -133,7 +133,7 @@ router.get('/properties', async (req, res) => {
 
 router.get('/properties/add', async (req, res) => {
   const [districts] = await db.query('SELECT id, name FROM districts ORDER BY name').catch(()=>[[]]);
-  res.render('admin/add-property', { title:'Add Property', page:'properties', property:null, districts, error:null });
+  res.render('add-property', { title:'Add Property', page:'properties', property:null, districts, error:null });
 });
 
 router.post('/properties/add', async (req, res) => {
@@ -163,7 +163,7 @@ router.get('/properties/:id/edit', async (req, res) => {
     const [[property]] = await db.query('SELECT * FROM properties WHERE id=?', [req.params.id]);
     if (!property) return res.status(404).send('Property not found');
     const [districts] = await db.query('SELECT id, name FROM districts ORDER BY name').catch(()=>[[]]);
-    res.render('admin/add-property', { title:'Edit Property', page:'properties', property, districts, error:null });
+    res.render('add-property', { title:'Edit Property', page:'properties', property, districts, error:null });
   } catch (err) { res.status(500).send('Error: ' + err.message); }
 });
 
@@ -224,7 +224,7 @@ router.get('/inquiries', async (req, res) => {
                createdAt: inq.created_at ? new Date(inq.created_at).toLocaleString() : '—' };
     });
 
-    res.render('admin/inquiries', {
+    res.render('inquiries', {
       title:'Inquiries', page:'inquiries',
       inquiries:fmtInquiries, filters:{ status },
       currentPage:Number(page), totalPages:Math.ceil(total/perPage), perPage,
@@ -278,7 +278,7 @@ router.get('/users', async (req, res) => {
                createdAt: u.created_at ? new Date(u.created_at).toLocaleDateString() : '—' };
     });
 
-    res.render('admin/users', {
+    res.render('users', {
       title:'Users', page:'users',
       users:fmtUsers, filters:{ q, status },
       currentPage:Number(page), totalPages:Math.ceil(total/perPage), perPage,
@@ -334,7 +334,7 @@ router.get('/agents', async (req, res) => {
                createdAt: a.created_at ? new Date(a.created_at).toLocaleDateString() : '—' };
     });
 
-    res.render('admin/agents', {
+    res.render('agents', {
       title:'Agents', page:'agents',
       agents:fmtAgents, filters:{ q, status },
       stats:{ totalAgents, activeAgents, suspended },
@@ -372,7 +372,7 @@ router.get('/districts', async (req, res) => {
       LEFT JOIN properties p ON p.district_id = d.id
       GROUP  BY d.id ORDER BY d.name
     `);
-    res.render('admin/districts', { title:'Districts', page:'districts', districts });
+    res.render('districts', { title:'Districts', page:'districts', districts });
   } catch (err) {
     res.status(500).send('Districts error: ' + err.message);
   }
@@ -436,7 +436,7 @@ router.get('/featured', async (req, res) => {
       WHERE  p.status='active' ORDER BY p.title
     `);
 
-    res.render('admin/featured', {
+    res.render('featured', {
       title:'Featured Ads', page:'featured',
       featuredListings:fmtFeatured,
       featuredStats:{ active, expiringSoon, impressions },
@@ -513,7 +513,7 @@ router.get('/reports', async (req, res) => {
       ...r, responseRate: r.total ? Math.round(r.resolved/r.total*100) : 0,
     }));
 
-    res.render('admin/reports', {
+    res.render('reports', {
       title:'Reports', page:'reports',
       report:{ totalRevenue:0, revenueGrowth:0, newListings, newUsers, conversionRate, byDistrict, byType, monthlyInquiries },
     });
@@ -562,7 +562,7 @@ router.get('/settings', async (req, res) => {
     if (row) admin = row;
   } catch(e) {}
 
-  res.render('admin/settings', {
+  res.render('settings', {
     title:'Settings', page:'settings',
     settings, admin, success: req.query.saved==='1',
   });

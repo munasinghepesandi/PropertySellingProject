@@ -1,4 +1,4 @@
-const pool = require('../config/db');
+const pool = require('./db');
 
 // ── POST /api/inquiries ──────────────────────────────────────
 const createInquiry = async (req, res) => {

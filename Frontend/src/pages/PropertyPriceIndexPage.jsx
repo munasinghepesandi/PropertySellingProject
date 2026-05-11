@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Navbar } from '../components/Navbar'
 import { Footer } from '../components/Footer'
 import {
-  BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+  BarChart, Bar,
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts'
 import { TrendingUp } from 'lucide-react'
 
@@ -68,11 +68,6 @@ export default function PropertyPriceIndexPage() {
     { type: 'Coconut', price: 7.62, unit: 'per acre' }
   ]
 
-  const formatPrice = (value) => {
-    if (value >= 1000) return `Rs.${(value / 1000).toFixed(1)}M`
-    return `Rs.${value.toFixed(2)}M`
-  }
-
   const formatLandPrice = (value) => {
     if (value >= 1) return `Rs.${value.toFixed(2)}M`
     return `Rs.${(value * 1000).toFixed(0)}K`
@@ -82,7 +77,7 @@ export default function PropertyPriceIndexPage() {
     <div className="min-h-screen bg-slate-50">
       <Navbar />
 
-      <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12">
+      <div className="bg-linear-to-r from-blue-900 to-blue-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center gap-3 mb-2">
             <TrendingUp size={32} />
@@ -167,7 +162,7 @@ export default function PropertyPriceIndexPage() {
               {/* Summary Cards */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
                 {overallPricesData.map((item, idx) => (
-                  <div key={idx} className="bg-gradient-to-br from-blue-50 to-slate-50 p-6 rounded-lg border border-blue-200">
+                  <div key={idx} className="bg-linear-to-br from-blue-50 to-slate-50 p-6 rounded-lg border border-blue-200">
                     <h3 className="font-semibold text-slate-900 mb-2">{item.name}</h3>
                     <p className="text-3xl font-bold text-blue-600 mb-2">Rs.{item.price.toFixed(2)}M</p>
                     <p className="text-sm text-slate-600">
@@ -231,7 +226,7 @@ export default function PropertyPriceIndexPage() {
               {/* Regional Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mt-8">
                 {regionalHousesData.map((item, idx) => (
-                  <div key={idx} className="bg-gradient-to-br from-blue-50 to-slate-50 p-4 rounded-lg border border-blue-200">
+                  <div key={idx} className="bg-linear-to-br from-blue-50 to-slate-50 p-4 rounded-lg border border-blue-200">
                     <p className="text-sm font-medium text-slate-600 mb-1">{item.region}</p>
                     <p className="text-2xl font-bold text-blue-600">Rs.{item.price.toFixed(2)}M</p>
                   </div>
@@ -285,7 +280,7 @@ export default function PropertyPriceIndexPage() {
               {/* Land Price Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
                 {landPricesData.slice(0, 8).map((item, idx) => (
-                  <div key={idx} className="bg-gradient-to-br from-teal-50 to-slate-50 p-4 rounded-lg border border-teal-200">
+                  <div key={idx} className="bg-linear-to-br from-teal-50 to-slate-50 p-4 rounded-lg border border-teal-200">
                     <p className="text-sm font-medium text-slate-600 mb-1">{item.region}</p>
                     <p className="text-lg font-bold text-teal-600">{formatLandPrice(item.price)}</p>
                     <p className="text-xs text-slate-500 mt-1">per perch</p>
@@ -351,7 +346,7 @@ export default function PropertyPriceIndexPage() {
               {/* Rental Summary Cards */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
                 {rentalPricesData.map((item, idx) => (
-                  <div key={idx} className="bg-gradient-to-br from-indigo-50 to-slate-50 p-6 rounded-lg border border-indigo-200">
+                  <div key={idx} className="bg-linear-to-br from-indigo-50 to-slate-50 p-6 rounded-lg border border-indigo-200">
                     <p className="text-sm font-medium text-slate-600 mb-2">{item.region}</p>
                     <p className="text-3xl font-bold text-indigo-600">Rs.{item.price}K</p>
                     <p className="text-xs text-slate-500 mt-2">per month</p>
