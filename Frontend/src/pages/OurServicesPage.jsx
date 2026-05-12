@@ -2,6 +2,10 @@ import React from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
+import BusinessAdvisoryPage from "./BusinessAdvisoryPage";
+import ForeignersGuidePage from "./ForeignersGuidePage";
+import SolarPanelsPage from "./SolarPanelsPage";
+import MarketInsightsPage from "./MarketInsightsPage";
 import {
   ArrowRight,
   BadgeDollarSign,
@@ -132,6 +136,13 @@ const otherServices = [
     link: "/our-services",
   },
   {
+    title: "Solar Panels",
+    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80&auto=format&fit=crop",
+    description:
+      "Go green with solar services - compare solar panel systems, trusted installers, and provider options for your home or business.",
+    link: "/our-services/solar-panels",
+  },
+  {
     title: "Insurance",
     image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80&auto=format&fit=crop",
     description:
@@ -215,388 +226,138 @@ const latestNews = [
   },
 ];
 
+export const inspirationCategories = [
+  "All",
+  "Living Room",
+  "Bathroom",
+  "Bedroom",
+  "Dining Room",
+  "Exterior",
+  "Garden",
+  "Kitchen",
+  "Luxury",
+];
+
+export const inspirationItems = [
+  { title: "Tri-Zen 02 Bedroom Apartment For Rent In Colombo 02", tag: "Living Room", image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Prime Apartment Complex For Sale In Colombo 07", tag: "Exterior", image: "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=1200&q=80&auto=format&fit=crop" },
+  { title: "1 Bedroom Apartment For Sale In Colombo 02", tag: "Bathroom", image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Luxe Furnished Apartment For Rent In Kottawa", tag: "Bedroom", image: "https://images.unsplash.com/photo-1616594039964-3de5bd33685d?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Modern Kitchen Design Ideas For City Homes", tag: "Kitchen", image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Pool-side Exterior Concept For Tropical Villas", tag: "Exterior", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Compact Dining Room Inspiration For Apartments", tag: "Dining Room", image: "https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Green Garden Corner With Natural Stone Pathways", tag: "Garden", image: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Minimal Living Room With Warm Tones", tag: "Living Room", image: "https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Open Kitchen With Island Counter", tag: "Kitchen", image: "https://images.unsplash.com/photo-1600586753151-384129cf4e3e?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Master Bedroom With Wood Accent Wall", tag: "Bedroom", image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Contemporary Bathroom With Glass Shower", tag: "Bathroom", image: "https://images.unsplash.com/photo-1616593969747-4797dc75033e?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Dining Space With Pendant Lighting", tag: "Dining Room", image: "https://images.unsplash.com/photo-1617103996702-96ff29b1c467?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Front Elevation For Urban Family Home", tag: "Exterior", image: "https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Garden Deck With Tropical Planting", tag: "Garden", image: "https://images.unsplash.com/photo-1518156677180-95a2893f3499?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Luxury Penthouse Living Hall", tag: "Luxury", image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Neutral Living Room With Art Wall", tag: "Living Room", image: "https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Monochrome Kitchen With Premium Finishes", tag: "Kitchen", image: "https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Guest Bedroom With Balcony Access", tag: "Bedroom", image: "https://images.unsplash.com/photo-1617104551722-3b2d51366458?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Small Bathroom Layout Ideas", tag: "Bathroom", image: "https://images.unsplash.com/photo-1564540574859-0dfb63985939?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Dining Nook For Compact Apartments", tag: "Dining Room", image: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Duplex Exterior With Vertical Fins", tag: "Exterior", image: "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Backyard Seating With Night Lights", tag: "Garden", image: "https://images.unsplash.com/photo-1472224371017-08207f84aaae?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Luxury Villa Lounge Interior", tag: "Luxury", image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Cozy Living Room For First Home Buyers", tag: "Living Room", image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Scandinavian Kitchen Style", tag: "Kitchen", image: "https://images.unsplash.com/photo-1600566752229-250ed79470f8?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Bedroom Storage Design For Small Spaces", tag: "Bedroom", image: "https://images.unsplash.com/photo-1617104551722-3b2d51366458?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Spa-style Bathroom With Stone Texture", tag: "Bathroom", image: "https://images.unsplash.com/photo-1616593969747-4797dc75033e?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Elegant Dining Area For Family Gatherings", tag: "Dining Room", image: "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Modern Facade With Glass Balcony", tag: "Exterior", image: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Courtyard Garden For Villa Homes", tag: "Garden", image: "https://images.unsplash.com/photo-1598902108854-10e335adac99?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Luxury Master Suite With Lounge", tag: "Luxury", image: "https://images.unsplash.com/photo-1600607687644-c7f34f8d9d9f?w=1200&q=80&auto=format&fit=crop" },
+  { title: "TV Feature Wall Living Room Trends", tag: "Living Room", image: "https://images.unsplash.com/photo-1493666438817-866a91353ca9?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Kitchen Storage Ideas For Apartments", tag: "Kitchen", image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Premium Bedroom Lighting Concepts", tag: "Bedroom", image: "https://images.unsplash.com/photo-1616593969747-4797dc75033e?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Compact Bathroom Vanity Designs", tag: "Bathroom", image: "https://images.unsplash.com/photo-1629079447777-1e605162dc8d?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Dining Layout For Open Plan Homes", tag: "Dining Room", image: "https://images.unsplash.com/photo-1616137422495-1e9e46e2aa77?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Luxury Residence Entrance Design", tag: "Exterior", image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Terrace Garden For Urban Living", tag: "Garden", image: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=1200&q=80&auto=format&fit=crop" },
+  { title: "High-end Living And Dining Combo", tag: "Luxury", image: "https://images.unsplash.com/photo-1617098474202-0d0d7f60a9d7?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Family Living Room With Natural Light", tag: "Living Room", image: "https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Two-tone Kitchen Cabinet Inspiration", tag: "Kitchen", image: "https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Soft-tone Bedroom With Timber Flooring", tag: "Bedroom", image: "https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Minimal Bathroom For Studio Apartments", tag: "Bathroom", image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Classic Dining Room With Wooden Table", tag: "Dining Room", image: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Contemporary Exterior With Clean Lines", tag: "Exterior", image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Landscape Garden Around Pool", tag: "Garden", image: "https://images.unsplash.com/photo-1599619351208-3e6c839d6828?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Luxury Penthouse Bedroom View", tag: "Luxury", image: "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Modern Living Room Ceiling Design", tag: "Living Room", image: "https://images.unsplash.com/photo-1560185127-6a8c7f6f5f0b?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Kitchen Backsplash And Island Concepts", tag: "Kitchen", image: "https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Kids Bedroom Interior Inspiration", tag: "Bedroom", image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Marble Bathroom With Gold Fixtures", tag: "Bathroom", image: "https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Dining Room Styling With Green Accents", tag: "Dining Room", image: "https://images.unsplash.com/photo-1600488994023-6f4748e66f96?w=1200&q=80&auto=format&fit=crop" },
+  { title: "Luxury Courtyard And Facade Lighting", tag: "Luxury", image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80&auto=format&fit=crop" },
+];
+
 function AdvisoryPage() {
+  const [activeInspirationCategory, setActiveInspirationCategory] = React.useState("All");
+  const visibleInspirationItems =
+    activeInspirationCategory === "All"
+      ? inspirationItems
+      : inspirationItems.filter((item) => item.tag === activeInspirationCategory);
+
   return (
     <div className="min-h-screen bg-[#f4f7fb] text-slate-900">
       <Navbar />
 
-      <section className="relative overflow-hidden text-white">
-        <img
-          src="https://images.unsplash.com/photo-1568605114967-8130f3a36994"
-          alt="Colombo skyline"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/55" />
-        <div className="absolute inset-x-0 top-0 h-2 bg-[#2171B5]" />
-
-        <div className="relative mx-auto flex min-h-[470px] max-w-7xl flex-col justify-center px-5 py-16 md:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-black uppercase tracking-[0.28em] text-white/90">Market Insights</p>
-            <h1 className="mt-4 text-5xl font-black tracking-[-0.03em] md:text-6xl lg:text-7xl">
-              Real Estate Market
-              <br />
-              Insights
-            </h1>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-white/95 md:text-lg">
-              Get all the latest property market insights in Sri Lanka. Estimate your potential ROI, find the best locations to settle in, evaluate how your price quotation fairs through our property price indicator and more. Navigate the property market in ease with us.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button className="inline-flex items-center gap-2 rounded-xl bg-[#2171B5] px-5 py-3 font-black text-white transition hover:shadow-lg hover:shadow-[#2171B5]/20">
-                Download Report
-                <Download size={18} />
+      <section className="mx-auto w-full max-w-7xl px-5 pb-14 pt-8 md:px-8">
+        <div className="bg-white px-1 py-2 md:px-2">
+          <div className="flex gap-3 overflow-x-auto pb-3">
+            {inspirationCategories.map((category) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setActiveInspirationCategory(category)}
+                className={`whitespace-nowrap rounded-full border px-6 py-2 text-sm font-bold transition ${
+                  activeInspirationCategory === category
+                    ? "border-[#2171B5] bg-[#2171B5] text-white"
+                    : "border-[#2171B5] bg-white text-[#2171B5] hover:bg-[#eff6fd]"
+                }`}
+              >
+                {category}
               </button>
-              <button className="inline-flex items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-5 py-3 font-black text-white transition hover:bg-white/20">
-                Explore Insights
-                <ArrowRight size={18} />
-              </button>
-            </div>
-          </div>
-
-          <div className="mt-10 w-full max-w-5xl rounded-none bg-black/25 px-4 py-4 backdrop-blur-[2px] md:px-6">
-            <div className="grid gap-4 md:grid-cols-3">
-              {advisoryHighlights.map((item) => (
-                <div key={item} className="flex items-start gap-2 text-sm font-semibold leading-6 text-white">
-                  <span className="mt-0.5 text-base text-blue-200">☑</span>
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-          <div className="rounded-[2rem] border border-[#d9e8f6] bg-white p-6 shadow-[0_18px_45px_rgba(8,48,107,0.06)] md:p-8">
-            <div className="flex items-center gap-3">
-              <div className="rounded-2xl bg-[#eff6fd] p-3 text-[#2171B5]">
-                <BarChart3 size={24} />
-              </div>
-              <div>
-                <p className="text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Report</p>
-                <h2 className="mt-1 text-3xl font-black tracking-[-0.03em] text-slate-900">
-                  Sri Lanka Real Estate Market Outlook 2026
-                </h2>
-              </div>
-            </div>
-
-            <p className="mt-5 text-sm leading-7 text-slate-600 md:text-base">
-              The ‘Market Outlook Report 2026’ published by the research team at LankaPropertyWeb (LPW) contains a complete analysis of the residential, commercial and land sales market analysis and also an outlook for 2026.
-            </p>
-
-            <ul className="mt-6 space-y-3">
-              {reportPoints.map((point) => (
-                <li key={point} className="flex gap-3 text-sm leading-6 text-slate-700 md:text-base">
-                  <span className="mt-1.5 h-2.5 w-2.5 rounded-full bg-[#2171B5]" />
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button className="rounded-xl bg-gradient-to-r from-[#2171B5] to-[#08306B] px-5 py-3 font-black text-white transition hover:shadow-lg hover:shadow-[#08306B]/20">
-                View Full Report
-              </button>
-              <button className="rounded-xl border border-[#2171B5] bg-white px-5 py-3 font-black text-[#2171B5] transition hover:bg-[#eff6fd]">
-                Request Analysis
-              </button>
-            </div>
-          </div>
-
-          <div className="overflow-hidden rounded-[2rem] border border-[#d9e8f6] bg-white shadow-[0_18px_45px_rgba(8,48,107,0.06)]">
-            <img
-              src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?w=1400&q=80&auto=format&fit=crop"
-              alt="Market report cover"
-              className="h-72 w-full object-cover"
-            />
-            <div className="p-6 md:p-8">
-              <div className="grid gap-4 sm:grid-cols-3">
-                {advisoryStats.map((stat) => (
-                  <div key={stat.label} className="rounded-2xl border border-[#d9e8f6] bg-[#f8fbff] p-4">
-                    <p className="text-xs font-black uppercase tracking-[0.24em] text-[#2171B5]">{stat.label}</p>
-                    <p className="mt-2 text-2xl font-black text-slate-900">{stat.value}</p>
-                    <p className="mt-2 text-sm leading-6 text-slate-600">{stat.note}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6 rounded-2xl bg-gradient-to-r from-[#2171B5] to-[#08306B] p-5 text-white">
-                <div className="flex items-start gap-3">
-                  <CalendarDays className="mt-0.5" size={22} />
-                  <div>
-                    <p className="text-xs font-black uppercase tracking-[0.24em] text-white/75">Updated weekly</p>
-                    <h3 className="mt-2 text-xl font-black">Stay ahead of the latest pricing changes</h3>
-                    <p className="mt-2 text-sm leading-7 text-white/85">
-                      Use market insights to shortlist areas, track demand, and compare opportunities across Sri Lanka.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-          <div className="mb-8">
-            <div className="h-1 w-16 rounded-full bg-[#2171B5]" />
-            <p className="mt-4 text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Previous Reports</p>
-          </div>
-
-          <div className="grid gap-6 lg:grid-cols-2">
-            <div className="rounded-[2rem] border border-[#d9e8f6] bg-[#f8fbff] p-6 shadow-sm">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-[#2171B5]">House Price Index</p>
-              <h3 className="mt-2 text-2xl font-black text-slate-900">House Price Index</h3>
-              <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl bg-white p-4 shadow-sm">
-                  <p className="text-sm font-bold text-slate-500">Avg. Sri Lanka House Price (4-bed)</p>
-                  <p className="mt-2 text-2xl font-black text-[#08306B]">85.12M</p>
-                </div>
-                <div className="rounded-2xl bg-white p-4 shadow-sm">
-                  <p className="text-sm font-bold text-slate-500">Avg. Sri Lanka Apartment Price (3-bed)</p>
-                  <p className="mt-2 text-2xl font-black text-[#08306B]">93.63M</p>
-                </div>
-              </div>
-
-              <div className="mt-6 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-[#d9e8f6]">
-                <table className="w-full text-left text-sm">
-                  <thead className="bg-[#eff6fd] text-[#2171B5]">
-                    <tr>
-                      <th className="px-4 py-3 font-black">Type</th>
-                      <th className="px-4 py-3 font-black">Average Price</th>
-                      <th className="px-4 py-3 font-black">Change</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {housePriceRows.map((row) => (
-                      <tr key={row[0]} className="border-t border-[#eef4fb]">
-                        <td className="px-4 py-3 font-semibold text-slate-700">{row[0]}</td>
-                        <td className="px-4 py-3 font-semibold text-slate-700">{row[1]}</td>
-                        <td className="px-4 py-3 font-semibold text-slate-700">{row[2]}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="rounded-[2rem] border border-[#d9e8f6] bg-[#f8fbff] p-6 shadow-sm">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-[#2171B5]">Land Price Index</p>
-              <h3 className="mt-2 text-2xl font-black text-slate-900">Land Price Index (Based year 2017)</h3>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {[
-                  "Colombo 1-15",
-                  "Colombo District (Except Colombo 1-15)",
-                  "Gampaha District",
-                  "Kaluthara District",
-                ].map((item) => (
-                  <span key={item} className="rounded-full border border-[#d9e8f6] bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm">
-                    {item}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-6 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-[#d9e8f6]">
-                <table className="w-full text-left text-sm">
-                  <thead className="bg-[#eff6fd] text-[#2171B5]">
-                    <tr>
-                      <th className="px-4 py-3 font-black">Type</th>
-                      <th className="px-4 py-3 font-black">Average Price</th>
-                      <th className="px-4 py-3 font-black">Change</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {landPriceRows.map((row) => (
-                      <tr key={row[0]} className="border-t border-[#eef4fb]">
-                        <td className="px-4 py-3 font-semibold text-slate-700">{row[0]}</td>
-                        <td className="px-4 py-3 font-semibold text-slate-700">{row[1]}</td>
-                        <td className="px-4 py-3 font-semibold text-slate-700">{row[2]}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-        <div className="rounded-[2rem] border border-[#d9e8f6] bg-white p-6 shadow-[0_16px_40px_rgba(8,48,107,0.05)] md:p-8">
-          <p className="text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Get an Instant Price Indication For Your Property</p>
-          <h2 className="mt-3 text-3xl font-black tracking-[-0.03em] text-slate-900">Online Property Price Indicator</h2>
-          <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600">
-            The Online Property Price Indicator (OPPI) is a statistical model that uses information from the properties advertised on Lanka Property Web to provide an indicative estimate of the current market value of a residential or commercial property.
-          </p>
-
-          <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {["Type", "Property Type", "Enter location", "Floor area (sqft)"].map((field) => (
-              <label key={field} className="block rounded-2xl border border-[#d9e8f6] bg-[#f8fbff] p-4">
-                <span className="text-xs font-black uppercase tracking-[0.16em] text-slate-400">{field}</span>
-                <input className="mt-2 w-full bg-transparent text-sm font-semibold text-slate-700 outline-none" placeholder={field === "Type" ? "Residential / Commercial" : `Enter ${field.toLowerCase()}`} />
-              </label>
             ))}
           </div>
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
-            <label className="block rounded-2xl border border-[#d9e8f6] bg-[#f8fbff] p-4">
-              <span className="text-xs font-black uppercase tracking-[0.16em] text-slate-400">Enter total price</span>
-              <input className="mt-2 w-full bg-transparent text-sm font-semibold text-slate-700 outline-none" placeholder="Rs. 0" />
-            </label>
-            <div className="rounded-2xl border border-dashed border-[#c7ddf1] bg-[#eff6fd] p-4 text-sm leading-6 text-slate-600">
-              <p className="text-xs font-black uppercase tracking-[0.16em] text-[#2171B5]">Disclaimer</p>
-              <p className="mt-2">
-                The OPPI is a statistical model and cannot replace a registered valuer. For more accurate prices, view listings or consult a registered valuer.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-          <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="rounded-[2rem] border border-[#d9e8f6] bg-[#f8fbff] p-6 shadow-sm">
-              <p className="text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Want To Get A Full Valuation Done?</p>
-              <h2 className="mt-3 text-3xl font-black tracking-[-0.03em] text-slate-900">Get a certified valuer to carry out a full inspection of your property</h2>
-              <button type="button" className="mt-6 rounded-xl bg-gradient-to-r from-[#2171B5] to-[#08306B] px-6 py-3 text-sm font-black text-white transition hover:shadow-lg hover:shadow-[#08306B]/20">
-                Request Valuation
-              </button>
-            </div>
-            <div className="rounded-[2rem] border border-[#d9e8f6] bg-white p-6 shadow-sm">
-              <p className="text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Find The Best Investment Properties</p>
-              <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                {["Trending Properties", "Top Investment Properties", "ROI", "Properties Less Than Avg"].map((item) => (
-                  <div key={item} className="rounded-2xl border border-[#d9e8f6] bg-[#f8fbff] px-4 py-3 text-sm font-bold text-slate-700">
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+          <p className="mt-4 text-sm font-semibold text-slate-600">Home &gt; Inspiration</p>
+          <h2 className="mt-3 text-2xl font-black tracking-[-0.02em] text-slate-900 md:text-4xl">
+            70053 Home Inspiration &amp; ideas in Sri Lanka
+          </h2>
+          <p className="mt-2 text-sm text-slate-500">Showing {visibleInspirationItems.length} filtered results</p>
 
-      <section className="bg-[#f8fbff]">
-        <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-          <div className="mb-6">
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Compare The Best Home Loans</p>
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.03em] text-slate-900">Compare bank offers and interest rates</h2>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {[
-              ["Seylan Bank", "Seylan Siri Niwasa", "10.5% Upwards Fixed - 5 Years"],
-              ["Sampath Bank", "Sevana Housing Loans", "11.5% Upwards Fixed - 5 Years"],
-              ["Peoples Bank", "Residential Housing", "12% Upwards Fixed - 5 Years"],
-              ["SDB", "sanasa", "14% Upwards Fixed - 5 Years"],
-              ["HDFC Bank", "Kedella Loan", "15% Upwards Fixed - 5 Years"],
-              ["NSB", "NSB Housing Loan", "7% Upwards Fixed - 5 Years"],
-              ["HNB", "Shanthi Home Loans", "8.75% Upwards Fixed - 5 Years"],
-              ["BOC", "BOC SIRIMEDURA", "10% Upwards Fixed - 5 Years"],
-              ["Seylan Bank", "Seylan Siri Niwasa", "10.5% Upwards Fixed - 5 Years"],
-            ].map(([bank, product, rate]) => (
-              <div key={`${bank}-${product}-${rate}`} className="rounded-2xl border border-[#d9e8f6] bg-white p-5 shadow-sm">
-                <p className="text-sm font-black text-slate-900">{bank}</p>
-                <p className="mt-1 text-sm text-slate-600">{product}</p>
-                <p className="mt-3 text-sm font-semibold text-[#2171B5]">Interest Rate: {rate}</p>
-              </div>
+          <div className="mt-8 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">
+            {visibleInspirationItems.map((item, index) => (
+              <Link
+                key={`${item.title}-${item.tag}`}
+                to={`/inspiration/${inspirationItems.findIndex((candidate) => candidate.title === item.title && candidate.tag === item.tag) + 1}`}
+                className="group relative block h-[260px] overflow-hidden rounded-xl bg-slate-100 shadow-sm md:h-[280px]"
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="h-full w-full object-cover object-center transition duration-300 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+                <span className="absolute right-3 top-3 rounded-md bg-[#2171B5] px-3 py-1 text-xs font-black text-white">
+                  {item.tag}
+                </span>
+                <p className="absolute inset-x-3 bottom-3 text-sm font-black leading-5 text-white drop-shadow">
+                  {item.title}
+                </p>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-        <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Market Research and Advisory</p>
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.03em] text-slate-900">Using years of data to guide better decisions</h2>
-            <p className="mt-4 text-sm leading-7 text-slate-600">
-              Using our expertise and access to years' of data, we can conduct Market Research, Feasibility analysis and advisory to help you identify the feasibility and market demand for your new project or get market information for investment purposes.
-            </p>
-            <p className="mt-4 text-sm leading-7 text-slate-600">
-              Sri Lanka's largest real estate project and China's largest developer are among the companies we've done research for.
-            </p>
-          </div>
-          <div className="rounded-[2rem] border border-[#d9e8f6] bg-white p-6 shadow-sm">
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Our Services</p>
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              {marketServices.map((item) => (
-                <div key={item} className="rounded-2xl border border-[#d9e8f6] bg-[#f8fbff] px-4 py-3 text-sm font-bold text-slate-700">
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-          <p className="text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Our Clients</p>
-          <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6">
-            {Array.from({ length: 6 }, (_, index) => (
-              <div key={index} className="flex h-20 items-center justify-center rounded-2xl border border-[#d9e8f6] bg-[#f8fbff] text-xs font-black uppercase tracking-[0.28em] text-slate-400">
-                client
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-[#f8fbff]">
-        <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-          <p className="text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Latest News</p>
-          <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {latestNews.map((item) => (
-              <article key={item.title} className="rounded-2xl border border-[#d9e8f6] bg-white p-5 shadow-sm">
-                <p className="text-xs font-black uppercase tracking-[0.24em] text-[#2171B5]">{item.date}</p>
-                <h3 className="mt-3 text-lg font-black text-slate-900">{item.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-600">{item.excerpt}</p>
-                <button type="button" className="mt-4 text-sm font-black text-[#2171B5]">
-                  Read More
-                </button>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-        <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
-          <div className="rounded-[2rem] bg-gradient-to-br from-[#08306B] to-[#2171B5] p-8 text-white shadow-[0_18px_50px_rgba(8,48,107,0.18)]">
-            <Phone size={30} />
-            <p className="mt-4 text-xs font-black uppercase tracking-[0.28em] text-blue-100">Contact Us</p>
-            <h2 className="mt-3 text-3xl font-black">Need help with market insights?</h2>
-            <p className="mt-3 text-sm leading-6 text-blue-100">
-              Contact our team and we’ll guide you through reports, valuations, investment options, and service requests.
-            </p>
-          </div>
-
-          <div className="rounded-[2rem] border border-[#d9e8f6] bg-white p-6 shadow-sm">
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">How to contact us</p>
-            <div className="mt-5 grid gap-4 md:grid-cols-2">
-              <div className="rounded-2xl border border-[#d9e8f6] bg-[#f8fbff] p-4">
-                <p className="font-black text-slate-900">Visit us</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">1st Floor, No.1, Bagatalle Road, Colombo 3, Sri Lanka</p>
-              </div>
-              <div className="rounded-2xl border border-[#d9e8f6] bg-[#f8fbff] p-4">
-                <p className="font-black text-slate-900">Call us</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">(+94) 11 7 167 167</p>
-                <p className="text-sm leading-6 text-slate-600">(+94) 76 7 167 167</p>
-              </div>
-              <div className="rounded-2xl border border-[#d9e8f6] bg-[#f8fbff] p-4">
-                <p className="font-black text-slate-900">Email us</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">contactus@lankapropertyweb.com</p>
-              </div>
-              <div className="rounded-2xl border border-[#d9e8f6] bg-[#f8fbff] p-4">
-                <p className="font-black text-slate-900">Chat with Us</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">Use the chat widget for quick assistance.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Footer />
     </div>
   );
 }
@@ -607,10 +368,25 @@ export default function OurServicesPage() {
 
   if (
     serviceSlug === "advisory" ||
+    serviceSlug === "property-buying-advisory" ||
+    serviceSlug === "business-advisory" ||
+    serviceSlug === "foreigners-buying-assistance" ||
     pathname.includes("market-insight") ||
     pathname.includes("market-insights")
   ) {
-    return <AdvisoryPage />;
+    if (serviceSlug === "business-advisory") {
+      return <BusinessAdvisoryPage />;
+    }
+
+    if (serviceSlug === "foreigners-buying-assistance") {
+      return <ForeignersGuidePage />;
+    }
+
+    return <MarketInsightsPage />;
+  }
+
+  if (serviceSlug === "solar-panels") {
+    return <SolarPanelsPage />;
   }
 
   return (
@@ -700,6 +476,41 @@ export default function OurServicesPage() {
               </article>
             );
           })}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 pb-12">
+        <div className="overflow-hidden rounded-[2rem] border border-[#d9e8f6] bg-gradient-to-r from-[#08306B] to-[#2171B5] shadow-[0_16px_40px_rgba(8,48,107,0.08)]">
+          <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <div className="p-8 text-white md:p-10">
+              <p className="text-xs font-black uppercase tracking-[0.28em] text-blue-100">Solar & Hot Water</p>
+              <h2 className="mt-3 text-3xl font-black tracking-[-0.03em] md:text-4xl">
+                Discover Green Energy Solutions for Your Home
+              </h2>
+              <p className="mt-4 max-w-xl text-sm leading-7 text-blue-100">
+                Find solar panel providers, compare system types, explore net metering options, and request quotes from trusted solar partners.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link
+                  to="/our-services/solar-panels"
+                  className="rounded-xl bg-white px-6 py-3 text-sm font-black text-[#08306B] transition hover:bg-blue-50"
+                >
+                  Open Solar Panels Page
+                </Link>
+                <Link
+                  to="/our-services/solar-panels#faq"
+                  className="rounded-xl border border-white/30 px-6 py-3 text-sm font-black text-white transition hover:bg-white/10"
+                >
+                  View FAQs
+                </Link>
+              </div>
+            </div>
+            <img
+              src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1400&q=80&auto=format&fit=crop"
+              alt="Solar rooftop panels"
+              className="h-full min-h-[300px] w-full object-cover"
+            />
+          </div>
         </div>
       </section>
 
