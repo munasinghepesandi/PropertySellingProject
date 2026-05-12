@@ -38,6 +38,7 @@ import Login from './components/Login'
 import Register from './components/Register'
 import BecomeAgentPage from './pages/BecomeAgentPage'
 import ForgotPassword from './components/ForgotPassword'
+import { ChatbotWidget } from './components/ChatbotWidget'
 
 function LoginRoute() {
   const navigate = useNavigate()
@@ -155,6 +156,7 @@ function App() {
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        <ChatbotWidget />
       </main>
     </BrowserRouter>
   )

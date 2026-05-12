@@ -247,7 +247,7 @@
 /* Home Loans Menu */
 .navbar-home-loans-menu {
   position: absolute;
-  top: 100%%;
+  top: 100%;
   left: 0;
   width: 380px;
   background: #ffffff;
@@ -344,7 +344,7 @@
 .navbar-post-ad-btn {
   padding: 10px 20px;
   border-radius: 999px;
-  background: linear-gradient(135deg, #363636 0%, #686869 100%);
+  background: linear-gradient(135deg, #2171B5 0%, #1e40af 100%);
   color: white;
   border: none;
   font-size: 14px;
@@ -495,7 +495,22 @@
   font-weight: 700;
 }
 
-/* Responsive Design */
+/* LARGE DEVICES (> 1024px) - Desktop First */
+@media (min-width: 1025px) {
+  .navbar-desktop-menu {
+    display: flex;
+  }
+
+  .navbar-search-wrapper {
+    display: flex;
+  }
+
+  .navbar-mobile-toggle {
+    display: none;
+  }
+}
+
+/* MEDIUM DEVICES (1024px and below) - Tablet */
 @media (max-width: 1024px) {
   .navbar-desktop-menu {
     display: none;
@@ -507,6 +522,10 @@
 
   .navbar-mobile-toggle {
     display: flex;
+  }
+
+  .navbar-main {
+    padding: 0 14px;
   }
 
   .navbar-mega-menu.menu-4-col {
@@ -521,35 +540,100 @@
 
   .navbar-mega-menu.menu-2-col {
     min-width: auto;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .navbar-mega-menu {
+    padding: 18px;
+    gap: 16px;
+  }
+
+  .navbar-post-ad-btn {
+    padding: 9px 14px;
+    font-size: 13px;
   }
 }
 
+/* SMALL DEVICES (768px and below) - Phone */
 @media (max-width: 768px) {
   .navbar-top-inner {
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
 
   .navbar-top-actions {
     width: 100%;
-    justify-content: space-around;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .navbar-top-bar {
+    padding: 8px 16px;
   }
 
   .navbar-brand {
-    font-size: 18px;
+    font-size: 16px;
+    gap: 6px;
+  }
+
+  .navbar-brand-icon {
+    padding: 4px;
+  }
+
+  .navbar-brand-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .navbar-top-link {
+    font-size: 12px;
+    padding: 5px 10px;
   }
 
   .navbar-main {
-    min-height: 60px;
-    padding: 0 16px;
+    min-height: 56px;
+    padding: 0 12px;
+    gap: 10px;
+  }
+
+  .navbar-container {
+    gap: 10px;
+  }
+
+  .navbar-mobile-toggle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navbar-mobile-toggle svg {
+    width: 18px;
+    height: 18px;
   }
 
   .navbar-mobile-panel {
-    padding: 16px 16px 20px;
+    padding: 14px 12px 18px;
+    gap: 10px;
   }
 
-  .navbar-search-input {
-    width: 100%;
+  .navbar-mobile-link {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .navbar-mobile-sublink {
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+
+  .navbar-post-ad-btn {
+    padding: 9px 12px;
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .navbar-post-ad-btn svg {
+    width: 14px;
+    height: 14px;
   }
 
   .navbar-mega-menu {
@@ -559,9 +643,146 @@
     right: 0;
     bottom: 0;
     border-radius: 0;
-    max-height: 60vh;
+    max-height: 70vh;
     overflow-y: auto;
     min-width: auto;
+    padding: 16px;
+    grid-template-columns: 1fr;
+  }
+
+  .navbar-mega-menu.menu-4-col {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar-mega-menu.menu-3-col {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar-mega-menu.menu-2-col {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar-mega-menu-column {
+    gap: 10px;
+  }
+
+  .navbar-mega-menu-title {
+    font-size: 10px;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+  }
+
+  .navbar-mega-menu-link {
+    font-size: 13px;
+    padding: 7px 0;
+    padding-left: 6px;
+  }
+
+  .navbar-home-loans-menu {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .navbar-home-loans-item {
+    padding: 10px;
+  }
+
+  .navbar-home-loans-item-title {
+    font-size: 13px;
+  }
+
+  .navbar-home-loans-item-desc {
+    font-size: 11px;
+  }
+
+  .navbar-login-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .navbar-register-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .navbar-badge {
+    padding: 1px 8px;
+    font-size: 9px;
+    margin-left: 4px;
+  }
+}
+
+/* EXTRA SMALL DEVICES (480px and below) - Small Phone */
+@media (max-width: 480px) {
+  .navbar-top-inner {
+    gap: 8px;
+  }
+
+  .navbar-top-link {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  .navbar-brand {
+    font-size: 14px;
+  }
+
+  .navbar-main {
+    min-height: 52px;
+    padding: 0 10px;
+  }
+
+  .navbar-mobile-toggle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .navbar-mobile-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .navbar-mobile-panel {
+    padding: 12px 10px 16px;
+  }
+
+  .navbar-mobile-link {
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+
+  .navbar-mobile-sublink {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .navbar-post-ad-btn {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .navbar-mega-menu {
+    padding: 14px;
+    gap: 12px;
+    max-height: 75vh;
+  }
+
+  .navbar-mega-menu-title {
+    font-size: 9px;
+  }
+
+  .navbar-mega-menu-link {
+    font-size: 12px;
+  }
+
+  .navbar-home-loans-menu {
+    padding: 10px;
+  }
+
+  .navbar-login-btn,
+  .navbar-register-btn {
+    padding: 7px 10px;
+    font-size: 11px;
   }
 }
 

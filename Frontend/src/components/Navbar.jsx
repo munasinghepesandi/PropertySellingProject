@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Search, Home, ChevronDown, Menu, X, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
