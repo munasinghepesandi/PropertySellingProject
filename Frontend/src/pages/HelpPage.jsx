@@ -16,57 +16,60 @@ export default function HelpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#f4f7fb] text-slate-900">
       <Navbar />
 
-      <main className="mx-auto max-w-[1800px] px-5 py-12">
-        <div className="bg-white rounded-xl p-8 shadow-sm">
-          <h1 className="text-3xl font-extrabold text-slate-900">Help & Support</h1>
-          <p className="mt-3 text-slate-600">Find answers to common questions, contact our support team, or request valuation assistance.</p>
+      <main className="mx-auto max-w-7xl px-5 py-12 md:px-8">
+        <div className="rounded-[2rem] bg-white p-6 shadow-[0_18px_45px_rgba(8,48,107,0.06)] md:p-10">
+          <p className="text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Help & Support</p>
+          <h1 className="mt-3 text-4xl font-black tracking-[-0.03em] text-slate-900">Need help with your request?</h1>
+          <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600 md:text-base">
+            Find answers to common questions, contact our support team, or request assistance with valuations, property posts, and service requests.
+          </p>
 
-          <section className="mt-8 grid gap-6 md:grid-cols-2">
-            <div>
-              <h2 className="text-xl font-bold text-slate-900">Frequently Asked Questions</h2>
+          <section className="mt-8 grid gap-6 lg:grid-cols-[1fr_0.95fr]">
+            <div className="rounded-[1.75rem] border border-[#d9e8f6] bg-[#f8fbff] p-6 md:p-8">
+              <h2 className="text-xl font-black text-slate-900">Frequently Asked Questions</h2>
               <div className="mt-4 space-y-4">
-                <details className="rounded-md border border-slate-100 p-4">
-                  <summary className="font-semibold">How do I post a property?</summary>
-                  <p className="mt-2 text-sm text-slate-600">Click "Post Your Ad" in the top right, fill in the property information and photos, then publish.</p>
+                <details className="rounded-2xl border border-[#d9e8f6] bg-white p-4 shadow-sm">
+                  <summary className="cursor-pointer font-bold text-slate-800">How do I post a property?</summary>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">Click "Post Your Ad" in the top right, fill in the property information and photos, then publish.</p>
                 </details>
 
-                <details className="rounded-md border border-slate-100 p-4">
-                  <summary className="font-semibold">How are prices calculated for the index?</summary>
-                  <p className="mt-2 text-sm text-slate-600">Average prices are based on active property ads on LankaPropertyWeb and are updated quarterly using our outlier-robust algorithm.</p>
+                <details className="rounded-2xl border border-[#d9e8f6] bg-white p-4 shadow-sm">
+                  <summary className="cursor-pointer font-bold text-slate-800">How are prices calculated for the index?</summary>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">Average prices are based on active property ads and are updated using our report data and market analysis.</p>
                 </details>
 
-                <details className="rounded-md border border-slate-100 p-4">
-                  <summary className="font-semibold">How do I contact the Buyer & Seller Assistance team?</summary>
-                  <p className="mt-2 text-sm text-slate-600">Use the Contact Team button on the Our Services page or email info@lankapropertyweb.com.</p>
+                <details className="rounded-2xl border border-[#d9e8f6] bg-white p-4 shadow-sm">
+                  <summary className="cursor-pointer font-bold text-slate-800">How do I contact the Buyer & Seller Assistance team?</summary>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">Use the support form on this page or email info@lankapropertyweb.com.</p>
                 </details>
               </div>
             </div>
 
-            <div>
-              <h2 className="text-xl font-bold text-slate-900">Contact Support</h2>
-              <p className="mt-3 text-sm text-slate-600">Need additional help? Send us a message and we'll get back to you within one business day.</p>
+            <div className="rounded-[1.75rem] bg-gradient-to-br from-[#08306B] to-[#2171B5] p-6 text-white shadow-[0_18px_45px_rgba(8,48,107,0.12)] md:p-8">
+              <p className="text-xs font-black uppercase tracking-[0.28em] text-white/75">Contact Support</p>
+              <h2 className="mt-3 text-2xl font-black">Send us a message</h2>
+              <p className="mt-3 text-sm leading-7 text-white/90">We’ll get back to you within one business day.</p>
 
               <form className="mt-6 grid gap-3" onSubmit={handleSupportSubmit}>
-                <input name="name" className="rounded-lg border border-slate-200 p-3" placeholder="Your name" />
-                <input name="email" className="rounded-lg border border-slate-200 p-3" placeholder="Email address" />
-                <input name="phone" className="rounded-lg border border-slate-200 p-3" placeholder="Phone (optional)" />
-                <textarea name="message" className="rounded-lg border border-slate-200 p-3" rows={5} placeholder="Tell us how we can help" />
-                <div className="flex items-center gap-3">
-                  <button type="submit" className="rounded-lg bg-[#2171B5] px-4 py-2 text-white font-semibold">Send message</button>
-                  <button type="button" onClick={() => { window.location.href = 'tel:+94771234567'; }} className="rounded-lg border px-4 py-2">Call +94 77 123 4567</button>
+                <input name="name" className="rounded-xl border border-white/20 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-white" placeholder="Your name" />
+                <input name="email" className="rounded-xl border border-white/20 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-white" placeholder="Email address" />
+                <input name="phone" className="rounded-xl border border-white/20 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-white" placeholder="Phone (optional)" />
+                <textarea name="message" className="rounded-xl border border-white/20 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-white" rows={5} placeholder="Tell us how we can help" />
+                <div className="flex flex-wrap items-center gap-3">
+                  <button type="submit" className="rounded-xl bg-white px-5 py-3 font-bold text-[#08306B] transition hover:shadow-lg">Send message</button>
+                  <button type="button" onClick={() => { window.location.href = 'tel:+94771234567'; }} className="rounded-xl border border-white px-5 py-3 font-bold text-white transition hover:bg-white/10">Call +94 77 123 4567</button>
                 </div>
               </form>
 
-              <div className="mt-6 text-sm text-slate-600">
-                <p><strong>Office:</strong> Colombo, Sri Lanka</p>
-                <p><strong>Email:</strong> info@lankapropertyweb.com</p>
+              <div className="mt-6 grid gap-3 text-sm text-white/90">
+                <p><strong className="text-white">Office:</strong> Colombo, Sri Lanka</p>
+                <p><strong className="text-white">Email:</strong> info@lankapropertyweb.com</p>
               </div>
             </div>
           </section>
-
         </div>
       </main>
 

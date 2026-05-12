@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Navbar } from '../components/Navbar'
 import { Footer } from '../components/Footer'
-import { ChevronRight, Search } from 'lucide-react'
+import { ChevronRight, Search, ArrowRight } from 'lucide-react'
 
 const createSection = (title, subtitle, description, focuses, accent = '#2171B5', heroImage, properties = []) => ({
   title,
@@ -444,6 +444,78 @@ export default function SalesSectionPage({ sectionSlug: sectionSlugProp } = {}) 
                 Browse All Sales <ChevronRight className="h-4 w-4" />
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+          <div className="mb-8">
+            <div className="h-1 w-16 rounded-full bg-[#2171B5]" />
+            <p className="mt-4 text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Helpful Resources</p>
+            <h2 className="mt-3 text-3xl font-black text-slate-900">Before you buy, know more</h2>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-5">
+            <Link
+              to="/price-meter"
+              className="rounded-[1.75rem] border border-[#d9e8f6] bg-[#f8fbff] p-4 shadow-[0_8px_24px_rgba(8,48,107,0.08)] transition hover:shadow-lg"
+            >
+              <div className="text-2xl">💰</div>
+              <h3 className="mt-3 font-black text-slate-900 text-sm">Price Meter</h3>
+              <p className="mt-1 text-xs text-slate-600">Get instant valuation</p>
+              <div className="mt-3 flex items-center gap-1 text-xs font-black text-[#2171B5]">
+                Calculate <ArrowRight size={12} />
+              </div>
+            </Link>
+
+            <Link
+              to="/property-buying-guide"
+              className="rounded-[1.75rem] border border-[#d9e8f6] bg-[#f8fbff] p-4 shadow-[0_8px_24px_rgba(8,48,107,0.08)] transition hover:shadow-lg"
+            >
+              <div className="text-2xl">📖</div>
+              <h3 className="mt-3 font-black text-slate-900 text-sm">Buying Guide</h3>
+              <p className="mt-1 text-xs text-slate-600">Step-by-step process</p>
+              <div className="mt-3 flex items-center gap-1 text-xs font-black text-[#2171B5]">
+                Learn <ArrowRight size={12} />
+              </div>
+            </Link>
+
+            <Link
+              to="/price-indices"
+              className="rounded-[1.75rem] border border-[#d9e8f6] bg-[#f8fbff] p-4 shadow-[0_8px_24px_rgba(8,48,107,0.08)] transition hover:shadow-lg"
+            >
+              <div className="text-2xl">📈</div>
+              <h3 className="mt-3 font-black text-slate-900 text-sm">Price Index</h3>
+              <p className="mt-1 text-xs text-slate-600">Market trends & data</p>
+              <div className="mt-3 flex items-center gap-1 text-xs font-black text-[#2171B5]">
+                Track <ArrowRight size={12} />
+              </div>
+            </Link>
+
+            <Link
+              to="/capital-gains-tax"
+              className="rounded-[1.75rem] border border-[#d9e8f6] bg-[#f8fbff] p-4 shadow-[0_8px_24px_rgba(8,48,107,0.08)] transition hover:shadow-lg"
+            >
+              <div className="text-2xl">📋</div>
+              <h3 className="mt-3 font-black text-slate-900 text-sm">Tax Guide</h3>
+              <p className="mt-1 text-xs text-slate-600">Capital gains info</p>
+              <div className="mt-3 flex items-center gap-1 text-xs font-black text-[#2171B5]">
+                Explore <ArrowRight size={12} />
+              </div>
+            </Link>
+
+            <Link
+              to="/market-outlook"
+              className="rounded-[1.75rem] border border-[#d9e8f6] bg-[#f8fbff] p-4 shadow-[0_8px_24px_rgba(8,48,107,0.08)] transition hover:shadow-lg"
+            >
+              <div className="text-2xl">🔮</div>
+              <h3 className="mt-3 font-black text-slate-900 text-sm">Outlook</h3>
+              <p className="mt-1 text-xs text-slate-600">Market analysis</p>
+              <div className="mt-3 flex items-center gap-1 text-xs font-black text-[#2171B5]">
+                Analyze <ArrowRight size={12} />
+              </div>
+            </Link>
           </div>
         </div>
       </section>

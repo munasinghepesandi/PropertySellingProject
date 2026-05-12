@@ -295,13 +295,18 @@ export function Navbar() {
 
   const agentMenuItems = useMemo(
     () => [
-      { label: "Find Agents / Agents Directory", to: "/find-agent" },
-      { label: "View All Agents / Agents Directory", to: "/agents-directory" },
-      { label: "Become an Agent", to: "/register" },
-      { label: "Residential sales", to: "/sales" },
-      { label: "Letting Agents", to: "/rentals" },
-      { label: "Commercial property agents", to: "/commercial" },
-      { label: "Land Sales", to: "/land" },
+          {
+            title: "Agent Services",
+            items: [
+              { label: "Find Agents / Agents Directory", to: "/find-agent" },
+              { label: "View All Agents / Agents Directory", to: "/agents-directory" },
+              { label: "Become an Agent", to: "/become-agent" },
+              { label: "Residential sales", to: "/sales" },
+              { label: "Letting Agents", to: "/rentals" },
+              { label: "Commercial property agents", to: "/commercial" },
+              { label: "Land Sales", to: "/land" },
+            ],
+          },
     ],
     []
   );
@@ -776,45 +781,67 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  width: "420px",
+                  minWidth: "760px",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
-                  borderRadius: "18px",
+                  borderRadius: "20px",
                   boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
-                  padding: "16px",
+                  padding: "22px 24px 24px",
                   display: "grid",
-                  gap: "10px",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "22px",
                   border: "1px solid rgba(148, 163, 184, 0.18)",
                 }}
               >
-                {agentMenuItems.map((item) => (
-                  <button
-                    key={item.label}
-                    type="button"
-                    onClick={() => {
-                      setAgentMenuOpen(false);
-                      navigate(item.to);
-                    }}
-                    style={{
-                      textAlign: "left",
-                      border: "none",
-                      background: "transparent",
-                      borderRadius: "12px",
-                      padding: "10px 12px",
-                      color: "#334155",
-                      cursor: "pointer",
-                    }}
-                    onMouseEnter={(event) => {
-                      event.currentTarget.style.backgroundColor = "#f1f5f9";
-                      event.currentTarget.style.color = primary;
-                    }}
-                    onMouseLeave={(event) => {
-                      event.currentTarget.style.backgroundColor = "transparent";
-                      event.currentTarget.style.color = "#334155";
-                    }}
-                  >
-                    <span style={{ display: "block", fontSize: "14px", fontWeight: 800 }}>{item.label}</span>
-                  </button>
+                {agentMenuItems.map((column) => (
+                  <div key={column.title}>
+                    <div
+                      style={{
+                        fontSize: "11px",
+                        fontWeight: "800",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.16em",
+                        color: "#0f172a",
+                        paddingBottom: "8px",
+                        marginBottom: "12px",
+                        borderBottom: "1px solid #d7dee8",
+                      }}
+                    >
+                      {column.title}
+                    </div>
+
+                    <div style={{ display: "grid", gap: "10px" }}>
+                      {column.items.map((item) => (
+                        <button
+                          key={item.label}
+                          type="button"
+                          onClick={() => {
+                            setAgentMenuOpen(false);
+                            navigate(item.to);
+                          }}
+                          style={{
+                            textAlign: "left",
+                            border: "none",
+                            background: "transparent",
+                            padding: "0",
+                            fontSize: "14px",
+                            lineHeight: "1.35",
+                            color: "#334155",
+                            cursor: "pointer",
+                            fontWeight: 500,
+                          }}
+                          onMouseEnter={(event) => {
+                            event.currentTarget.style.color = primary;
+                          }}
+                          onMouseLeave={(event) => {
+                            event.currentTarget.style.color = "#334155";
+                          }}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             )}
@@ -1133,7 +1160,7 @@ export function Navbar() {
           </div>
           {mobileAgentOpen && (
             <div style={{ display: "grid", gap: "8px", paddingLeft: "8px", order: navItemOrder["Find Agent"] }}>
-              {agentMenuItems.map((item) => (
+              {agentMenuItems.flatMap((column) => column.items).map((item) => (
                 <button
                   key={item.label}
                   type="button"
