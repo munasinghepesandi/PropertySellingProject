@@ -72,13 +72,16 @@ export default function HomeLoanCalculatorPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <Navbar />
 
-      <section className="bg-gradient-to-r from-[#08306B] to-[#2171B5] text-white">
-        <div className="mx-auto max-w-7xl px-5 py-12 md:py-14">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-100">Home Loan Calculator</p>
-          <h1 className="mt-3 text-4xl font-black md:text-5xl">Calculate your monthly home loan payment</h1>
-          <p className="mt-4 max-w-3xl text-blue-100">
-            LankaPropertyWeb's user-friendly mortgage calculator helps estimate monthly home loan commitments for real estate purchases.
-          </p>
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f] text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.15),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.12),transparent_22%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0))]" />
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-blue-100">EMI Calculator</p>
+            <h1 className="mt-3 text-4xl font-black leading-tight sm:text-5xl">Calculate Your Monthly Payment</h1>
+            <p className="mt-4 max-w-2xl text-base text-white/80 leading-relaxed">
+              Use our interactive calculator to estimate your monthly loan commitment, total interest, and repayment schedule based on your property value and preferred terms.
+            </p>
+          </div>
         </div>
       </section>
 

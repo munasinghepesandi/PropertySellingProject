@@ -303,8 +303,27 @@ function AdvisoryPage() {
       : inspirationItems.filter((item) => item.tag === activeInspirationCategory);
 
   return (
-    <div className="min-h-screen bg-[#f4f7fb] text-slate-900">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       <Navbar />
+
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f] text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.15),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.12),transparent_22%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0))]" />
+        
+        <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-blue-100">🛠️ Our Services</p>
+            <h1 className="mt-3 text-4xl font-black leading-tight sm:text-5xl">Professional Property Services</h1>
+            <p className="mt-4 max-w-2xl text-base text-white/80 sm:text-lg leading-relaxed">
+              Comprehensive support services to guide you through every step of your property journey. From valuations to legal assistance, we're here to help.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3 text-sm font-semibold">
+              <span className="rounded-full bg-white/15 px-4 py-2 backdrop-blur border border-white/20">✓ Expert Guidance</span>
+              <span className="rounded-full bg-white/15 px-4 py-2 backdrop-blur border border-white/20">✓ Complete Support</span>
+              <span className="rounded-full bg-white/15 px-4 py-2 backdrop-blur border border-white/20">✓ Trusted Services</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="mx-auto w-full max-w-7xl px-5 pb-14 pt-8 md:px-8">
         <div className="bg-white px-1 py-2 md:px-2">

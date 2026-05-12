@@ -9,14 +9,33 @@ export function Navbar() {
   const [homeLoansMenuOpen, setHomeLoansMenuOpen] = useState(false);
   const [marketInsightsMenuOpen, setMarketInsightsMenuOpen] = useState(false);
   const [agentMenuOpen, setAgentMenuOpen] = useState(false);
+  const [wantedMenuOpen, setWantedMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSalesOpen, setMobileSalesOpen] = useState(false);
+  const [mobileWantedOpen, setMobileWantedOpen] = useState(false);
   const [mobileOurServicesOpen, setMobileOurServicesOpen] = useState(false);
   const [mobileHomeLoansOpen, setMobileHomeLoansOpen] = useState(false);
   const [mobileMarketInsightsOpen, setMobileMarketInsightsOpen] = useState(false);
   const [mobileAgentOpen, setMobileAgentOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
+
+  function handleNavigate(path, openInEdge = false) {
+    if (openInEdge && typeof window !== 'undefined') {
+      const url = window.location.origin + path;
+      try {
+        const win = window.open('microsoft-edge:' + url, '_blank');
+        if (!win) {
+          navigate(path);
+        }
+      } catch (err) {
+        // fallback to normal navigate
+        navigate(path);
+      }
+    } else {
+      navigate(path);
+    }
+  }
 
   useEffect(() => {
     const updateViewport = () => {
@@ -141,7 +160,6 @@ export function Navbar() {
     { label: "Land", to: "/land" },
     { label: "Apartment Finder", to: "/contact", badge: "New" },
     { label: "Invest", to: "/invest" },
-    { label: "Wanted", to: "/wanted" },
     { label: "More", to: "/more" },
   ];
 
@@ -204,6 +222,29 @@ export function Navbar() {
           { label: "Sri Lanka House Price Index", to: "/sales/house-price-index" },
           { label: "Sri Lanka Land Price Index", to: "/sales/land-price-index" },
           { label: "Guide for foreigners buying property", to: "/features/property-buying-for-foreigners.php" },
+        ],
+      },
+    ],
+    []
+  );
+
+  const wantedMenuColumns = useMemo(
+    () => [
+      {
+        title: "Wanted Properties",
+        items: [
+          { label: "View All Wanted Properties", to: "/wanted/view-all" },
+          { label: "Houses wanted", to: "/wanted/houses" },
+          { label: "Apartments wanted", to: "/wanted/apartments" },
+        ],
+      },
+      {
+        title: "More Wanted",
+        items: [
+          { label: "Land wanted", to: "/wanted/land" },
+          { label: "Commercial Buildings", to: "/wanted/commercial" },
+          { label: "Rooms wanted", to: "/wanted/rooms" },
+          { label: "Post Your Ad", to: "/post-ad" },
         ],
       },
     ],
@@ -284,9 +325,9 @@ export function Navbar() {
         items: [
           { label: "Sri Lanka House Price Index", to: "/sales/house-price-index" },
           { label: "Sri Lanka Land Price Index", to: "/sales/land-price-index" },
-          { label: "Membership Benefits", to: "/our-services" },
-          { label: "Market Outlook Report", to: "/market-insights" },
-          { label: "News & Guides", to: "/more" },
+          { label: "Membership Benefits", to: "/membership-benefits" },
+          { label: "Market Outlook Report", to: "/market-outlook-report" },
+          { label: "News & Guides", to: "/news-and-guides" },
         ],
       },
     ],
@@ -302,6 +343,7 @@ export function Navbar() {
               { label: "View All Agents / Agents Directory", to: "/agents-directory" },
               { label: "Become an Agent", to: "/become-agent" },
               { label: "Residential sales", to: "/sales" },
+              { label: "Promote Your Property", to: "/promote-property" },
               { label: "Letting Agents", to: "/rentals" },
               { label: "Commercial property agents", to: "/commercial" },
               { label: "Land Sales", to: "/land" },
@@ -409,8 +451,11 @@ export function Navbar() {
             <button type="button" style={topLinkStyle} onClick={() => navigate("/register")}>
               Register
             </button>
-            <button type="button" style={topLinkStyle} onClick={() => navigate("/help")}>
+            <button type="button" style={topLinkStyle} onClick={() => navigate('/help')}>
               Help
+            </button>
+            <button type="button" style={postAdStyle} onClick={() => navigate('/post-ad')}>
+              Post Your Ad
             </button>
           </div>
         </div>
@@ -624,14 +669,14 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  width: "360px",
+                  minWidth: "680px",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
-                  borderRadius: "18px",
+                  borderRadius: "20px",
                   boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
-                  padding: "16px",
+                  padding: "24px 28px 28px",
                   display: "grid",
-                  gap: "10px",
+                  gap: "16px",
                   border: "1px solid rgba(148, 163, 184, 0.18)",
                 }}
               >
@@ -648,7 +693,7 @@ export function Navbar() {
                       border: "none",
                       background: "transparent",
                       borderRadius: "12px",
-                      padding: "10px 12px",
+                      padding: "16px 18px",
                       color: "#334155",
                       cursor: "pointer",
                     }}
@@ -661,8 +706,8 @@ export function Navbar() {
                       event.currentTarget.style.color = "#334155";
                     }}
                   >
-                    <span style={{ display: "block", fontSize: "14px", fontWeight: 800 }}>{item.label}</span>
-                    <span style={{ display: "block", marginTop: "4px", fontSize: "12px", lineHeight: 1.4, color: "#64748b" }}>
+                    <span style={{ display: "block", fontSize: "16px", fontWeight: 800 }}>{item.label}</span>
+                    <span style={{ display: "block", marginTop: "4px", fontSize: "14px", lineHeight: 1.4, color: "#64748b" }}>
                       {item.description}
                     </span>
                   </button>
@@ -760,22 +805,22 @@ export function Navbar() {
           </div>
 
           <div
-            style={{ position: "relative", order: navItemOrder["Find Agent"] }}
-            onMouseEnter={() => setAgentMenuOpen(true)}
-            onMouseLeave={() => setAgentMenuOpen(false)}
+            style={{ position: "relative", order: navItemOrder["Wanted"] }}
+            onMouseEnter={() => setWantedMenuOpen(true)}
+            onMouseLeave={() => setWantedMenuOpen(false)}
           >
             <button
               type="button"
               style={{ ...menuLinkStyle, fontSize: "15px" }}
               onClick={() => {
-                setAgentMenuOpen(false);
-                navigate("/find-agent");
+                setWantedMenuOpen(false);
+                navigate("/wanted");
               }}
             >
-              Find Agent
+              Wanted
             </button>
 
-            {agentMenuOpen && (
+            {wantedMenuOpen && (
               <div
                 style={{
                   position: "absolute",
@@ -793,7 +838,7 @@ export function Navbar() {
                   border: "1px solid rgba(148, 163, 184, 0.18)",
                 }}
               >
-                {agentMenuItems.map((column) => (
+                {wantedMenuColumns.map((column) => (
                   <div key={column.title}>
                     <div
                       style={{
@@ -816,7 +861,7 @@ export function Navbar() {
                           key={item.label}
                           type="button"
                           onClick={() => {
-                            setAgentMenuOpen(false);
+                            setWantedMenuOpen(false);
                             navigate(item.to);
                           }}
                           style={{
@@ -825,6 +870,94 @@ export function Navbar() {
                             background: "transparent",
                             padding: "0",
                             fontSize: "14px",
+                            lineHeight: "1.35",
+                            color: "#334155",
+                            cursor: "pointer",
+                            fontWeight: 500,
+                          }}
+                          onMouseEnter={(event) => {
+                            event.currentTarget.style.color = primary;
+                          }}
+                          onMouseLeave={(event) => {
+                            event.currentTarget.style.color = "#334155";
+                          }}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div
+            style={{ position: "relative", order: navItemOrder["Find Agent"] }}
+            onMouseEnter={() => setAgentMenuOpen(true)}
+            onMouseLeave={() => setAgentMenuOpen(false)}
+          >
+            <button
+              type="button"
+              style={{ ...menuLinkStyle, fontSize: "15px" }}
+              onClick={() => {
+                setAgentMenuOpen(false);
+                navigate("/find-agent");
+              }}
+            >
+              Find Agent
+            </button>
+
+            {agentMenuOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "100%",
+                  left: 0,
+                  minWidth: "680px",
+                  backgroundColor: "#ffffff",
+                  color: "#0f172a",
+                  borderRadius: "20px",
+                  boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
+                  padding: "24px 28px 28px",
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "24px",
+                  border: "1px solid rgba(148, 163, 184, 0.18)",
+                }}
+              >
+                {agentMenuItems.map((column) => (
+                  <div key={column.title}>
+                    <div
+                      style={{
+                        fontSize: "12px",
+                        fontWeight: "800",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.16em",
+                        color: "#0f172a",
+                        paddingBottom: "10px",
+                        marginBottom: "14px",
+                        borderBottom: "1px solid #d7dee8",
+                      }}
+                    >
+                      {column.title}
+                    </div>
+
+                    <div style={{ display: "grid", gap: "10px" }}>
+                      {column.items.map((item) => (
+                        <button
+                          key={item.label}
+                          type="button"
+                          onClick={() => {
+                            setAgentMenuOpen(false);
+                            navigate(item.to);
+                          }}
+                          style={{
+                            textAlign: "left",
+                            border: "none",
+                            background: "transparent",
+                            padding: "0",
+                            fontSize: "15px",
                             lineHeight: "1.35",
                             color: "#334155",
                             cursor: "pointer",
@@ -1069,7 +1202,7 @@ export function Navbar() {
             </button>
           </div>
           {mobileHomeLoansOpen && (
-            <div style={{ display: "grid", gap: "8px", paddingLeft: "8px", order: navItemOrder["Home Loans"] }}>
+            <div style={{ display: "grid", gap: "10px", paddingLeft: "8px", order: navItemOrder["Home Loans"] }}>
               {homeLoansMenuItems.map((item) => (
                 <button
                   key={item.label}
@@ -1116,6 +1249,51 @@ export function Navbar() {
           {mobileMarketInsightsOpen && (
             <div style={{ display: "grid", gap: "8px", paddingLeft: "8px", order: navItemOrder["Market Insights"] }}>
               {marketInsightsMenuColumns.flatMap((column) => column.items).map((item) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  style={mobileSubLinkStyle}
+                  onClick={() => {
+                    navigate(item.to);
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div style={{ display: "flex", gap: "8px", alignItems: "center", order: navItemOrder["Wanted"] }}>
+            <button
+              type="button"
+              style={{ ...mobileLinkStyle, flex: 1 }}
+              onClick={() => {
+                navigate("/wanted");
+                setMobileMenuOpen(false);
+              }}
+            >
+              Wanted
+            </button>
+            <button
+              type="button"
+              aria-label="Open wanted dropdown"
+              style={{
+                ...mobileLinkStyle,
+                width: "48px",
+                padding: "12px 0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onClick={() => setMobileWantedOpen((value) => !value)}
+            >
+              <ChevronDown style={{ width: "16px", height: "16px" }} />
+            </button>
+          </div>
+          {mobileWantedOpen && (
+            <div style={{ display: "grid", gap: "10px", paddingLeft: "8px", order: navItemOrder["Wanted"] }}>
+              {wantedMenuColumns.flatMap((column) => column.items).map((item) => (
                 <button
                   key={item.label}
                   type="button"
@@ -1201,9 +1379,14 @@ export function Navbar() {
             </button>
           </div>
 
-          <button type="button" style={mobileLinkStyle} onClick={() => { navigate("/help"); setMobileMenuOpen(false); }}>
-            Help
-          </button>
+          <div style={{ display: 'grid', gap: 8 }}>
+            <button type="button" style={mobileLinkStyle} onClick={() => { navigate('/help'); setMobileMenuOpen(false); }}>
+              Help
+            </button>
+            <button type="button" style={mobileLinkStyle} onClick={() => { navigate('/post-ad'); setMobileMenuOpen(false); }}>
+              Post Your Ad
+            </button>
+          </div>
         </div>
         </div>
       )}
