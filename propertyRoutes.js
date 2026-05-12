@@ -3,9 +3,9 @@ const router  = express.Router();
 const {
   getProperties, getPropertyById, createProperty,
   updateProperty, deleteProperty, updateStatus
-} = require('../controllers/propertyController');
-const { protect, adminOnly } = require('../middleware/authMiddleware');
-const upload = require('../middleware/uploadMiddleware');
+} = require('./propertyController');
+const { protect, adminOnly } = require('./authMiddleware');
+const upload = require('./uploadMiddleware');
 
 router.get('/',                            getProperties);
 router.get('/:id',                         getPropertyById);

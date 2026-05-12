@@ -1,4 +1,4 @@
-const pool = require('../config/db');
+const pool = require('./db');
 
 // ── GET /api/properties ──────────────────────────────────────
 const getProperties = async (req, res) => {

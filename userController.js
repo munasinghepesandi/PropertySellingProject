@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const pool   = require('../config/db');
+const pool   = require('./db');
 
 // ── GET /api/users  (admin) ──────────────────────────────────
 const getUsers = async (req, res) => {

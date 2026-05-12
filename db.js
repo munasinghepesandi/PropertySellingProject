@@ -21,7 +21,7 @@ const pool = mysql.createPool({
     conn.release();
   } catch (err) {
     console.error('❌  MySQL connection failed:', err.message);
-    process.exit(1);
+    console.error('   Continuing without a startup connection so the server can still boot.');
   }
 })();
 

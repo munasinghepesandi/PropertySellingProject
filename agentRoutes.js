@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/db'); // adjust path if needed
+const db = require('./db');
 
 // GET /admin/agents
 router.get('/', async (req, res) => {

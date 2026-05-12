@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const pool = require('../config/db');
+const pool = require('./db');
 
 // ── Protect: any logged-in user ──────────────────────────────
 const protect = async (req, res, next) => {

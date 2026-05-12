@@ -1,7 +1,7 @@
 const express = require('express');
 const router  = express.Router();
-const { createInquiry, getInquiries, updateInquiryStatus, deleteInquiry } = require('../controllers/inquiryController');
-const { protect, adminOnly } = require('../middleware/authMiddleware');
+const { createInquiry, getInquiries, updateInquiryStatus, deleteInquiry } = require('./inquiryController');
+const { protect, adminOnly } = require('./authMiddleware');
 
 router.post('/',                       createInquiry);          // public
 router.get('/',    protect, adminOnly, getInquiries);
