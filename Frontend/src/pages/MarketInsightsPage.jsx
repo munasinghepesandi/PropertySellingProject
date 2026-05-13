@@ -69,49 +69,23 @@ const latestNews = [
 
 export default function MarketInsightsPage() {
   return (
-    <div className="min-h-screen bg-[#f4f7fb] text-slate-900">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       <Navbar />
 
-      <section className="relative overflow-hidden text-white">
-        <img
-          src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1600&q=80&auto=format&fit=crop"
-          alt="Colombo skyline"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-x-0 top-0 h-2 bg-[#2171B5]" />
-
-        <div className="relative mx-auto flex min-h-[470px] max-w-7xl flex-col justify-center px-5 py-16 md:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-black uppercase tracking-[0.28em] text-white/90">Market Insights</p>
-            <h1 className="mt-4 text-5xl font-black tracking-[-0.03em] md:text-6xl lg:text-7xl">
-              Real Estate Market
-              <br />
-              Insights
-            </h1>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-white/95 md:text-lg">
-              Get all the latest property market insights in Sri Lanka. Estimate your potential ROI, find the best locations to settle in, evaluate how your price quotation fares through our property price indicator and more.
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f] text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.15),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.12),transparent_22%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0))]" />
+        
+        <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-blue-100">📊 Market Insights</p>
+            <h1 className="mt-3 text-4xl font-black leading-tight sm:text-5xl">Real Estate Market Insights</h1>
+            <p className="mt-4 max-w-2xl text-base text-white/80 sm:text-lg leading-relaxed">
+              Get all the latest property market insights in Sri Lanka. Estimate your potential ROI, find the best locations to settle in, and evaluate market trends.
             </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button className="inline-flex items-center gap-2 rounded-xl bg-[#2171B5] px-5 py-3 font-black text-white transition hover:shadow-lg hover:shadow-[#2171B5]/20">
-                Download Report
-                <Download size={18} />
-              </button>
-              <button className="inline-flex items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-5 py-3 font-black text-white transition hover:bg-white/20">
-                Explore Insights
-              </button>
-            </div>
-          </div>
-
-          <div className="mt-10 w-full max-w-5xl bg-black/25 px-4 py-4 backdrop-blur-[2px] md:px-6">
-            <div className="grid gap-4 md:grid-cols-3">
-              {reportHighlights.map((item) => (
-                <div key={item} className="flex items-start gap-2 text-sm font-semibold leading-6 text-white">
-                  <span className="mt-0.5 text-base text-blue-200">☑</span>
-                  <span>{item}</span>
-                </div>
-              ))}
+            <div className="mt-6 flex flex-wrap gap-3 text-sm font-semibold">
+              <span className="rounded-full bg-white/15 px-4 py-2 backdrop-blur border border-white/20">✓ Market Analysis</span>
+              <span className="rounded-full bg-white/15 px-4 py-2 backdrop-blur border border-white/20">✓ Price Insights</span>
+              <span className="rounded-full bg-white/15 px-4 py-2 backdrop-blur border border-white/20">✓ Investment Data</span>
             </div>
           </div>
         </div>

@@ -114,53 +114,44 @@ export default function FindAgentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f3f5f7]">
+    <div className="min-h-screen bg-slate-50">
       <Navbar />
 
-      <main className="mx-auto max-w-[1320px] px-4 py-6 lg:px-5 lg:py-8">
-        <div className="rounded-none bg-white shadow-[0_1px_0_rgba(15,23,42,0.08)] lg:rounded-xl lg:border lg:border-slate-200">
-          <div className="border-b border-slate-200 px-4 py-4 lg:px-6">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#2171B5]">Find Agents / Agents Directory</p>
-                <h1 className="mt-2 text-3xl font-light leading-tight text-slate-900 lg:text-[38px]">Directory of Real Estate Agents / Brokers / Realtors in Sri Lanka</h1>
-              </div>
-              <div className="rounded-full bg-[#f0f6fb] px-4 py-2 text-sm font-semibold text-[#08306B]">
-                View All Agents / Agents Directory
-              </div>
-            </div>
-
-            <div className="mt-5 flex flex-wrap gap-2">
-              {directoryLinks.map((item) => (
-                item.to.startsWith('#') ? (
-                  <a
-                    key={item.label}
-                    href={item.to}
-                    className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 transition hover:border-[#2171B5] hover:text-[#2171B5]"
-                  >
-                    {item.label}
-                  </a>
-                ) : (
-                  <Link
-                    key={item.label}
-                    to={item.to}
-                    className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 transition hover:border-[#2171B5] hover:text-[#2171B5]"
-                  >
-                    {item.label}
-                  </Link>
-                )
-              ))}
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f] text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.15),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.12),transparent_22%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0))]" />
+        
+        <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-blue-100">👥 Find Agents</p>
+            <h1 className="mt-3 text-4xl font-black leading-tight sm:text-5xl">Real Estate Agents Directory</h1>
+            <p className="mt-4 max-w-2xl text-base text-white/80 sm:text-lg leading-relaxed">
+              Connect with verified real estate agents, brokers, and realtors across Sri Lanka. Find the perfect agent for your property needs.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3 text-sm font-semibold">
+              <span className="rounded-full bg-white/15 px-4 py-2 backdrop-blur border border-white/20">✓ Verified Agents</span>
+              <span className="rounded-full bg-white/15 px-4 py-2 backdrop-blur border border-white/20">✓ Expert Support</span>
+              <span className="rounded-full bg-white/15 px-4 py-2 backdrop-blur border border-white/20">✓ Easy Connect</span>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="grid gap-5 px-4 py-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-6">
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="rounded-2xl bg-white shadow-md ring-1 ring-slate-200 p-6 lg:p-8">
+          <div className="mb-6 pb-6 border-b border-slate-200">
+            <p className="text-xs font-bold uppercase tracking-widest text-[#2171B5]">🔍 Search Agents</p>
+            <h2 className="mt-2 text-2xl font-black text-slate-900">Find the Right Agent for You</h2>
+            <p className="mt-2 text-xs text-slate-600">Browse verified agents and connect with real estate professionals in your area.</p>
+          </div>
+
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
             <section>
-              <div className="rounded-lg border border-slate-200 bg-[#f3f4f6] p-4 lg:p-5">
-                <form className="grid gap-3 lg:grid-cols-[220px_minmax(0,1fr)_220px_auto] lg:items-center" onSubmit={handleSearch}>
+              <div className="rounded-lg bg-gradient-to-br from-blue-50 to-slate-50 p-5 ring-1 ring-slate-200">
+                <form className="grid gap-3 lg:grid-cols-[200px_minmax(0,1fr)_140px_auto] lg:items-center" onSubmit={handleSearch}>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="h-12 rounded border border-slate-300 bg-white px-3 text-sm text-slate-700"
+                    className="rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#2171B5]/20"
                   >
                     {categories.map((item) => (
                       <option key={item} value={item}>{item}</option>
@@ -172,14 +163,14 @@ export default function FindAgentPage() {
                     <input
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
-                      className="h-12 w-full rounded border border-slate-300 bg-white px-10 text-sm text-slate-700 outline-none focus:border-[#2171B5]"
+                      className="w-full rounded-lg border border-slate-200 bg-white px-10 py-2.5 text-sm text-slate-700 outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#2171B5]/20"
                       placeholder="Keywords"
                     />
                   </div>
 
                   <div className="hidden lg:block" />
 
-                  <button type="submit" className="h-12 rounded bg-[#ff5a00] px-8 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-[#e55100]">
+                  <button type="submit" className="rounded-lg bg-gradient-to-r from-[#2171B5] to-[#08306B] px-6 py-2.5 font-bold text-white text-sm uppercase tracking-wide transition hover:shadow-lg hover:scale-105">
                     Search
                   </button>
                 </form>

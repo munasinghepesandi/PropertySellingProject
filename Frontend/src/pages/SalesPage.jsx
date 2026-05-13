@@ -665,7 +665,7 @@ export default function SalesPage({ filterType = 'all' }) {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-6 md:gap-8 px-3 pb-12 sm:px-6 md:pb-14 lg:grid-cols-[0.78fr_1.22fr] lg:px-8">
+      <section className="mx-auto grid max-w-6xl gap-6 md:gap-8 px-3 pb-12 sm:px-6 md:pb-14 lg:grid-cols-[0.78fr_1.22fr] lg:px-8">
         <aside className={`lg:sticky lg:top-6 h-fit rounded-2xl md:rounded-[2rem] border border-[#d9e8f6] bg-white p-4 md:p-6 shadow-[0_18px_40px_rgba(8,48,107,0.05)] ${sidebarOpen ? 'block' : 'hidden'} lg:block`}>
           <div className="flex items-center justify-between gap-3">
             <div>

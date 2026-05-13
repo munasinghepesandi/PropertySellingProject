@@ -92,35 +92,41 @@ export default function HomeLoanRatesPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <Navbar />
 
-      <section className="bg-gradient-to-r from-[#08306B] to-[#2171B5] text-white">
-        <div className="mx-auto max-w-7xl px-5 py-12 md:py-14">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-100">Home Loan Rates in Sri Lanka</p>
-          <h1 className="mt-3 text-4xl font-black md:text-5xl">Compare Home Loan Rates in Sri Lanka</h1>
-          <p className="mt-4 max-w-3xl text-blue-100">
-            Search home loan products by loan amount, loan period, and down payment to estimate your first monthly repayment.
-          </p>
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f] text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.15),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.12),transparent_22%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0))]" />
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-blue-100">Compare Rates</p>
+            <h1 className="mt-3 text-4xl font-black leading-tight sm:text-5xl">Home Loan Rates in Sri Lanka</h1>
+            <p className="mt-4 max-w-2xl text-base text-white/80 leading-relaxed">
+              Search and compare home loan products by amount, period, and down payment to estimate your monthly repayment across all leading Sri Lankan banks.
+            </p>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-10">
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-2xl font-black">Quick home loan search</h2>
-          <div className="mt-5 grid gap-4 md:grid-cols-3">
+      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="rounded-2xl bg-white p-6 shadow-md ring-1 ring-slate-200">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-[#2171B5]">Search & Compare</p>
+            <h2 className="mt-2 text-2xl font-black text-slate-900">Quick home loan search</h2>
+          </div>
+          <div className="mt-6 grid gap-4 md:grid-cols-4">
             <label className="block">
-              <span className="text-sm font-bold text-slate-600">Loan amount</span>
+              <span className="text-xs font-bold uppercase tracking-wide text-slate-600">Loan Amount</span>
               <input
                 type="number"
                 value={loanAmount}
                 onChange={(event) => setLoanAmount(event.target.value)}
-                className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]"
+                className="mt-2 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#2171B5]/20"
               />
             </label>
             <label className="block">
-              <span className="text-sm font-bold text-slate-600">Loan period</span>
+              <span className="text-xs font-bold uppercase tracking-wide text-slate-600">Loan Period</span>
               <select
                 value={loanPeriod}
                 onChange={(event) => setLoanPeriod(event.target.value)}
-                className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]"
+                className="mt-2 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#2171B5]/20"
               >
                 {[5, 10, 15, 20, 25, 30].map((year) => (
                   <option key={year} value={year}>
@@ -130,22 +136,27 @@ export default function HomeLoanRatesPage() {
               </select>
             </label>
             <label className="block">
-              <span className="text-sm font-bold text-slate-600">Down Payment</span>
+              <span className="text-xs font-bold uppercase tracking-wide text-slate-600">Down Payment</span>
               <input
                 type="number"
                 value={downPayment}
                 onChange={(event) => setDownPayment(event.target.value)}
-                className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2171B5]"
+                className="mt-2 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#2171B5]/20"
               />
-              <span className={`mt-2 block text-xs font-bold ${downPaymentPercent >= 20 ? "text-emerald-700" : "text-red-600"}`}>
-                Enter above 20% of the property value
-              </span>
             </label>
+            <div className="flex items-end">
+              <div className="text-xs font-semibold leading-tight">
+                <span className={`block ${downPaymentPercent >= 20 ? "text-emerald-600" : "text-amber-600"}`}>
+                  {downPaymentPercent.toFixed(1)}% of value
+                </span>
+                <span className="block text-slate-500 mt-1">{downPaymentPercent >= 20 ? "✓ Valid" : "⚠ Minimum 20%"}</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div className="hidden grid-cols-[0.85fr_1.45fr_0.8fr_1fr] bg-slate-100 px-5 py-4 text-sm font-black text-slate-700 md:grid">
+        <div className="mt-8 overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-slate-200">
+          <div className="hidden grid-cols-[1fr_1.5fr_0.8fr_1.2fr] gap-4 bg-gradient-to-r from-slate-50 to-blue-50 px-6 py-4 text-sm font-black text-slate-700 md:grid">
             <span>Bank</span>
             <span>Home Loan Product</span>
             <span>Interest Rate</span>
@@ -154,11 +165,11 @@ export default function HomeLoanRatesPage() {
           {searchRows.map((row) => (
             <div
               key={`${row.bank}-${row.product}`}
-              className="grid gap-3 border-t border-slate-200 px-5 py-5 text-sm md:grid-cols-[0.85fr_1.45fr_0.8fr_1fr] md:items-center"
+              className="grid gap-3 border-t border-slate-100 px-6 py-5 text-sm md:grid-cols-[1fr_1.5fr_0.8fr_1.2fr] md:items-center transition duration-150 hover:bg-blue-50"
             >
-              <div className="flex items-center gap-3 font-black text-slate-900">
+              <div className="flex items-center gap-3 font-bold text-slate-900">
                 <span
-                  className="inline-flex h-12 w-16 items-center justify-center overflow-hidden rounded-xl bg-white p-2 text-xs font-black shadow-sm ring-1 ring-black/10"
+                  className="inline-flex h-10 w-14 items-center justify-center rounded-lg p-1 text-xs font-bold shadow-sm ring-1 ring-black/5"
                   style={{ backgroundColor: row.color, color: row.textColor }}
                 >
                   <img
@@ -176,25 +187,25 @@ export default function HomeLoanRatesPage() {
                 {row.bank}
               </div>
               <div>
-                <p className="font-bold">{row.product}</p>
+                <p className="font-semibold text-slate-900">{row.product}</p>
                 {row.readMore ? (
-                  <button type="button" className="mt-1 text-xs font-black uppercase tracking-wide text-[#2171B5]">
-                    Read more
+                  <button type="button" className="mt-1 text-xs font-bold uppercase tracking-wide text-[#2171B5] hover:text-[#08306B]">
+                    Read more →
                   </button>
                 ) : null}
               </div>
-              <strong>{row.rate}% upwards</strong>
-              <strong className="text-lg text-[#08306B]">{formatMoney(row.monthly)}</strong>
+              <span className="font-bold text-slate-700">{row.rate}%+</span>
+              <span className="font-bold text-lg text-[#08306B]">{formatMoney(row.monthly)}</span>
             </div>
           ))}
         </div>
 
-        <p className="mt-5 text-sm font-semibold text-slate-600">Last Update Date :- February 1st 2026</p>
-        <p className="mt-2 text-xs leading-5 text-slate-500">
-          **Initial monthly repayment figures are estimates only, based on the advertised rate, loan amount and term entered.
-          Rates, fees, charges, and the total cost of the loan may vary depending on your loan amount, loan term, credit history,
-          and individual circumstances.
-        </p>
+        <div className="mt-6 rounded-lg bg-blue-50 border border-blue-200 px-6 py-4 ring-1 ring-blue-100">
+          <p className="text-xs font-bold uppercase tracking-wide text-slate-600 mb-2">📋 Important Notice</p>
+          <p className="text-xs text-slate-600 leading-relaxed">
+            Monthly repayment figures are estimates based on advertised rates and your inputs. Actual rates, fees, and total costs may vary based on loan amount, tenure, credit history, and individual circumstances. Last updated: February 1st, 2026.
+          </p>
+        </div>
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-8 px-5 pb-12 lg:grid-cols-[0.95fr_1.05fr]">

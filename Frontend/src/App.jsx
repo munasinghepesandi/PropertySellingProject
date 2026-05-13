@@ -17,6 +17,8 @@ import PropertyPriceIndexPage from './pages/PropertyPriceIndexPage'
 import OurServicesPage from './pages/OurServicesPage'
 import HouseBuildersPage from './pages/HouseBuildersPage'
 import FindAgentPage from './pages/FindAgentPage'
+import LettingAgentsPage from './pages/LettingAgentsPage'
+import PromotePropertyPage from './pages/PromotePropertyPage'
 import HelpPage from './pages/HelpPage'
 import { PostAd } from './pages/PostAd'
 import SolarPanelsPage from './pages/SolarPanelsPage'
@@ -34,10 +36,16 @@ import PropertyBuyingGuidePage from './pages/PropertyBuyingGuidePage'
 import CapitalGainsTaxPage from './pages/CapitalGainsTaxPage'
 import PriceIndicesPage from './pages/PriceIndicesPage'
 import MarketOutlookReportPage from './pages/MarketOutlookReportPage'
+import HousesWantedPage from './pages/HousesWantedPage'
+import LandWantedPage from './pages/LandWantedPage'
+import ApartmentsWantedPage from './pages/ApartmentsWantedPage'
+import RoomsWantedPage from './pages/RoomsWantedPage'
+import CommercialWantedPage from './pages/CommercialWantedPage'
 import Login from './components/Login'
 import Register from './components/Register'
 import BecomeAgentPage from './pages/BecomeAgentPage'
 import ForgotPassword from './components/ForgotPassword'
+import WantedPropertiesPage from './pages/WantedPropertiesPage'
 import { ChatbotWidget } from './components/ChatbotWidget'
 
 function LoginRoute() {
@@ -73,6 +81,7 @@ function App() {
           <Route path="/become-agent" element={<BecomeAgentPage />} />
           <Route path="/forgot" element={<ForgotRoute />} />
           <Route path="/post-ad" element={<PostAd />} />
+          <Route path="/promote-property" element={<PromotePropertyPage />} />
 
           {/* Keep Navbar/Footer links from breaking */}
           <Route path="/properties" element={<SalesPage />} />
@@ -90,7 +99,7 @@ function App() {
           <Route path="/inspiration/:inspirationId" element={<InspirationDetailPage />} />
           <Route path="/market-insights/inspiration/:inspirationId" element={<InspirationDetailPage />} />
           <Route path="/sales/:sectionSlug" element={<SalesSectionPage />} />
-          <Route path="/rentals" element={<Homepage />} />
+          <Route path="/rentals" element={<LettingAgentsPage />} />
           <Route path="/houses" element={<HousesPage />} />
           <Route path="/apartments" element={<ApartmentsPage />} />
           <Route path="/luxury" element={<LuxuryPage />} />
@@ -112,6 +121,12 @@ function App() {
           <Route path="/home-loans/calculator" element={<HomeLoanCalculatorPage />} />
           <Route path="/home-loans/comparison" element={<HomeLoanComparisonPage />} />
           <Route path="/home-loans/comparision" element={<HomeLoanComparisonPage />} />
+          <Route path="/wanted/view-all" element={<WantedPropertiesPage />} />
+          <Route path="/wanted/houses" element={<HousesWantedPage />} />
+          <Route path="/wanted/apartments" element={<ApartmentsWantedPage />} />
+          <Route path="/wanted/land" element={<LandWantedPage />} />
+          <Route path="/wanted/commercial" element={<CommercialWantedPage />} />
+          <Route path="/wanted/rooms" element={<RoomsWantedPage />} />
           <Route path="/sales/foreigners-guide" element={<ForeignersGuidePage />} />
           <Route path="/features/property-buying-for-foreigners.php" element={<ForeignersGuidePage />} />
           <Route path="/features/land-price-index.php" element={<PropertyPriceIndexPage />} />
@@ -147,7 +162,7 @@ function App() {
           <Route path="/our-services/land-price-index" element={<PriceIndicesPage />} />
           <Route path="/market-outlook" element={<MarketOutlookReportPage />} />
           <Route path="/market-outlook-report" element={<MarketOutlookReportPage />} />
-          <Route path="/wanted" element={<Homepage />} />
+          <Route path="/wanted" element={<WantedPropertiesPage />} />
           <Route path="/more" element={<Homepage />} />
           <Route path="/aboutus" element={<Homepage />} />
           <Route path="/faqs" element={<Homepage />} />
