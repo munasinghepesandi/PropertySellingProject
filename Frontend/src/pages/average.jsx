@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 
 
+
 import chartImage from "../assets/1773335963248_copy.jpg";
 
 const Average = {
