@@ -1,8 +1,9 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-
+import { useNavigate } from "react-router-dom";
 
 export default function Bungalows() {
+  const navigate = useNavigate();
   return (
     <>
       <Navbar />
@@ -93,22 +94,20 @@ export default function Bungalows() {
           <div className="lg:col-span-3">
             {/* PROPERTY GRID */}
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+
               {/* CARD 1 */}
               <div className="overflow-hidden rounded-xl border border-slate-300 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                
+                
                 <img
                   src="https://images.unsplash.com/photo-1568605114967-8130f3a36994"
                   alt="property"
+                  onClick={() => navigate("/propertynew")}
                   className="h-[200px] w-full object-cover"
                 />
-
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Beautiful House
-                  </h3>
-
-                  <p className="mt-1 text-sm text-slate-500">
-                    Negombo
-                  </p>
+                  <h3 className="text-lg font-semibold">Beautiful House</h3>
+                  <p className="mt-1 text-sm text-slate-500">Peradeniya, Kandy</p>
                 </div>
               </div>
 
@@ -118,22 +117,16 @@ export default function Bungalows() {
                   <span className="absolute right-3 top-3 rounded bg-red-600 px-2 py-1 text-[11px] font-semibold text-white">
                     URGENT
                   </span>
-
                   <img
                     src="https://images.unsplash.com/photo-1507149833265-60c372daea22"
                     alt="property"
+                    onClick={() => navigate("/propertynew")}
                     className="h-[200px] w-full object-cover"
                   />
                 </div>
-
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Modern Villa
-                  </h3>
-
-                  <p className="mt-1 text-sm text-slate-500">
-                    Colombo 10
-                  </p>
+                  <h3 className="text-lg font-semibold">Modern Villa</h3>
+                  <p className="mt-1 text-sm text-slate-500">Katugastota, Kandy</p>
                 </div>
               </div>
 
@@ -143,22 +136,15 @@ export default function Bungalows() {
                   <span className="absolute right-3 top-3 rounded bg-red-600 px-2 py-1 text-[11px] font-semibold text-white">
                     URGENT
                   </span>
-
                   <img
                     src="https://images.unsplash.com/photo-1494526585095-c41746248156"
                     alt="property"
                     className="h-[200px] w-full object-cover"
                   />
                 </div>
-
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Luxury Home
-                  </h3>
-
-                  <p className="mt-1 text-sm text-slate-500">
-                    Colombo 07
-                  </p>
+                  <h3 className="text-lg font-semibold">Luxury Home</h3>
+                  <p className="mt-1 text-sm text-slate-500">Hanthana, Kandy</p>
                 </div>
               </div>
 
@@ -168,22 +154,16 @@ export default function Bungalows() {
                   <span className="absolute right-3 top-3 rounded bg-red-600 px-2 py-1 text-[11px] font-semibold text-white">
                     URGENT
                   </span>
-
                   <img
                     src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c"
                     alt="property"
+                    onClick={() => navigate("/propertynew")}
                     className="h-[200px] w-full object-cover"
                   />
                 </div>
-
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Stylish Apartment
-                  </h3>
-
-                  <p className="mt-1 text-sm text-slate-500">
-                    Mount Lavinia
-                  </p>
+                  <h3 className="text-lg font-semibold">Stylish Apartment</h3>
+                  <p className="mt-1 text-sm text-slate-500">Ampitiya, Kandy</p>
                 </div>
               </div>
 
@@ -193,22 +173,15 @@ export default function Bungalows() {
                   <span className="absolute right-3 top-3 rounded bg-red-600 px-2 py-1 text-[11px] font-semibold text-white">
                     URGENT
                   </span>
-
                   <img
                     src="https://images.unsplash.com/photo-1570129477492-45c003edd2be"
                     alt="property"
                     className="h-[200px] w-full object-cover"
                   />
                 </div>
-
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Family House
-                  </h3>
-
-                  <p className="mt-1 text-sm text-slate-500">
-                    Kandy
-                  </p>
+                  <h3 className="text-lg font-semibold">Family House</h3>
+                  <p className="mt-1 text-sm text-slate-500">Digana, Kandy</p>
                 </div>
               </div>
 
@@ -218,24 +191,18 @@ export default function Bungalows() {
                   <span className="absolute right-3 top-3 rounded bg-red-600 px-2 py-1 text-[11px] font-semibold text-white">
                     URGENT
                   </span>
-
                   <img
                     src="https://images.unsplash.com/photo-1501183638710-841dd1904471"
                     alt="property"
                     className="h-[200px] w-full object-cover"
                   />
                 </div>
-
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Modern Residence
-                  </h3>
-
-                  <p className="mt-1 text-sm text-slate-500">
-                    Galle
-                  </p>
+                  <h3 className="text-lg font-semibold">Modern Residence</h3>
+                  <p className="mt-1 text-sm text-slate-500">Kandy City, Kandy</p>
                 </div>
               </div>
+
             </div>
           </div>
 
@@ -243,13 +210,8 @@ export default function Bungalows() {
           <div className="flex flex-col gap-5">
             {/* AD BOX */}
             <div className="rounded-xl bg-blue-950 p-6 text-center text-white">
-              <h3 className="text-xl font-bold">
-                Market Report 2026
-              </h3>
-
-              <p className="mt-2 text-blue-200">
-                OUT NOW!
-              </p>
+              <h3 className="text-xl font-bold">Market Report 2026</h3>
+              <p className="mt-2 text-blue-200">OUT NOW!</p>
             </div>
 
             {/* FEATURED */}
@@ -267,9 +229,6 @@ export default function Bungalows() {
           </div>
         </div>
       </div>
-
-      
     </>
   );
 }
-
