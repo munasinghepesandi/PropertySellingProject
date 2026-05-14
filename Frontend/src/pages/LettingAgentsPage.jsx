@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Check } from 'lucide-react'
+import { Navbar } from '../components/Navbar'
 
 export default function LettingAgentsPage() {
   const navigate = useNavigate()
@@ -68,22 +69,44 @@ export default function LettingAgentsPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <Navbar/>
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#08306B] to-[#2171B5] py-20 text-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <h1 className="text-4xl sm:text-5xl font-extrabold mb-6">Manage Rental Properties Professionally</h1>
-          <p className="text-lg text-blue-100 max-w-3xl">List, manage, and lease properties with verified tenants. Connect with qualified renters and streamline your letting business.</p>
+      <section
+        className="relative py-28 text-white"
+        style={{
+          backgroundImage: `url('https://businesstech.co.za/news/wp-content/uploads/2023/02/rent.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/40" aria-hidden="true" />
+
+        <div className="relative z-10 max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Manage Rental Properties Professionally</h1>
+              <p className="text-base sm:text-lg text-blue-100 max-w-xl mb-6">List, manage, and lease properties with verified tenants. Connect with qualified renters and streamline your letting business.</p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button className="inline-flex items-center justify-center px-6 py-3 bg-[#2171B5] hover:bg-[#1b5f98] text-white rounded-lg font-semibold">Get Started</button>
+                <button onClick={() => navigate('/find-agent')} className="inline-flex items-center justify-center px-6 py-3 border border-white/30 text-white rounded-lg hover:bg-white/10">Find an Agent</button>
+              </div>
+            </div>
+
+            <div className="hidden md:flex justify-end">
+              
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Key Metrics */}
       <section className="bg-[#f0f5fb] py-16 border-b border-blue-200">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {metrics.map((m) => (
-              <div key={m.label} className="text-center">
-                <div className="text-5xl font-extrabold text-[#08306B]">{m.value}</div>
-                <div className="text-gray-700 mt-3 font-medium">{m.label}</div>
+              <div key={m.label} className="bg-white p-6 rounded-xl shadow-sm text-center">
+                <div className="text-3xl sm:text-4xl font-extrabold text-[#08306B]">{m.value}</div>
+                <div className="text-gray-600 mt-2 font-medium">{m.label}</div>
               </div>
             ))}
           </div>
@@ -94,7 +117,7 @@ export default function LettingAgentsPage() {
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-[#08306B] mb-16 text-center">Why List with LankaPropertyWeb?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {benefits.map((benefit) => (
               <div key={benefit.title} className="bg-white p-8 rounded-xl border border-[#e0ecf7] hover:shadow-lg transition">
                 <h3 className="font-bold text-[#08306B] text-lg mb-3">{benefit.title}</h3>
@@ -118,10 +141,10 @@ export default function LettingAgentsPage() {
           <h2 className="text-3xl font-bold text-[#08306B] mb-14 text-center">Letting Services</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((svc) => (
-              <div key={svc.title} className="bg-white rounded-xl p-8 text-center border border-blue-100 hover:border-[#2171B5] transition">
-                <div className="text-5xl mb-4">{svc.icon}</div>
+              <div key={svc.title} className="bg-white rounded-xl p-6 text-center border border-blue-50 hover:shadow-md transition">
+                <div className="mx-auto flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#e6f2fb] to-white text-2xl mb-4">{svc.icon}</div>
                 <h4 className="font-bold text-[#08306B] text-lg">{svc.title}</h4>
-                <p className="text-sm text-gray-600 mt-3">{svc.desc}</p>
+                <p className="text-sm text-gray-600 mt-2">{svc.desc}</p>
               </div>
             ))}
           </div>
@@ -133,21 +156,26 @@ export default function LettingAgentsPage() {
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-[#08306B] mb-16 text-center">Flexible Packages</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {packages.map((pkg) => (
-              <div key={pkg.name} className={`${pkg.bg} ${pkg.border} rounded-xl p-8`}>
-                <h3 className="text-2xl font-bold text-[#08306B]">{pkg.name}</h3>
-                <div className="mt-4">
-                  <div className="text-4xl font-extrabold text-[#2171B5]">{pkg.price}</div>
-                  <div className="text-sm text-gray-500 font-medium">{pkg.subtext}</div>
+            {packages.map((pkg, i) => (
+              <div key={pkg.name} className={`${pkg.bg} ${pkg.border} rounded-xl p-6 flex flex-col justify-between`}>
+                <div>
+                  <h3 className="text-2xl font-bold text-[#08306B]">{pkg.name}</h3>
+                  <div className="mt-4">
+                    <div className="text-3xl sm:text-4xl font-extrabold text-[#2171B5]">{pkg.price}</div>
+                    <div className="text-sm text-gray-500 font-medium">{pkg.subtext}</div>
+                  </div>
+                  <ul className="mt-6 space-y-3">
+                    {pkg.features.map((feat, idx) => (
+                      <li key={idx} className="flex items-center gap-3">
+                        <Check className="w-4 h-4 text-[#2171B5] flex-shrink-0" />
+                        <span className="text-gray-700 text-sm">{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="mt-8 space-y-4">
-                  {pkg.features.map((feat, idx) => (
-                    <li key={idx} className="flex items-center gap-3">
-                      <Check className="w-5 h-5 text-[#2171B5] flex-shrink-0" />
-                      <span className="text-gray-700 text-sm">{feat}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-6">
+                  <button className={`w-full py-3 rounded-md font-semibold ${i===1? 'bg-[#08306B] text-white hover:bg-[#062852]':'border border-gray-200 text-[#08306B] hover:bg-gray-50'}`}>Choose</button>
+                </div>
               </div>
             ))}
           </div>
