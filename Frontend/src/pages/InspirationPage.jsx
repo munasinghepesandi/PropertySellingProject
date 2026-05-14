@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
-import { inspirationCategories, inspirationItems } from "./OurServicesPage";
+import { inspirationCategories, inspirationItems } from "../data/inspirationData";
 
 export default function InspirationPage() {
   return (

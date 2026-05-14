@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
@@ -7,24 +6,22 @@ import ForeignersGuidePage from "./ForeignersGuidePage";
 import SolarPanelsPage from "./SolarPanelsPage";
 import MarketInsightsPage from "./MarketInsightsPage";
 import {
-  ArrowRight,
+  
   BadgeDollarSign,
-  BarChart3,
+  
   BriefcaseBusiness,
   Calculator,
-  CalendarDays,
-  ClipboardList,
-  Download,
+  
   FileText,
   Handshake,
-  Home,
+  
   Landmark,
-  MapPin,
+  
   Phone,
   Scale,
-  Search,
+  
   ShieldCheck,
-  TrendingUp,
+  
 } from "lucide-react";
 
 const buyerSellerServices = [
@@ -167,223 +164,36 @@ const marketServices = [
   "Reports based on website and market data",
 ];
 
-const advisoryStats = [
-  { label: "Market trend", value: "Rising", note: "Demand stays active in key metro areas" },
-  { label: "Price outlook", value: "Stable", note: "Buyer interest remains steady for well-located homes" },
-  { label: "Investor focus", value: "High", note: "Apartments and land continue to draw attention" },
-];
 
-const reportPoints = [
-  "Updated Sri Lanka property trend overview",
-  "Pricing signals for buyers, sellers, and investors",
-  "High-demand areas, rental demand, and growth pockets",
-  "Practical insight for planning your next move",
-];
 
-const advisoryHighlights = [
-  "Estimate your potential ROI before you invest",
-  "Find the best locations to settle in",
-  "Evaluate how your price quotation compares",
-];
-
-const housePriceRows = [
-  ["Sri Lanka Overall House Sale price", "85.12 million", "25.0%"],
-  ["Sri Lanka Overall Apartment Sale price", "93.63 million", "15.20%"],
-];
-
-const landPriceRows = [
-  ["Sri Lanka Overall Residential Land price", "3.60 million Per perch", "72%"],
-  ["Colombo 1-15 Residential Land price", "14.63 million Per perch", "13%"],
-  ["Western Province (apart from Colombo city) Residential Land price", "2.42 million Per perch", "70%"],
-  ["Sri Lanka Overall Tea Land price", "5.81 million Per acre", "13%"],
-  ["Sri Lanka Overall Coconut Land price", "8.05 million Per acre", "1%"],
-];
-
-const latestNews = [
-  {
-    date: "Monday April 06, 2026",
-    title: "Robust Demand for Real Estate Purchases Displayed at the Lanka Property Show 2026",
-    excerpt:
-      "From left to right: Mr. Kishore Reddy, President, Indian CEO Forum; Mr. Virath De Alwis, Chairman,...",
-  },
-  {
-    date: "Wednesday March 18, 2026",
-    title: "Capitalizing on the Real Estate Expansion: Lanka Property Show 2026 Sets the Stage for Sri Lanka’s Next Era of Growth",
-    excerpt:
-      "The Lanka Property Show 2026, Sri Lanka’s flagship real estate exhibition, is set to return for...",
-  },
-  {
-    date: "Thursday February 26, 2026",
-    title: "LankaPropertyWeb Unveils ‘Apartment Finder’: A Game-Changer in the Real Estate Market",
-    excerpt:
-      "Colombo, Sri Lanka – LankaPropertyWeb (LPW) is redefining the property search experience with the...",
-  },
-  {
-    date: "Tuesday April 07, 2026",
-    title: "The Smart Investor’s Guide to Below Market Value Properties in Sri Lanka",
-    excerpt:
-      "Buying property in Sri Lanka has long been viewed as a reliable investment, but finding real value...",
-  },
-];
-
-export const inspirationCategories = [
-  "All",
-  "Living Room",
-  "Bathroom",
-  "Bedroom",
-  "Dining Room",
-  "Exterior",
-  "Garden",
-  "Kitchen",
-  "Luxury",
-];
-
-export const inspirationItems = [
-  { title: "Tri-Zen 02 Bedroom Apartment For Rent In Colombo 02", tag: "Living Room", image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Prime Apartment Complex For Sale In Colombo 07", tag: "Exterior", image: "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=1200&q=80&auto=format&fit=crop" },
-  { title: "1 Bedroom Apartment For Sale In Colombo 02", tag: "Bathroom", image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Luxe Furnished Apartment For Rent In Kottawa", tag: "Bedroom", image: "https://images.unsplash.com/photo-1616594039964-3de5bd33685d?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Modern Kitchen Design Ideas For City Homes", tag: "Kitchen", image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Pool-side Exterior Concept For Tropical Villas", tag: "Exterior", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Compact Dining Room Inspiration For Apartments", tag: "Dining Room", image: "https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Green Garden Corner With Natural Stone Pathways", tag: "Garden", image: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Minimal Living Room With Warm Tones", tag: "Living Room", image: "https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Open Kitchen With Island Counter", tag: "Kitchen", image: "https://images.unsplash.com/photo-1600586753151-384129cf4e3e?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Master Bedroom With Wood Accent Wall", tag: "Bedroom", image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Contemporary Bathroom With Glass Shower", tag: "Bathroom", image: "https://images.unsplash.com/photo-1616593969747-4797dc75033e?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Dining Space With Pendant Lighting", tag: "Dining Room", image: "https://images.unsplash.com/photo-1617103996702-96ff29b1c467?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Front Elevation For Urban Family Home", tag: "Exterior", image: "https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Garden Deck With Tropical Planting", tag: "Garden", image: "https://images.unsplash.com/photo-1518156677180-95a2893f3499?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Luxury Penthouse Living Hall", tag: "Luxury", image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Neutral Living Room With Art Wall", tag: "Living Room", image: "https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Monochrome Kitchen With Premium Finishes", tag: "Kitchen", image: "https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Guest Bedroom With Balcony Access", tag: "Bedroom", image: "https://images.unsplash.com/photo-1617104551722-3b2d51366458?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Small Bathroom Layout Ideas", tag: "Bathroom", image: "https://images.unsplash.com/photo-1564540574859-0dfb63985939?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Dining Nook For Compact Apartments", tag: "Dining Room", image: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Duplex Exterior With Vertical Fins", tag: "Exterior", image: "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Backyard Seating With Night Lights", tag: "Garden", image: "https://images.unsplash.com/photo-1472224371017-08207f84aaae?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Luxury Villa Lounge Interior", tag: "Luxury", image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Cozy Living Room For First Home Buyers", tag: "Living Room", image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Scandinavian Kitchen Style", tag: "Kitchen", image: "https://images.unsplash.com/photo-1600566752229-250ed79470f8?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Bedroom Storage Design For Small Spaces", tag: "Bedroom", image: "https://images.unsplash.com/photo-1617104551722-3b2d51366458?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Spa-style Bathroom With Stone Texture", tag: "Bathroom", image: "https://images.unsplash.com/photo-1616593969747-4797dc75033e?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Elegant Dining Area For Family Gatherings", tag: "Dining Room", image: "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Modern Facade With Glass Balcony", tag: "Exterior", image: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Courtyard Garden For Villa Homes", tag: "Garden", image: "https://images.unsplash.com/photo-1598902108854-10e335adac99?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Luxury Master Suite With Lounge", tag: "Luxury", image: "https://images.unsplash.com/photo-1600607687644-c7f34f8d9d9f?w=1200&q=80&auto=format&fit=crop" },
-  { title: "TV Feature Wall Living Room Trends", tag: "Living Room", image: "https://images.unsplash.com/photo-1493666438817-866a91353ca9?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Kitchen Storage Ideas For Apartments", tag: "Kitchen", image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Premium Bedroom Lighting Concepts", tag: "Bedroom", image: "https://images.unsplash.com/photo-1616593969747-4797dc75033e?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Compact Bathroom Vanity Designs", tag: "Bathroom", image: "https://images.unsplash.com/photo-1629079447777-1e605162dc8d?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Dining Layout For Open Plan Homes", tag: "Dining Room", image: "https://images.unsplash.com/photo-1616137422495-1e9e46e2aa77?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Luxury Residence Entrance Design", tag: "Exterior", image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Terrace Garden For Urban Living", tag: "Garden", image: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=1200&q=80&auto=format&fit=crop" },
-  { title: "High-end Living And Dining Combo", tag: "Luxury", image: "https://images.unsplash.com/photo-1617098474202-0d0d7f60a9d7?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Family Living Room With Natural Light", tag: "Living Room", image: "https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Two-tone Kitchen Cabinet Inspiration", tag: "Kitchen", image: "https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Soft-tone Bedroom With Timber Flooring", tag: "Bedroom", image: "https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Minimal Bathroom For Studio Apartments", tag: "Bathroom", image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Classic Dining Room With Wooden Table", tag: "Dining Room", image: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Contemporary Exterior With Clean Lines", tag: "Exterior", image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Landscape Garden Around Pool", tag: "Garden", image: "https://images.unsplash.com/photo-1599619351208-3e6c839d6828?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Luxury Penthouse Bedroom View", tag: "Luxury", image: "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Modern Living Room Ceiling Design", tag: "Living Room", image: "https://images.unsplash.com/photo-1560185127-6a8c7f6f5f0b?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Kitchen Backsplash And Island Concepts", tag: "Kitchen", image: "https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Kids Bedroom Interior Inspiration", tag: "Bedroom", image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Marble Bathroom With Gold Fixtures", tag: "Bathroom", image: "https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Dining Room Styling With Green Accents", tag: "Dining Room", image: "https://images.unsplash.com/photo-1600488994023-6f4748e66f96?w=1200&q=80&auto=format&fit=crop" },
-  { title: "Luxury Courtyard And Facade Lighting", tag: "Luxury", image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80&auto=format&fit=crop" },
-];
-
-function AdvisoryPage() {
-  const [activeInspirationCategory, setActiveInspirationCategory] = React.useState("All");
-  const visibleInspirationItems =
-    activeInspirationCategory === "All"
-      ? inspirationItems
-      : inspirationItems.filter((item) => item.tag === activeInspirationCategory);
-
-  return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      <Navbar />
-
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f] text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.15),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.12),transparent_22%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0))]" />
-        
-        <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-wider text-blue-100">🛠️ Our Services</p>
-            <h1 className="mt-3 text-4xl font-black leading-tight sm:text-5xl">Professional Property Services</h1>
-            <p className="mt-4 max-w-2xl text-base text-white/80 sm:text-lg leading-relaxed">
-              Comprehensive support services to guide you through every step of your property journey. From valuations to legal assistance, we're here to help.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3 text-sm font-semibold">
-              <span className="rounded-full bg-white/15 px-4 py-2 backdrop-blur border border-white/20">✓ Expert Guidance</span>
-              <span className="rounded-full bg-white/15 px-4 py-2 backdrop-blur border border-white/20">✓ Complete Support</span>
-              <span className="rounded-full bg-white/15 px-4 py-2 backdrop-blur border border-white/20">✓ Trusted Services</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto w-full max-w-7xl px-5 pb-14 pt-8 md:px-8">
-        <div className="bg-white px-1 py-2 md:px-2">
-          <div className="flex gap-3 overflow-x-auto pb-3">
-            {inspirationCategories.map((category) => (
-              <button
-                key={category}
-                type="button"
-                onClick={() => setActiveInspirationCategory(category)}
-                className={`whitespace-nowrap rounded-full border px-6 py-2 text-sm font-bold transition ${
-                  activeInspirationCategory === category
-                    ? "border-[#2171B5] bg-[#2171B5] text-white"
-                    : "border-[#2171B5] bg-white text-[#2171B5] hover:bg-[#eff6fd]"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-
-          <p className="mt-4 text-sm font-semibold text-slate-600">Home &gt; Inspiration</p>
-          <h2 className="mt-3 text-2xl font-black tracking-[-0.02em] text-slate-900 md:text-4xl">
-            70053 Home Inspiration &amp; ideas in Sri Lanka
-          </h2>
-          <p className="mt-2 text-sm text-slate-500">Showing {visibleInspirationItems.length} filtered results</p>
-
-          <div className="mt-8 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {visibleInspirationItems.map((item, index) => (
-              <Link
-                key={`${item.title}-${item.tag}`}
-                to={`/inspiration/${inspirationItems.findIndex((candidate) => candidate.title === item.title && candidate.tag === item.tag) + 1}`}
-                className="group relative block h-[260px] overflow-hidden rounded-xl bg-slate-100 shadow-sm md:h-[280px]"
-              >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="h-full w-full object-cover object-center transition duration-300 group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-                <span className="absolute right-3 top-3 rounded-md bg-[#2171B5] px-3 py-1 text-xs font-black text-white">
-                  {item.tag}
-                </span>
-                <p className="absolute inset-x-3 bottom-3 text-sm font-black leading-5 text-white drop-shadow">
-                  {item.title}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  );
-}
+ 
 
 export default function OurServicesPage() {
   const { serviceSlug } = useParams();
   const { pathname } = useLocation();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const fd = new FormData(form);
+    const payload = Object.fromEntries(fd.entries());
+    payload.property_id = null;
+
+    try {
+      const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${apiBase}/api/inquiries`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Submission failed');
+      window.alert('Thanks — we will contact you shortly');
+      form.reset();
+    } catch (err) {
+      window.alert('Submission failed: ' + (err.message || 'Unknown error'));
+    }
+  };
 
   if (
     serviceSlug === "advisory" ||
@@ -416,6 +226,8 @@ export default function OurServicesPage() {
         <img
           src="https://images.unsplash.com/photo-1568605114967-8130f3a36994"
           alt="Property assistance consultation"
+          loading="lazy"
+          decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-black/55" />
@@ -466,29 +278,39 @@ export default function OurServicesPage() {
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {buyerSellerServices.map((service) => {
             const Icon = service.icon;
+            const id = `service-${service.title.replace(/\s+/g, '-').toLowerCase()}`;
             return (
-              <article key={service.title} className="flex h-full flex-col overflow-hidden rounded-3xl border border-[#d9e8f6] bg-white shadow-[0_16px_40px_rgba(8,48,107,0.06)] transition hover:-translate-y-1 hover:shadow-[0_22px_55px_rgba(8,48,107,0.10)]">
+              <article
+                key={service.title}
+                role="article"
+                aria-labelledby={id}
+                className="flex h-full flex-col overflow-hidden rounded-3xl border border-[#d9e8f6] bg-white shadow-[0_16px_40px_rgba(8,48,107,0.06)] transition hover:-translate-y-1 hover:shadow-[0_22px_55px_rgba(8,48,107,0.10)]"
+              >
                 <div className="relative h-52">
                   <img src={service.image} alt={service.title} className="h-full w-full object-cover" loading="lazy" />
                   <div className="absolute left-4 top-4 rounded-2xl bg-white/95 p-3 text-[#2171B5] shadow-sm ring-1 ring-[#d9e8f6]">
-                    <Icon size={24} />
+                    <Icon size={24} aria-hidden="true" />
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-[#061f47]/30 via-transparent to-transparent" />
                 </div>
                 <div className="flex flex-1 flex-col p-6">
                   <p className="text-xs font-black uppercase tracking-[0.16em] text-[#2171B5]">{service.eyebrow}</p>
-                  <h2 className="mt-1 text-xl font-black">{service.title}</h2>
+                  <h2 id={id} className="mt-1 text-xl font-black">{service.title}</h2>
                   <p className="mt-4 text-sm leading-6 text-slate-600">{service.description}</p>
                   <h3 className="mt-5 text-sm font-black uppercase tracking-wide text-slate-800">{service.heading}</h3>
                   <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
                     {service.items.map((item) => (
                       <li key={item} className="flex gap-2">
-                        <ShieldCheck className="mt-1 h-4 w-4 flex-none text-[#2171B5]" />
+                        <ShieldCheck className="mt-1 h-4 w-4 flex-none text-[#2171B5]" aria-hidden="true" />
                         <span>{item}</span>
                       </li>
                     ))}
                   </ul>
-                  <button type="button" className="mt-auto w-full rounded-xl bg-gradient-to-r from-[#2171B5] to-[#08306B] px-5 py-3 text-sm font-black text-white transition hover:shadow-lg hover:shadow-[#08306B]/20">
+                  <button
+                    type="button"
+                    aria-label={`Learn more about ${service.title}`}
+                    className="mt-auto w-full rounded-xl bg-gradient-to-r from-[#2171B5] to-[#08306B] px-5 py-3 text-sm font-black text-white transition hover:shadow-lg hover:shadow-[#08306B]/20"
+                  >
                     Learn More
                   </button>
                 </div>
@@ -638,7 +460,7 @@ export default function OurServicesPage() {
             />
           </div>
 
-          <form className="rounded-[2rem] border border-[#d9e8f6] bg-white p-6 shadow-[0_16px_40px_rgba(8,48,107,0.05)]">
+          <form onSubmit={handleSubmit} className="rounded-[2rem] border border-[#d9e8f6] bg-white p-6 shadow-[0_16px_40px_rgba(8,48,107,0.05)]" aria-label="Contact form">
             <div className="flex items-center gap-3">
               <BriefcaseBusiness className="text-[#2171B5]" size={24} />
               <h2 className="text-2xl font-black">Contact Us</h2>
@@ -646,19 +468,19 @@ export default function OurServicesPage() {
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               <label className="block">
                 <span className="text-sm font-bold text-slate-700">Name *</span>
-                <input className="mt-2 w-full rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#d5e9fb]" />
+                <input name="name" required className="mt-2 w-full rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#d5e9fb]" />
               </label>
               <label className="block">
                 <span className="text-sm font-bold text-slate-700">Email *</span>
-                <input type="email" className="mt-2 w-full rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#d5e9fb]" />
+                <input name="email" type="email" required className="mt-2 w-full rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#d5e9fb]" />
               </label>
               <label className="block">
                 <span className="text-sm font-bold text-slate-700">Phone *</span>
-                <input className="mt-2 w-full rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#d5e9fb]" />
+                <input name="phone" required className="mt-2 w-full rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#d5e9fb]" />
               </label>
               <label className="block">
                 <span className="text-sm font-bold text-slate-700">Select your services</span>
-                <select className="mt-2 w-full rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#d5e9fb]">
+                <select name="service" className="mt-2 w-full rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#d5e9fb]">
                   <option>Property Valuations</option>
                   <option>Legal Assistance</option>
                   <option>Document preparation & submission</option>
@@ -671,12 +493,12 @@ export default function OurServicesPage() {
             </div>
             <label className="mt-4 block">
               <span className="text-sm font-bold text-slate-700">Message</span>
-              <textarea rows={5} className="mt-2 w-full rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#d5e9fb]" />
+              <textarea name="message" rows={5} className="mt-2 w-full rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none transition focus:border-[#2171B5] focus:ring-2 focus:ring-[#d5e9fb]" />
             </label>
             <p className="mt-4 text-xs leading-5 text-slate-500">
               This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.
             </p>
-            <button type="button" className="mt-5 rounded-xl bg-gradient-to-r from-[#2171B5] to-[#08306B] px-6 py-3 text-sm font-black text-white transition hover:shadow-lg hover:shadow-[#08306B]/20">
+            <button type="submit" className="mt-5 rounded-xl bg-gradient-to-r from-[#2171B5] to-[#08306B] px-6 py-3 text-sm font-black text-white transition hover:shadow-lg hover:shadow-[#08306B]/20">
               Submit
             </button>
           </form>

@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
-import { inspirationItems } from "./OurServicesPage";
+import { inspirationItems } from "../data/inspirationData";
 
 function buildFeatureList(tag) {
   const baseFeatures = {
