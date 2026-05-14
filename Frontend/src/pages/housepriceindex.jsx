@@ -1,38 +1,36 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 
-
-
 import chartImage from "../assets/1773335963248_copy.jpg";
 
-const Average = {
+const HousePriceIndexData = {
   "Dec 2025 (Q4)": [
-    { label: "Kandy House Sale price", value: "251.65 million" },
-    { label: "Kandy Apartment Sale price", value: "109.51 million" },
-    { label: "Kandy Buildings Sale price", value: "409.27 million" },
+    { label: "Kandy House Price Index", value: "251.65 million" },
+    { label: "Colombo House Price Index", value: "312.40 million" },
+    { label: "Galle House Price Index", value: "198.75 million" },
   ],
 
   "Sep 2025 (Q3)": [
-    { label: "Kandy House Sale price", value: "240.10 million" },
-    { label: "Kandy Apartment Sale price", value: "98.20 million" },
-    { label: "Kandy Buildings Sale price", value: "390.00 million" },
+    { label: "Kandy House Price Index", value: "240.10 million" },
+    { label: "Colombo House Price Index", value: "301.55 million" },
+    { label: "Galle House Price Index", value: "185.20 million" },
   ],
 };
 
-export default function RegionPrices() {
+export default function HousePriceIndex() {
   const [selectedPeriod, setSelectedPeriod] =
     useState("Dec 2025 (Q4)");
 
   const [prices, setPrices] = useState(
-    Average[selectedPeriod]
+    HousePriceIndexData[selectedPeriod]
   );
 
   const handleGo = () => {
-    setPrices(Average[selectedPeriod]);
+    setPrices(HousePriceIndexData[selectedPeriod]);
   };
 
   const handleViewIndex = () => {
-    alert("Navigate to Land Price Index Page");
+    alert("Navigate to Detailed House Price Index Page");
   };
 
   return (
@@ -45,18 +43,18 @@ export default function RegionPrices() {
         <div className="mx-auto mb-10 max-w-6xl text-center">
 
           <h1 className="mb-3 text-3xl font-bold text-slate-900 md:text-4xl">
-            Average Property Prices of Sri Lanka
+            House Price Index of Sri Lanka
           </h1>
 
           <p className="mx-auto mb-6 max-w-3xl text-sm leading-6 text-slate-500 md:text-base">
-            Average Prices are based on property ads published on
-            LankaPropertyWeb.com. Prices represent advertised values
-            and may not reflect final selling prices.
+            The House Price Index represents average advertised house prices
+            across major cities in Sri Lanka. Data is based on property listings
+            and market trends.
           </p>
 
           <img
             src={chartImage}
-            alt="Average Property Prices Chart"
+            alt="House Price Index Chart"
             className="mx-auto w-full max-w-5xl rounded-2xl shadow-lg"
           />
         </div>
@@ -65,17 +63,15 @@ export default function RegionPrices() {
         <div className="mx-auto mb-6 flex max-w-4xl flex-col items-center gap-4 rounded-2xl bg-white p-5 shadow-md md:flex-row">
 
           <label className="font-semibold text-slate-700">
-            View prices for
+            Select period
           </label>
 
           <select
             value={selectedPeriod}
-            onChange={(e) =>
-              setSelectedPeriod(e.target.value)
-            }
+            onChange={(e) => setSelectedPeriod(e.target.value)}
             className="w-full rounded-lg border border-slate-300 px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500 md:w-auto"
           >
-            {Object.keys(Average).map((period) => (
+            {Object.keys(HousePriceIndexData).map((period) => (
               <option key={period} value={period}>
                 {period}
               </option>
@@ -86,14 +82,14 @@ export default function RegionPrices() {
             onClick={handleGo}
             className="rounded-lg bg-blue-700 px-6 py-2 font-medium text-white transition hover:bg-blue-900"
           >
-            Go
+            Apply
           </button>
         </div>
 
         {/* TITLE */}
         <div className="mx-auto mb-4 max-w-4xl">
           <h1 className="text-2xl font-bold text-slate-900 md:text-3xl">
-            Average Sales prices by Region for {selectedPeriod}
+            House Price Index by Region — {selectedPeriod}
           </h1>
         </div>
 
@@ -102,8 +98,8 @@ export default function RegionPrices() {
 
           {/* HEADER */}
           <div className="hidden justify-between border-b border-slate-300 bg-slate-50 px-6 py-4 font-bold text-slate-700 md:flex">
-            <span>Property Type</span>
-            <span>Average Price (Rs.)</span>
+            <span>Region</span>
+            <span>House Price Index</span>
           </div>
 
           {/* BODY */}
@@ -112,9 +108,7 @@ export default function RegionPrices() {
               <div
                 key={index}
                 className={`flex flex-col gap-2 px-6 py-4 transition hover:bg-blue-50 md:flex-row md:items-center md:justify-between ${
-                  index % 2 === 0
-                    ? "bg-slate-100"
-                    : "bg-white"
+                  index % 2 === 0 ? "bg-slate-100" : "bg-white"
                 }`}
               >
                 <span className="font-medium text-slate-800">
@@ -136,12 +130,10 @@ export default function RegionPrices() {
             onClick={handleViewIndex}
             className="rounded-xl bg-blue-700 px-8 py-3 font-semibold text-white shadow-md transition hover:-translate-y-1 hover:bg-blue-900"
           >
-            View Land Price Index
+            View Detailed House Price Index
           </button>
         </div>
       </div>
-
-     
     </>
   );
 }
