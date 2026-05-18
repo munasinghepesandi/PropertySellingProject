@@ -2,8 +2,38 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Search, Home, ChevronDown, Menu, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+const AUTH_STORAGE_KEY = 'lanka_property_current_user';
+const REGISTERED_USERS_KEY = 'lanka_property_registered_users';
+
+function readCurrentUser() {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  try {
+    const storedUser = window.localStorage.getItem(AUTH_STORAGE_KEY);
+    return storedUser ? JSON.parse(storedUser) : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function readRegisteredUsers() {
+  if (typeof window === 'undefined') {
+    return [];
+  }
+
+  try {
+    const storedUsers = window.localStorage.getItem(REGISTERED_USERS_KEY);
+    return storedUsers ? JSON.parse(storedUsers) : [];
+  } catch (error) {
+    return [];
+  }
+}
+
 export function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentUser, setCurrentUser] = useState(() => readCurrentUser());
   const [salesMenuOpen, setSalesMenuOpen] = useState(false);
   const [ourServicesMenuOpen, setOurServicesMenuOpen] = useState(false);
   const [homeLoansMenuOpen, setHomeLoansMenuOpen] = useState(false);
@@ -42,11 +72,45 @@ export function Navbar() {
       setIsMobile(window.innerWidth < 1024);
     };
 
-    updateViewport();
-    window.addEventListener("resize", updateViewport);
+    const handleStorageChange = () => {
+      setCurrentUser(readCurrentUser());
+    };
 
-    return () => window.removeEventListener("resize", updateViewport);
+    updateViewport();
+    handleStorageChange();
+    window.addEventListener("resize", updateViewport);
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener("resize", updateViewport);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
+
+  const displayName =
+    currentUser?.fullName ||
+    currentUser?.name ||
+    readRegisteredUsers().find((user) => user.email?.toLowerCase() === currentUser?.email?.toLowerCase())
+      ?.fullName ||
+    '';
+
+  const handleLogout = () => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem(AUTH_STORAGE_KEY);
+      window.dispatchEvent(new Event('storage'));
+    }
+    setCurrentUser(null);
+    setMobileMenuOpen(false);
+  };
+
+  const handlePostAdClick = () => {
+    if (currentUser) {
+      navigate('/post-ad');
+      return;
+    }
+
+    navigate('/login?redirect=%2Fpost-ad');
+  };
 
   const primary = "#2171B5";
   const dark = "#08306B";
@@ -445,18 +509,44 @@ export function Navbar() {
           </div>
 
           <div style={topActionsStyle}>
-            <button type="button" style={topLinkStyle} onClick={() => navigate("/login")}>
-              Login
-            </button>
-            <button type="button" style={topLinkStyle} onClick={() => navigate("/register")}>
-              Register
-            </button>
+            {currentUser ? (
+              <>
+                {displayName ? (
+                  <span
+                    style={{
+                      ...topLinkStyle,
+                      cursor: 'default',
+                      color: primary,
+                      border: '1px solid rgba(33, 113, 181, 0.2)',
+                      padding: '8px 14px',
+                      borderRadius: '999px',
+                      backgroundColor: 'rgba(33, 113, 181, 0.08)',
+                    }}
+                  >
+                    {displayName}
+                  </span>
+                ) : null}
+                <button type="button" style={topLinkStyle} onClick={handleLogout}>
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <button type="button" style={topLinkStyle} onClick={() => navigate('/login') }>
+                  Login
+                </button>
+                <button type="button" style={topLinkStyle} onClick={() => navigate('/register') }>
+                  Register
+                </button>
+              </>
+            )}
             <button type="button" style={topLinkStyle} onClick={() => navigate('/help')}>
               Help
             </button>
-            <button type="button" style={postAdStyle} onClick={() => navigate('/post-ad')}>
+            <button type="button" style={postAdStyle} onClick={handlePostAdClick}>
               Post Your Ad
             </button>
+
           </div>
         </div>
       </div>
@@ -1374,16 +1464,34 @@ export function Navbar() {
             <button type="button" style={loginStyle} onClick={() => { navigate("/login"); setMobileMenuOpen(false); }}>
               Login
             </button>
-            <button type="button" style={registerStyle} onClick={() => { navigate("/register"); setMobileMenuOpen(false); }}>
-              Register
-            </button>
+            {currentUser ? (
+              <button
+                type="button"
+                style={{
+                  ...registerStyle,
+                  border: '1px solid rgba(255,255,255,0.3)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  backgroundColor: 'rgba(255,255,255,0.14)',
+                }}
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            ) : (
+              <button type="button" style={registerStyle} onClick={() => { navigate("/register"); setMobileMenuOpen(false); }}>
+                Register
+              </button>
+            )}
           </div>
 
           <div style={{ display: 'grid', gap: 8 }}>
             <button type="button" style={mobileLinkStyle} onClick={() => { navigate('/help'); setMobileMenuOpen(false); }}>
               Help
             </button>
-            <button type="button" style={mobileLinkStyle} onClick={() => { navigate('/post-ad'); setMobileMenuOpen(false); }}>
+            <button type="button" style={mobileLinkStyle} onClick={() => { handlePostAdClick(); setMobileMenuOpen(false); }}>
               Post Your Ad
             </button>
           </div>

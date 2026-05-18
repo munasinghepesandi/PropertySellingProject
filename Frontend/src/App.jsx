@@ -50,11 +50,13 @@ import { ChatbotWidget } from './components/ChatbotWidget'
 
 function LoginRoute() {
   const navigate = useNavigate()
+  const searchParams = new URLSearchParams(window.location.search)
+  const redirectTo = searchParams.get('redirect') || '/'
   return (
     <Login
       onSwitchToRegister={() => navigate('/register')}
       onSwitchToForgot={() => navigate('/forgot')}
-      openProperty={() => navigate('/')}
+      openProperty={() => navigate(redirectTo)}
     />
   )
 }

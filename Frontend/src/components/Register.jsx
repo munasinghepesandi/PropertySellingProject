@@ -1,6 +1,22 @@
 import { useState } from 'react'
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
 
+const AUTH_STORAGE_KEY = 'lanka_property_current_user'
+const REGISTERED_USERS_KEY = 'lanka_property_registered_users'
+
+function readRegisteredUsers() {
+  if (typeof window === 'undefined') {
+    return []
+  }
+
+  try {
+    const storedUsers = window.localStorage.getItem(REGISTERED_USERS_KEY)
+    return storedUsers ? JSON.parse(storedUsers) : []
+  } catch (error) {
+    return []
+  }
+}
+
 export default function Register({ onSwitchToLogin }) {
   const [userType, setUserType] = useState('owner')
   const [formData, setFormData] = useState({
@@ -35,7 +51,20 @@ export default function Register({ onSwitchToLogin }) {
 
     setLoading(true)
     setTimeout(() => {
-      console.log('Register:', { userType, ...formData })
+      const currentUser = {
+        fullName: formData.fullName,
+        email: formData.email,
+        userType,
+      }
+      const storedUsers = readRegisteredUsers()
+      const nextUsers = [
+        ...storedUsers.filter((user) => user.email?.toLowerCase() !== formData.email.toLowerCase()),
+        currentUser,
+      ]
+
+      window.localStorage.setItem(REGISTERED_USERS_KEY, JSON.stringify(nextUsers))
+      window.localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(currentUser))
+      window.dispatchEvent(new Event('storage'))
       setSuccess('Account created successfully! Please check your email to verify.')
       setLoading(false)
       setFormData({

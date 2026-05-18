@@ -1,6 +1,21 @@
 import { useState } from 'react'
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
 
+const AUTH_STORAGE_KEY = 'lanka_property_current_user'
+
+function readStoredUsers() {
+  if (typeof window === 'undefined') {
+    return []
+  }
+
+  try {
+    const storedUsers = window.localStorage.getItem('lanka_property_registered_users')
+    return storedUsers ? JSON.parse(storedUsers) : []
+  } catch (error) {
+    return []
+  }
+}
+
 export default function Login({ onSwitchToRegister, onSwitchToForgot, openProperty }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -14,7 +29,14 @@ export default function Login({ onSwitchToRegister, onSwitchToForgot, openProper
     
     // Simulate API call
     setTimeout(() => {
-      console.log('Login:', { email, password })
+      const matchingUser = readStoredUsers().find((user) => user.email?.toLowerCase() === email.toLowerCase())
+      const currentUser = {
+        fullName: matchingUser?.fullName || (email ? email.split('@')[0] : ''),
+        email,
+      }
+
+      window.localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(currentUser))
+      window.dispatchEvent(new Event('storage'))
       setLoading(false)
       // After successful login, open property details (uses sample if no prop passed)
       if (typeof openProperty === 'function') openProperty()
