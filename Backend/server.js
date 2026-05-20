@@ -1,98 +1,71 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import ejsLayouts from 'express-ejs-layouts';
-import sequelize from './config/database.js';
-import propertiesRouter from './routes/properties.js';
-import salesRouter from './routes/sales.js';
-import loansRouter from './routes/loans.js';
-import authRouter from './routes/auth.js';
-import adminRoutes from './routes/adminRoutes.js';
-import User from './models/User.js';
-import UType from './models/UType.js';
+const express = require('express');
+const cors    = require('cors');
+const helmet  = require('helmet');
+const morgan  = require('morgan');
+const path    = require('path');
+const ejsLayouts = require('express-ejs-layouts');
 
-dotenv.config();
+require('dotenv').config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// ── Route imports ────────────────────────────────────────────
+const authRoutes     = require('./routes/authRoutes');
+const propertyRoutes = require('./routes/propertyRoutes');
+const userRoutes     = require('./routes/userRoutes');
+const inquiryRoutes  = require('./routes/inquiryRoutes');
+const statsRoutes    = require('./routes/statsRoutes');
+const adminRoutes    = require('./routes/adminRoutes');   // ← ADD
+
+// ── Error middleware ─────────────────────────────────────────
+const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
-const START_PORT = Number(process.env.PORT) || 5002;
-const MAX_PORT_RETRIES = 25;
 
-// Middleware
-app.use(cors());
+
+
+// ── View Engine (EJS) ────────────────────────────────────────
+app.set('view engine', 'ejs');                                 // ← ADD
+app.set('views', path.join(__dirname, 'views'));   
+app.use(ejsLayouts);                  
+app.set('layout', 'admin/layout');            
+
+// ── Core Middleware ──────────────────────────────────────────
+app.use(helmet({ contentSecurityPolicy: false }));             // ← CHANGED (false = allow inline styles/scripts)
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(ejsLayouts);
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.set('layout', 'admin/layout');
+app.use(morgan('dev'));
 
-app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
+// ── Static files ─────────────────────────────────────────────
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+app.use('/public',  express.static(path.join(__dirname, 'public')));  // ← ADD
 
-// Health check route
+// ── Admin Panel (EJS) ────────────────────────────────────────
+app.use('/admin', adminRoutes);                                // ← ADD
+
+// ── API Routes ───────────────────────────────────────────────
+app.use('/api/auth',       authRoutes);
+app.use('/api/properties', propertyRoutes);
+app.use('/api/users',      userRoutes);
+app.use('/api/inquiries',  inquiryRoutes);
+app.use('/api/stats',      statsRoutes);
+
+// ── Health Check ─────────────────────────────────────────────
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'Backend is running', timestamp: new Date() });
+  res.json({ status: 'ok', time: new Date().toISOString() });
 });
 
-// Routes
-app.use('/api/properties', propertiesRouter);
-app.use('/api/sales', salesRouter);
-app.use('/api/loans', loansRouter);
-app.use('/api/auth', authRouter);
-app.use('/admin', adminRoutes);
+// ── Root redirect to admin ───────────────────────────────────
+app.get('/', (req, res) => res.redirect('/admin'));            // ← ADD
 
-app.get('/', (req, res) => {
-  res.redirect('/admin/dashboard');
+// ── Error Handlers ───────────────────────────────────────────
+app.use(notFound);
+app.use(errorHandler);
+
+// ── Start Server ─────────────────────────────────────────────
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀  Lanka Property API running → http://localhost:${PORT}`);
 });
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Internal Server Error', message: err.message });
-});
-
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ error: 'Not Found', message: 'Route not found' });
-});
-
-// Database initialization and server start
-const initializeServer = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('✓ MySQL database connected successfully');
-
-    await sequelize.query('ALTER TABLE `user` MODIFY `password` VARCHAR(255) NOT NULL');
-    console.log('✓ Ensured `user.password` supports hashed passwords');
-  } catch (error) {
-    console.error('✗ Database connection failed (continuing to start server for dev):', error.message);
-    console.error('  - If you expected the DB to be available, verify your .env DB settings and that MySQL is running.');
-  }
-
-  const startServer = (port, attempt = 0) => {
-    const server = app.listen(port, () => {
-      console.log(`✓ Backend server running on http://localhost:${port}`);
-      console.log(`✓ Health check: http://localhost:${port}/api/health`);
-    });
-
-    server.on('error', (error) => {
-      if (error?.code === 'EADDRINUSE' && attempt < MAX_PORT_RETRIES) {
-        console.warn(`⚠ Port ${port} is in use, retrying on ${port + 1}...`);
-        startServer(port + 1, attempt + 1);
-        return;
-      }
-
-      console.error('✗ Failed to start backend server:', error.message);
-      process.exit(1);
-    });
-  };
-
-  startServer(START_PORT);
-};
-
-initializeServer();

@@ -1,6 +1,5 @@
-import React from "react";
-import SalesSectionPage from "./SalesSectionPage";
+import Land from "./Land";
 
 export default function LandPage() {
-  return <SalesSectionPage sectionSlug="land" />;
+  return <Land />;
 }
