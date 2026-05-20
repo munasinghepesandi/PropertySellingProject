@@ -166,12 +166,16 @@ const homepage = () => {
               </form>
 
               <div className="hero-actions">
-                <a href="#about-us" className="hero-action-primary">
+                <button 
+                  onClick={() => navigate('/post-ad')} 
+                  className="hero-action-primary"
+                >
+                  Post Your Ad
+                  <ArrowRight size={16} />
+                </button>
+                <a href="#about-us" className="hero-action-secondary">
                   Learn More
                   <ArrowRight size={16} />
-                </a>
-                <a href="#contact-us" className="hero-action-secondary">
-                  Contact Us
                 </a>
               </div>
 

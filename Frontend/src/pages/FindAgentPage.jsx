@@ -60,7 +60,7 @@ const directoryLinks = [
   { label: 'View All Agents / Agents Directory', to: '#agent-results' },
   { label: 'Become an Agent', to: '/register' },
   { label: 'Residential sales', to: '/sales' },
-  { label: 'Letting Agents', to: '/rentals' },
+  { label: 'Letting Agents', to: '/letting-agents' },
   { label: 'Commercial property agents', to: '/commercial' },
   { label: 'Land Sales', to: '/land' },
 ]

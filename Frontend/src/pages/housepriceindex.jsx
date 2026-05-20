@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 
-import chartImage from "../assets/1773335963248_copy.jpg";
+import chartImage from "../assets/hero.png";
 
 const HousePriceIndexData = {
   "Dec 2025 (Q4)": [

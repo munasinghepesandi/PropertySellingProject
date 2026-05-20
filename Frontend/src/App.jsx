@@ -7,6 +7,7 @@ import ApartmentsPage from './pages/ApartmentsPage'
 import LuxuryPage from './pages/LuxuryPage'
 import LandPage from './pages/LandPage'
 import CommercialPage from './pages/CommercialPage'
+import PropertyPage from './pages/properties'
 import HomeLoanPage from './pages/HomeLoanPage'
 import HomeLoanRatesPage from './pages/HomeLoanRatesPage'
 import HomeLoanCalculatorPage from './pages/HomeLoanCalculatorPage'
@@ -41,6 +42,26 @@ import LandWantedPage from './pages/LandWantedPage'
 import ApartmentsWantedPage from './pages/ApartmentsWantedPage'
 import RoomsWantedPage from './pages/RoomsWantedPage'
 import CommercialWantedPage from './pages/CommercialWantedPage'
+import AveragePage from './pages/average'
+import FeaturedPage from './pages/featured'
+import Featured1Page from './pages/featured1'
+import Featured2Page from './pages/featured2'
+import TopInvesmentPage from './pages/topinvesment'
+import MidRangeApartmentsPage from './pages/midrangeapartments'
+import CultivationLandsPage from './pages/cultivationlands'
+import TrendingPage from './pages/trending'
+import RoiPage from './pages/ROI'
+import ViewAllNewProjectsPage from './pages/viewallnewprojects'
+import PropertyDetails from './pages/viewmore'
+import Pro from './pages/propertynew'
+import CondoDirectoryPage from './pages/condodirectory'
+import BungalowsPage from './pages/bungalows'
+import VillasPage from './pages/villas'
+import BareLandPage from './pages/bareland'
+import BeachfrontLandPage from './pages/beachfrontland'
+import LandPriceIndexPage from './pages/landpriceindex'
+import InvestHomePage from './pages/investhome'
+import BusinessAdvisoryPage from './pages/BusinessAdvisoryPage'
 import Login from './components/Login'
 import Register from './components/Register'
 import BecomeAgentPage from './pages/BecomeAgentPage'
@@ -86,7 +107,7 @@ function App() {
           <Route path="/promote-property" element={<PromotePropertyPage />} />
 
           {/* Keep Navbar/Footer links from breaking */}
-          <Route path="/properties" element={<SalesPage />} />
+          <Route path="/properties" element={<PropertyPage />} />
           <Route path="/kandy" element={<KandyPage />} />
           <Route path="/contact" element={<Homepage />} />
           <Route path="/help" element={<HelpPage />} />
@@ -101,11 +122,30 @@ function App() {
           <Route path="/inspiration/:inspirationId" element={<InspirationDetailPage />} />
           <Route path="/market-insights/inspiration/:inspirationId" element={<InspirationDetailPage />} />
           <Route path="/sales/:sectionSlug" element={<SalesSectionPage />} />
-          <Route path="/rentals" element={<LettingAgentsPage />} />
+          <Route path="/average" element={<AveragePage />} />
+          <Route path="/featured" element={<FeaturedPage />} />
+          <Route path="/featured1" element={<Featured1Page />} />
+          <Route path="/featured2" element={<Featured2Page />} />
+          <Route path="/topinvesment" element={<TopInvesmentPage />} />
+          <Route path="/midrangeapartments" element={<MidRangeApartmentsPage />} />
+          <Route path="/cultivationlands" element={<CultivationLandsPage />} />
+          <Route path="/trending" element={<TrendingPage />} />
+          <Route path="/ROI" element={<RoiPage />} />
+          <Route path="/viewallnewprojects" element={<ViewAllNewProjectsPage />} />
+          <Route path="/viewmore" element={<PropertyDetails />} />
+          <Route path="/propertynew" element={<Pro />} />
+          <Route path="/condodirectory" element={<CondoDirectoryPage />} />
+          <Route path="/rentals" element={<PropertyPage />} />
           <Route path="/houses" element={<HousesPage />} />
           <Route path="/apartments" element={<ApartmentsPage />} />
+          <Route path="/bungalows" element={<BungalowsPage />} />
+          <Route path="/villas" element={<VillasPage />} />
           <Route path="/luxury" element={<LuxuryPage />} />
           <Route path="/land" element={<LandPage />} />
+          <Route path="/bareland" element={<BareLandPage />} />
+          <Route path="/beachfrontland" element={<BeachfrontLandPage />} />
+          <Route path="/landpriceindex" element={<LandPriceIndexPage />} />
+          <Route path="/investhome" element={<InvestHomePage />} />
           <Route path="/commercial" element={<CommercialPage />} />
           <Route path="/house-builders" element={<HouseBuildersPage />} />
           <Route path="/house-construction" element={<HouseBuildersPage />} />
@@ -141,6 +181,7 @@ function App() {
           <Route path="/find-agent" element={<FindAgentPage />} />
           <Route path="/agents-directory" element={<FindAgentPage />} />
           <Route path="/find-agents" element={<FindAgentPage />} />
+          <Route path="/letting-agents" element={<LettingAgentsPage />} />
           <Route path="/invest" element={<InvestmentAdvisoryPage />} />
           <Route path="/our-services/investing-in-sri-lanka" element={<InvestmentAdvisoryPage />} />
           <Route path="/house-construction" element={<HouseConstructionPage />} />
@@ -164,6 +205,7 @@ function App() {
           <Route path="/our-services/land-price-index" element={<PriceIndicesPage />} />
           <Route path="/market-outlook" element={<MarketOutlookReportPage />} />
           <Route path="/market-outlook-report" element={<MarketOutlookReportPage />} />
+          <Route path="/businessforsale" element={<BusinessAdvisoryPage />} />
           <Route path="/wanted" element={<WantedPropertiesPage />} />
           <Route path="/more" element={<Homepage />} />
           <Route path="/aboutus" element={<Homepage />} />
