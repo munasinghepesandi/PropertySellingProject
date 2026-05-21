@@ -9,12 +9,12 @@ import {
 const properties = [
   {
     id: 1,
-    title: "1.25 acres bare land in Kelaniya",
-    location: "Kelaniya",
-    price: "Rs. 3.5M",
+    title: "1.25 acres bare land in Kandy",
+    location: "Kandy",
+    price: "Rs. 2,500,000",
     type: "Bare Land",
     image:
-      "https://images.unsplash.com/photo-1507089947368-19c1da9775ae",
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1200&auto=format&fit=crop",
     size: "1.25 acres",
   },
   {

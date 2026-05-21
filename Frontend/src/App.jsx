@@ -2,10 +2,10 @@ import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-route
 import Homepage from './pages/homepage'
 import SalesPage from './pages/SalesPage'
 import KandyPage from './pages/KandyPage'
-import HousesPage from './pages/HousesPage'
-import ApartmentsPage from './pages/ApartmentsPage'
-import LuxuryPage from './pages/LuxuryPage'
-import LandPage from './pages/LandPage'
+import HousesPage from './pages/houses'
+import ApartmentsPage from './pages/apartments'
+import LuxuryApartmentsPage from './pages/luxuryapartments'
+import Land from './pages/land'
 import CommercialPage from './pages/CommercialPage'
 import PropertyPage from './pages/properties'
 import HomeLoanPage from './pages/HomeLoanPage'
@@ -140,8 +140,8 @@ function App() {
           <Route path="/apartments" element={<ApartmentsPage />} />
           <Route path="/bungalows" element={<BungalowsPage />} />
           <Route path="/villas" element={<VillasPage />} />
-          <Route path="/luxury" element={<LuxuryPage />} />
-          <Route path="/land" element={<LandPage />} />
+          <Route path="/luxury" element={<LuxuryApartmentsPage />} />
+          <Route path="/land" element={<Land />} />
           <Route path="/bareland" element={<BareLandPage />} />
           <Route path="/beachfrontland" element={<BeachfrontLandPage />} />
           <Route path="/landpriceindex" element={<LandPriceIndexPage />} />

@@ -74,7 +74,7 @@ const listings = [
   },
   {
     title: "Fully Equipped Restaurant with Bar License",
-    location: "Colombo 3",
+    location: "Kandy 3",
     price: "Rs. 45 million",
     type: "Looking for Investor",
     category: "Restaurant",

@@ -263,13 +263,6 @@ export function Navbar() {
       { label: "Apartment Finder", to: "/featured" },
       { label: "Featured Land Projects", to: "/featured2" },
       { label: "Condo Directory", to: "/condodirectory" },
-      { label: "Apartments", to: "/apartments" },
-      { label: "Apartments Wanted", to: "/wanted/apartments" },
-      { label: "Luxury Apartments", to: "/luxuryapartments" },
-      { label: "Mid-range Apartments", to: "/midrangeapartments" },
-      { label: "Condo Directory (All)", to: "/condodirectory" },
-      { label: "Featured Apartments", to: "/featured" },
-      { label: "Invest Home (apartments)", to: "/investhome" },
     ],
     []
   );
@@ -307,7 +300,7 @@ export function Navbar() {
         items: [
           { label: "Invest Home", to: "/investhome" },
           { label: "Top Invesment Properties", to: "/topinvesment" },
-          { label: "Luxury Apartments", to: "/luxuryapartments" },
+          { label: "Luxury Apartments", to: "/luxury" },
           { label: "Mid-range Apartments", to: "/midrangeapartments" },
           { label: "Cultivation lands", to: "/cultivationlands" },
         ],
@@ -366,7 +359,7 @@ export function Navbar() {
           { label: "Newly built property for sale", to: "/sales/newly-built-property" },
           { label: "Colonial Houses for sale", to: "/sales/colonial-houses" },
           { label: "Urgent properties for sale", to: "/sales/urgent-properties" },
-          { label: "Luxury Apartments", to: "/sales/luxury-apartments" },
+          { label: "Luxury Apartments", to: "/luxury" },
           { label: "Mid-range Apartments", to: "/sales/mid-range-apartments" },
           { label: "Bungalows in Nuwara Eliya", to: "/sales/bungalows-nuwara-eliya" },
           { label: "Houses in Battaramulla area", to: "/sales/houses-battaramulla" },
