@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
-import { BarChart3, CalendarDays, Download, Phone } from "lucide-react";
+import { BarChart3, CalendarDays, Phone } from "lucide-react";
 
 const reportHighlights = [
   "Updated Sri Lanka property trend overview",
@@ -69,14 +69,14 @@ const latestNews = [
 
 export default function MarketInsightsPage() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
+    <div className="min-h-screen  text-slate-900">
       <Navbar />
 
       <section className="relative overflow-hidden  text-white">
-        <div className="absolute inset-0 " />
+        <div className="absolute inset-0 bg-slate-950/65" />
         <img
-          src="https://s3.ap-southeast-1.amazonaws.com/static.boc.lk/4100/media-230302022456.jpg"
-          alt="Home Loans banner"
+          src="https://media.istockphoto.com/id/1605328309/photo/red-graph-chart-rising-up-on-stack-coins-and-house-model-on-wooden-table-white-wall-background.jpg?s=612x612&w=0&k=20&c=vCQHQ2-C7JZJDiipuvN8yHEsmXif4rVVojuIOmXQLCI="
+          alt="Home Loans eligibility banner"
           className="absolute inset-0 -z-10 h-full w-full object-cover object-center opacity-100"
         />
         
