@@ -146,15 +146,15 @@ export default function HomeLoanPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
+    <div className="min-h-screen  text-slate-900">
       <Navbar />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f] text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.15),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.12),transparent_22%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0))]" />
+      <section className="relative overflow-hidden  text-white">
+        <div className="absolute inset-0 bg-slate-950/65" />
         <img
-          src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1600&q=80&auto=format&fit=crop"
+          src="https://s3.ap-southeast-1.amazonaws.com/static.boc.lk/4100/media-230302022456.jpg"
           alt="Home Loans banner"
-          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-25"
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-center opacity-100"
         />
 
         <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">

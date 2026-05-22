@@ -107,7 +107,7 @@ export function PostAd() {
 
     try {
       const payload = buildPayload(form);
-      const url = `${API_BASE_URL}/properties`;
+      const url = `${API_BASE_URL}/properties/public`;
       console.log("Posting ad to:", url);
       console.log("Payload:", payload);
       const response = await fetch(url, {
