@@ -164,24 +164,24 @@ export function PostAd() {
     <div className="min-h-screen  text-slate-900">
       <Navbar />
 
-      <section className="relative overflow-hidden text-white">
-        <div className="absolute inset-0 bg-black/40 " />
+      <section className="relative min-h-[340px] overflow-hidden text-white sm:min-h-[420px]">
+        <div className="absolute inset-0 bg-black/60 " />
         <img
-          src="https://images.prop24.com/252470453"
+          src="https://cdn.home-designing.com/wp-content/uploads/2023/04/modern-houses.jpg"
           alt="Kandy banner"
-          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-100"
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-center opacity-100"
           loading="lazy"
         />
 
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.2),transparent_50%)]" />
-        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
           <p className="inline-flex rounded-full border border-white/25 bg-white/10 px-4 py-1 text-xs font-bold uppercase tracking-[0.2em]">
             Property Advertisement Portal
           </p>
-          <h1 className="mt-4 max-w-3xl text-4xl font-black leading-tight sm:text-5xl">
+          <h1 className="mt-4 max-w-3xl text-3xl font-black leading-tight sm:text-5xl lg:text-6xl">
             Post Your Property Ad
           </h1>
-          <p className="mt-4 max-w-2xl text-base text-white/85 sm:text-lg">
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-white/85 sm:text-lg">
             Submit your listing in minutes with all key details buyers need.
             Your ad will be published to the homepage once posted.
           </p>
@@ -191,14 +191,14 @@ export function PostAd() {
       <section className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:px-8 lg:py-14">
         <form
           onSubmit={handleSubmit}
-          className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+          className="w-full rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
         >
-          <div className="mb-6 flex items-center justify-between gap-3">
+          <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 className="text-2xl font-black text-[#08306B]">
+              <h2 className="text-xl font-black text-[#08306B] sm:text-2xl">
                 Listing Details
               </h2>
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 text-sm leading-6 text-slate-500">
                 Fill in complete details to attract serious buyers.
               </p>
             </div>
@@ -384,25 +384,25 @@ export function PostAd() {
             </p>
           )}
 
-          <div className="mt-6 flex flex-wrap items-center gap-3">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <button
               type="submit"
               disabled={loading}
-              className="rounded-xl bg-[#2171B5] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#08306B] disabled:cursor-not-allowed disabled:opacity-70"
+              className="w-full rounded-xl bg-[#2171B5] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#08306B] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
             >
               {loading ? "Posting Advertisement..." : "Post Advertisement"}
             </button>
             <button
               type="button"
               onClick={() => setForm(initialForm)}
-              className="rounded-xl border border-slate-300 px-6 py-3 text-sm font-bold text-slate-700 transition hover:bg-slate-100"
+              className="w-full rounded-xl border border-slate-300 px-6 py-3 text-sm font-bold text-slate-700 transition hover:bg-slate-100 sm:w-auto"
             >
               Reset Form
             </button>
           </div>
         </form>
 
-        <aside className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <aside className="w-full rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
           <h3 className="text-xl font-black text-[#08306B]">
             Tips for a Better Ad
           </h3>
