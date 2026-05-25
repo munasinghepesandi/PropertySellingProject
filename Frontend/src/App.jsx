@@ -136,7 +136,7 @@ function App() {
           {/* Keep Navbar/Footer links from breaking */}
           <Route path="/properties" element={<PropertyPage />} />
           <Route path="/kandy" element={<KandyPage />} />
-          <Route path="/contact" element={<Homepage />} />
+          <Route path="/contact" element={<MorePage title={"Contact Us"} />} />
           <Route path="/help" element={<HelpPage />} />
           <Route path="/sales" element={<SalesPage />} />
           <Route path="/sales/house-price-index" element={<PropertyPriceIndexPage />} />
@@ -222,6 +222,7 @@ function App() {
           <Route path="/membership-benefits" element={<MembershipBenefitsPage />} />
           <Route path="/membership" element={<MembershipBenefitsPage />} />
           <Route path="/news-and-guides" element={<NewsAndGuidesPage />} />
+          <Route path="/more/news-and-guides" element={<NewsAndGuidesPage />} />
           <Route path="/guides" element={<NewsAndGuidesPage />} />
           <Route path="/news" element={<NewsAndGuidesPage />} />
           <Route path="/price-meter" element={<PriceMeterPage />} />
@@ -262,7 +263,6 @@ function App() {
           <Route path="/more/guides/land-price-index" element={<MorePage title={"Sri Lanka Land Price Index"} />} />
           <Route path="/more/guides/membership-benefits" element={<MorePage title={"Membership Benefits"} />} />
 
-          <Route path="/more/news-and-guides" element={<MorePage title={"News & Guides"} />} />
           <Route path="/more/about-us" element={<MorePage title={"About us"} />} />
           <Route path="/more/careers" element={<Careers />} />
           <Route path="/more/contact-us" element={<MorePage title={"Contact Us"} />} />
@@ -286,8 +286,9 @@ function App() {
           <Route path="/more/ideal-home/other-services" element={<OtherServices />} />
 
           <Route path="/more" element={<MoreIndex />} />
-          <Route path="/aboutus" element={<Homepage />} />
-          <Route path="/faqs" element={<Homepage />} />
+          <Route path="/aboutus" element={<MorePage title={"About us"} />} />
+          <Route path="/events" element={<MorePage title={"Events"} />} />
+          <Route path="/faqs" element={<MorePage title={"FAQs"} />} />
           <Route path="/privacy-policy" element={<Homepage />} />
           <Route path="/terms" element={<Homepage />} />
 
