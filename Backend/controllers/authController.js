@@ -8,7 +8,7 @@ const generateToken = (id) =>
 // ── POST /api/auth/register ──────────────────────────────────
 const register = async (req, res) => {
   try {
-    const { name, email, password, phone } = req.body;
+    const { name, email, password, phone, user_type } = req.body;
     if (!name || !email || !password)
       return res.status(400).json({ message: 'Name, email and password are required' });
 
@@ -17,8 +17,8 @@ const register = async (req, res) => {
 
     const hashed = await bcrypt.hash(password, 12);
     const [result] = await pool.query(
-      'INSERT INTO users (name, email, password, phone, role) VALUES (?, ?, ?, ?, ?)',
-      [name, email, hashed, phone || null, 'user']
+      'INSERT INTO users (name, email, password, phone, role, user_type) VALUES (?, ?, ?, ?, ?, ?)',
+      [name, email, hashed, phone || null, 'user', user_type || null]
     );
 
     res.status(201).json({

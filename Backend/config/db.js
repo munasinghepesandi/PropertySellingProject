@@ -70,6 +70,37 @@ async function ensureDistrictsTable() {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
     await bootstrap.query(`
+      CREATE TABLE IF NOT EXISTS \`${dbName}\`.\`users\` (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(200) NOT NULL,
+        email VARCHAR(200) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL,
+        phone VARCHAR(60) DEFAULT NULL,
+        role VARCHAR(30) NOT NULL DEFAULT 'user',
+        user_type VARCHAR(60) DEFAULT NULL,
+        status VARCHAR(30) NOT NULL DEFAULT 'active',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_users_role (role),
+        INDEX idx_users_type (user_type)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `);
+    try {
+      await bootstrap.query(`ALTER TABLE \`${dbName}\`.\`users\` ADD COLUMN user_type VARCHAR(60) DEFAULT NULL AFTER phone`);
+    } catch (error) {
+      if (error?.errno !== 1060) {
+        throw error;
+      }
+    }
+    await bootstrap.query(`
+      CREATE TABLE IF NOT EXISTS \`${dbName}\`.\`admins\` (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(200) NOT NULL,
+        email VARCHAR(200) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `);
+    await bootstrap.query(`
       CREATE TABLE IF NOT EXISTS \`${dbName}\`.\`property_images\` (
         id INT AUTO_INCREMENT PRIMARY KEY,
         property_id INT NOT NULL,
