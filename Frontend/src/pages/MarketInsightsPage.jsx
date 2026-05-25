@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
-import { BarChart3, CalendarDays, Download, Phone } from "lucide-react";
+import { BarChart3, CalendarDays, Phone } from "lucide-react";
 
 const reportHighlights = [
   "Updated Sri Lanka property trend overview",
@@ -69,11 +69,16 @@ const latestNews = [
 
 export default function MarketInsightsPage() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
+    <div className="min-h-screen  text-slate-900">
       <Navbar />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f] text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.15),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.12),transparent_22%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0))]" />
+      <section className="relative overflow-hidden  text-white">
+        <div className="absolute inset-0 bg-slate-950/65" />
+        <img
+          src="https://media.istockphoto.com/id/1605328309/photo/red-graph-chart-rising-up-on-stack-coins-and-house-model-on-wooden-table-white-wall-background.jpg?s=612x612&w=0&k=20&c=vCQHQ2-C7JZJDiipuvN8yHEsmXif4rVVojuIOmXQLCI="
+          alt="Home Loans eligibility banner"
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-center opacity-100"
+        />
         
         <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
           <div>

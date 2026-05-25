@@ -4,14 +4,14 @@ import { Navbar } from '../components/Navbar'
 import { ChevronLeft, ChevronRight, Search, Bell, Lock, ShieldCheck } from 'lucide-react'
 
 const apartmentListings = [
-  { id: 690001, title: 'Apartment wanted near British School', area: 'Colombo 7, Nawala', summary: 'Looking for 2-3 bedroom apartment near international schools.', hint: 'Colombo 7 / Nawala', badge: 'Family wanted', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1400&q=80&auto=format&fit=crop' },
+  { id: 690001, title: 'Apartment wanted near British School', area: 'Kandy 7, Nawala', summary: 'Looking for 2-3 bedroom apartment near international schools.', hint: 'Kandy 7 / Nawala', badge: 'Family wanted', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1400&q=80&auto=format&fit=crop' },
   { id: 690002, title: 'Furnished apartment wanted close to Kandy City', area: 'Kandy, Peradeniya', summary: 'Seeking fully furnished apartment in Kandy city or Peradeniya.', hint: 'Kandy / Peradeniya', badge: 'Kandy wanted', image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?w=1400&q=80&auto=format&fit=crop' },
-  { id: 690003, title: 'Apartment wanted in Colombo 3 4', area: 'Colombo 3, Colombo 4', summary: 'Need a 2 bedroom apartment with parking and lift.', hint: 'Colombo inner suburbs', badge: 'Immediate', image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1400&q=80&auto=format&fit=crop' },
+  { id: 690003, title: 'Apartment wanted in Kandy 3 4', area: 'Kandy 3, Kandy 4', summary: 'Need a 2 bedroom apartment with parking and lift.', hint: 'Kandy inner suburbs', badge: 'Immediate', image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1400&q=80&auto=format&fit=crop' },
   { id: 690004, title: 'Studio apartment wanted near Wattala', area: 'Wattala, Ja-Ela', summary: 'Studio or 1 bedroom apartment with good public transport links.', hint: 'Wattala', badge: 'Budget', image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1400&q=80&auto=format&fit=crop' },
 ]
 
-const featuredProjects = ['The Elizabeth Colombo 07', 'Mon Vie', 'Marina Square', 'Lotus Villa']
-const topCities = ['Colombo', 'Kandy', 'Nawala', 'Battaramulla', 'Negombo']
+const featuredProjects = ['The Elizabeth Kandy 07', 'Mon Vie', 'Marina Square', 'Lotus Villa']
+const topCities = ['Kandy', 'Kandy', 'Nawala', 'Battaramulla', 'Negombo']
 
 function ApartmentsWantedPage() {
   const [query, setQuery] = useState('')
@@ -49,7 +49,7 @@ function ApartmentsWantedPage() {
         <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
           <p className="text-xs font-bold uppercase tracking-wider text-blue-100">🏢 Apartments wanted</p>
           <h1 className="mt-3 text-4xl font-black leading-tight sm:text-5xl">List of Apartments wanted</h1>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">Browse apartment wanted requests across Sri Lanka including Colombo and Kandy.</p>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">Browse apartment wanted requests across Sri Lanka including Kandy.</p>
         </div>
       </section>
 

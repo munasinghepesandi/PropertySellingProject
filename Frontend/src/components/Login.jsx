@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
+
 
 const AUTH_STORAGE_KEY = 'lanka_property_current_user'
 
@@ -11,6 +11,7 @@ function readStoredUsers() {
   try {
     const storedUsers = window.localStorage.getItem('lanka_property_registered_users')
     return storedUsers ? JSON.parse(storedUsers) : []
+  // eslint-disable-next-line no-unused-vars
   } catch (error) {
     return []
   }
@@ -43,10 +44,12 @@ export default function Login({ onSwitchToRegister, onSwitchToForgot, openProper
     }, 1000)
   }
 
+  // eslint-disable-next-line no-unused-vars
   const handleGoogleSuccess = (credentialResponse) => {
     console.log('Google Login Success:', credentialResponse)
   }
 
+  // eslint-disable-next-line no-unused-vars
   const handleFacebookLogin = (response) => {
     console.log('Facebook Login Success:', response)
   }

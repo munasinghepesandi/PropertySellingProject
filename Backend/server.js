@@ -4,8 +4,12 @@ const helmet  = require('helmet');
 const morgan  = require('morgan');
 const path    = require('path');
 const ejsLayouts = require('express-ejs-layouts');
+const fs = require('fs');
 
-require('dotenv').config();
+const envLocal = path.join(__dirname, '.env.local');
+const envDefault = path.join(__dirname, '.env');
+const envPath = fs.existsSync(envLocal) ? envLocal : envDefault;
+require('dotenv').config({ path: envPath });
 
 // ── Route imports ────────────────────────────────────────────
 const authRoutes     = require('./routes/authRoutes');

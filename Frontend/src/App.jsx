@@ -2,10 +2,10 @@ import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-route
 import Homepage from './pages/homepage'
 import SalesPage from './pages/SalesPage'
 import KandyPage from './pages/KandyPage'
-import HousesPage from './pages/HousesPage'
-import ApartmentsPage from './pages/ApartmentsPage'
-import LuxuryPage from './pages/LuxuryPage'
-import LandPage from './pages/LandPage'
+import HousesPage from './pages/houses'
+import ApartmentsPage from './pages/apartments'
+import LuxuryApartmentsPage from './pages/luxuryapartments'
+import Land from './pages/land'
 import CommercialPage from './pages/CommercialPage'
 import PropertyPage from './pages/properties'
 import HomeLoanPage from './pages/HomeLoanPage'
@@ -32,6 +32,7 @@ import HouseConstructionPage from './pages/HouseConstructionPage'
 import HomeMoversPage from './pages/HomeMoversPage'
 import MembershipBenefitsPage from './pages/MembershipBenefitsPage'
 import NewsAndGuidesPage from './pages/NewsAndGuidesPage'
+import Careers from './pages/Careers'
 import PriceMeterPage from './pages/PriceMeterPage'
 import PropertyBuyingGuidePage from './pages/PropertyBuyingGuidePage'
 import CapitalGainsTaxPage from './pages/CapitalGainsTaxPage'
@@ -64,7 +65,33 @@ import InvestHomePage from './pages/investhome'
 import BusinessAdvisoryPage from './pages/BusinessAdvisoryPage'
 import Login from './components/Login'
 import Register from './components/Register'
+import MorePage from './pages/MorePage'
+import MoreIndex from './pages/MoreIndex'
 import BecomeAgentPage from './pages/BecomeAgentPage'
+import BusinessListing from './pages/BusinessListing'
+import Real from './pages/Real'
+import Ideal from './pages/Ideal'
+import BuyerSellerAssistance from './pages/BuyerSellerAssistance'
+import PromoteProperty from './pages/PromoteProperty'
+import IdealAppliances from './pages/IdealAppliances'
+import Electronic from './pages/Electronic'
+import Furniture from './pages/Furniture'
+import Household from './pages/Household'
+import SolarHotWater from './pages/SolarHotWater'
+import Bathrooms from './pages/Bathrooms'
+import Gardening from './pages/Gardening'
+import Kitchen from './pages/Kitchen'
+import Professionals from './pages/Professionals'
+import Flooring from './pages/Flooring'
+import HouseConstructionIdeal from './pages/HouseConstructionIdeal'
+import Lighting from './pages/Lighting'
+import ServiceProviders from './pages/ServiceProviders'
+import OtherServices from './pages/OtherServices'
+import MapsOfSriLanka from './pages/MapsOfSriLanka'
+import AreaGuideKandy from './pages/AreaGuideKandy'
+import PointsOfInterestKandy from './pages/PointsOfInterestKandy'
+import Restaurant from './pages/Restaurant'
+import BusinessCategory from './pages/BusinessCategory'
 import ForgotPassword from './components/ForgotPassword'
 import WantedPropertiesPage from './pages/WantedPropertiesPage'
 import { ChatbotWidget } from './components/ChatbotWidget'
@@ -109,7 +136,7 @@ function App() {
           {/* Keep Navbar/Footer links from breaking */}
           <Route path="/properties" element={<PropertyPage />} />
           <Route path="/kandy" element={<KandyPage />} />
-          <Route path="/contact" element={<Homepage />} />
+          <Route path="/contact" element={<MorePage title={"Contact Us"} />} />
           <Route path="/help" element={<HelpPage />} />
           <Route path="/sales" element={<SalesPage />} />
           <Route path="/sales/house-price-index" element={<PropertyPriceIndexPage />} />
@@ -140,8 +167,8 @@ function App() {
           <Route path="/apartments" element={<ApartmentsPage />} />
           <Route path="/bungalows" element={<BungalowsPage />} />
           <Route path="/villas" element={<VillasPage />} />
-          <Route path="/luxury" element={<LuxuryPage />} />
-          <Route path="/land" element={<LandPage />} />
+          <Route path="/luxury" element={<LuxuryApartmentsPage />} />
+          <Route path="/land" element={<Land />} />
           <Route path="/bareland" element={<BareLandPage />} />
           <Route path="/beachfrontland" element={<BeachfrontLandPage />} />
           <Route path="/landpriceindex" element={<LandPriceIndexPage />} />
@@ -195,6 +222,7 @@ function App() {
           <Route path="/membership-benefits" element={<MembershipBenefitsPage />} />
           <Route path="/membership" element={<MembershipBenefitsPage />} />
           <Route path="/news-and-guides" element={<NewsAndGuidesPage />} />
+          <Route path="/more/news-and-guides" element={<NewsAndGuidesPage />} />
           <Route path="/guides" element={<NewsAndGuidesPage />} />
           <Route path="/news" element={<NewsAndGuidesPage />} />
           <Route path="/price-meter" element={<PriceMeterPage />} />
@@ -207,9 +235,60 @@ function App() {
           <Route path="/market-outlook-report" element={<MarketOutlookReportPage />} />
           <Route path="/businessforsale" element={<BusinessAdvisoryPage />} />
           <Route path="/wanted" element={<WantedPropertiesPage />} />
-          <Route path="/more" element={<Homepage />} />
-          <Route path="/aboutus" element={<Homepage />} />
-          <Route path="/faqs" element={<Homepage />} />
+          <Route path="/more/buyer-seller-assistance" element={<BuyerSellerAssistance />} />
+          <Route path="/more/promote-your-property" element={<PromoteProperty />} />
+
+          <Route path="/more/businesses" element={<BusinessListing />} />
+          <Route path="/more/businesses/real-estate" element={<Real />} />
+          <Route path="/more/businesses/new" element={<MorePage title={"New Businesses for Sale"} />} />
+            <Route path="/more/businesses/real-estate" element={<Real />} />
+            <Route path="/more/businesses/restaurant" element={<Restaurant />} />
+            <Route path="/more/businesses/construction" element={<BusinessCategory />} />
+            <Route path="/more/businesses/agriculture" element={<BusinessCategory />} />
+            <Route path="/more/businesses/tech" element={<BusinessCategory />} />
+            <Route path="/more/businesses/hospitality" element={<BusinessCategory />} />
+            <Route path="/more/businesses/business" element={<BusinessCategory />} />
+            <Route path="/more/businesses/manufacturing" element={<BusinessCategory />} />
+            <Route path="/more/businesses/garment-textile" element={<BusinessCategory />} />
+            <Route path="/more/businesses/services-bpo" element={<BusinessCategory />} />
+
+          <Route path="/more/area-guides/maps-of-sri-lanka" element={<MapsOfSriLanka />} />
+          <Route path="/more/area-guides/area-guide" element={<AreaGuideKandy />} />
+          <Route path="/more/area-guides/points-of-interest" element={<PointsOfInterestKandy />} />
+
+          <Route path="/more/guides/property-buying-guide" element={<MorePage title={"Property Buying Guide"} />} />
+          <Route path="/more/guides/foreign-buyers-guide" element={<MorePage title={"Foreign Buyers' Guide"} />} />
+          <Route path="/more/guides/capital-gains-tax" element={<MorePage title={"Capital Gains Tax"} />} />
+          <Route path="/more/guides/house-price-index" element={<MorePage title={"Sri Lanka House Price Index"} />} />
+          <Route path="/more/guides/land-price-index" element={<MorePage title={"Sri Lanka Land Price Index"} />} />
+          <Route path="/more/guides/membership-benefits" element={<MorePage title={"Membership Benefits"} />} />
+
+          <Route path="/more/about-us" element={<MorePage title={"About us"} />} />
+          <Route path="/more/careers" element={<Careers />} />
+          <Route path="/more/contact-us" element={<MorePage title={"Contact Us"} />} />
+          <Route path="/more/events" element={<MorePage title={"Events"} />} />
+          <Route path="/more/faqs" element={<MorePage title={"FAQs"} />} />
+
+          <Route path="/more/ideal-home" element={<Ideal />} />
+          <Route path="/more/ideal-home/appliances" element={<IdealAppliances />} />
+          <Route path="/more/ideal-home/electronics" element={<Electronic />} />
+          <Route path="/more/ideal-home/furniture" element={<Furniture />} />
+          <Route path="/more/ideal-home/household-items" element={<Household />} />
+          <Route path="/more/ideal-home/solar-hot-water" element={<SolarHotWater />} />
+          <Route path="/more/ideal-home/bathrooms" element={<Bathrooms />} />
+          <Route path="/more/ideal-home/gardening" element={<Gardening />} />
+          <Route path="/more/ideal-home/kitchen" element={<Kitchen />} />
+          <Route path="/more/ideal-home/professionals" element={<Professionals />} />
+          <Route path="/more/ideal-home/flooring" element={<Flooring />} />
+          <Route path="/more/ideal-home/house-construction" element={<HouseConstructionIdeal />} />
+          <Route path="/more/ideal-home/lighting" element={<Lighting />} />
+          <Route path="/more/ideal-home/service-providers" element={<ServiceProviders />} />
+          <Route path="/more/ideal-home/other-services" element={<OtherServices />} />
+
+          <Route path="/more" element={<MoreIndex />} />
+          <Route path="/aboutus" element={<MorePage title={"About us"} />} />
+          <Route path="/events" element={<MorePage title={"Events"} />} />
+          <Route path="/faqs" element={<MorePage title={"FAQs"} />} />
           <Route path="/privacy-policy" element={<Homepage />} />
           <Route path="/terms" element={<Homepage />} />
 

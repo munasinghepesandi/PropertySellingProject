@@ -4,15 +4,15 @@ import { Navbar } from '../components/Navbar'
 import { ArrowRight, Bell, ChevronLeft, ChevronRight, Search, ShieldCheck } from 'lucide-react'
 
 const commercialListings = [
-  { id: 790101, title: 'Commercial building wanted in Colombo 3', area: 'Colombo 3, Colombo 4', summary: 'Looking for a commercial building with shopfronts or office space in Colombo 3.', hint: 'Colombo 3/4', badge: 'Prime', image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?w=1400&q=80&auto=format&fit=crop' },
+  { id: 790101, title: 'Commercial building wanted in Kandy 3', area: 'Kandy 3, Kandy 4', summary: 'Looking for a commercial building with shopfronts or office space in Kandy 3.', hint: 'Kandy 3/4', badge: 'Prime', image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?w=1400&q=80&auto=format&fit=crop' },
   { id: 790102, title: 'Warehouse / industrial land wanted near Wattala', area: 'Wattala, Kelaniya', summary: 'Seeking warehouse or industrial plot suitable for light manufacturing.', hint: 'Wattala / Kelaniya', badge: 'Industrial', image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1400&q=80&auto=format&fit=crop' },
   { id: 790103, title: 'Retail shop units wanted in Kandy city', area: 'Kandy, Peradeniya', summary: 'Retail units desired in Kandy city center and busy market areas.', hint: 'Kandy city', badge: 'Kandy wanted', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1400&q=80&auto=format&fit=crop' },
-  { id: 790104, title: 'Office building wanted along Galle Road', area: 'Colombo 3, Galle Road', summary: 'Modern office building with parking and lifts preferred along Galle Road.', hint: 'Galle Road', badge: 'Office', image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1400&q=80&auto=format&fit=crop' },
+  { id: 790104, title: 'Office building wanted along Galle Road', area: 'Kandy 3, Galle Road', summary: 'Modern office building with parking and lifts preferred along Galle Road.', hint: 'Galle Road', badge: 'Office', image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1400&q=80&auto=format&fit=crop' },
   { id: 790105, title: 'Land for commercial development near Kaduwela', area: 'Kaduwela, Battaramulla', summary: 'Large land parcel wanted for commercial development and warehouses.', hint: 'Kaduwela', badge: 'Development', image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1400&q=80&auto=format&fit=crop' },
 ]
 
-const featuredProjects = ['Commercial Hub Colombo 03', 'Kandy Retail Park', 'Wattala Logistics Park']
-const topCities = ['Colombo', 'Kandy', 'Wattala', 'Negombo', 'Kaduwela']
+const featuredProjects = ['Commercial Hub Kandy 03', 'Kandy Retail Park', 'Wattala Logistics Park']
+const topCities = ['Kandy', 'Kandy', 'Wattala', 'Negombo', 'Kaduwela']
 
 function CommercialWantedPage() {
   const [query, setQuery] = useState('')

@@ -87,7 +87,7 @@ export default function LettingAgentsPage() {
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Manage Rental Properties Professionally</h1>
               <p className="text-base sm:text-lg text-blue-100 max-w-xl mb-6">List, manage, and lease properties with verified tenants. Connect with qualified renters and streamline your letting business.</p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <button className="inline-flex items-center justify-center px-6 py-3 bg-[#2171B5] hover:bg-[#1b5f98] text-white rounded-lg font-semibold">Get Started</button>
+                <button onClick={() => navigate('/luxury')} className="inline-flex items-center justify-center px-6 py-3 bg-[#2171B5] hover:bg-[#1b5f98] text-white rounded-lg font-semibold">Get Started</button>
                 <button onClick={() => navigate('/find-agent')} className="inline-flex items-center justify-center px-6 py-3 border border-white/30 text-white rounded-lg hover:bg-white/10">Find an Agent</button>
               </div>
             </div>

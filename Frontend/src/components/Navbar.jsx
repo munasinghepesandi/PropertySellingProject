@@ -47,7 +47,9 @@ export function Navbar() {
   const [mobileHomeLoansOpen, setMobileHomeLoansOpen] = useState(false);
   const [mobileMarketInsightsOpen, setMobileMarketInsightsOpen] = useState(false);
   const [mobileAgentOpen, setMobileAgentOpen] = useState(false);
+  const [moreMenuOpen, setMoreMenuOpen] = useState(false);
   const [mobileRentalsOpen, setMobileRentalsOpen] = useState(false);
+  const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
 
@@ -263,13 +265,6 @@ export function Navbar() {
       { label: "Apartment Finder", to: "/featured" },
       { label: "Featured Land Projects", to: "/featured2" },
       { label: "Condo Directory", to: "/condodirectory" },
-      { label: "Apartments", to: "/apartments" },
-      { label: "Apartments Wanted", to: "/wanted/apartments" },
-      { label: "Luxury Apartments", to: "/luxuryapartments" },
-      { label: "Mid-range Apartments", to: "/midrangeapartments" },
-      { label: "Condo Directory (All)", to: "/condodirectory" },
-      { label: "Featured Apartments", to: "/featured" },
-      { label: "Invest Home (apartments)", to: "/investhome" },
     ],
     []
   );
@@ -307,7 +302,7 @@ export function Navbar() {
         items: [
           { label: "Invest Home", to: "/investhome" },
           { label: "Top Invesment Properties", to: "/topinvesment" },
-          { label: "Luxury Apartments", to: "/luxuryapartments" },
+          { label: "Luxury Apartments", to: "/luxury" },
           { label: "Mid-range Apartments", to: "/midrangeapartments" },
           { label: "Cultivation lands", to: "/cultivationlands" },
         ],
@@ -366,7 +361,7 @@ export function Navbar() {
           { label: "Newly built property for sale", to: "/sales/newly-built-property" },
           { label: "Colonial Houses for sale", to: "/sales/colonial-houses" },
           { label: "Urgent properties for sale", to: "/sales/urgent-properties" },
-          { label: "Luxury Apartments", to: "/sales/luxury-apartments" },
+          { label: "Luxury Apartments", to: "/luxury" },
           { label: "Mid-range Apartments", to: "/sales/mid-range-apartments" },
           { label: "Bungalows in Nuwara Eliya", to: "/sales/bungalows-nuwara-eliya" },
           { label: "Houses in Battaramulla area", to: "/sales/houses-battaramulla" },
@@ -490,6 +485,84 @@ export function Navbar() {
           { label: "Membership Benefits", to: "/membership-benefits" },
           { label: "Market Outlook Report", to: "/market-outlook-report" },
           { label: "News & Guides", to: "/news-and-guides" },
+        ],
+      },
+    ],
+    []
+  );
+
+  const moreMenuColumns = useMemo(
+    () => [
+      {
+        title: "Assistance",
+        items: [
+          { label: "Buyer & Seller Assistance", to: "/more/buyer-seller-assistance" },
+          { label: "Promote your property", to: "/more/promote-your-property" },
+        ],
+      },
+      {
+        title: "Businesses for Sale",
+        items: [
+          { label: "New", to: "/more/businesses/new" },
+          { label: "View All Businesses for Sale", to: "/more/businesses" },
+          { label: "Real Estate", to: "/more/businesses/real-estate" },
+          { label: "Restaurant", to: "/more/businesses/restaurant" },
+          { label: "Construction", to: "/more/businesses/construction" },
+          { label: "Agriculture", to: "/more/businesses/agriculture" },
+          { label: "Tech", to: "/more/businesses/tech" },
+          { label: "Hospitality", to: "/more/businesses/hospitality" },
+          { label: "Business", to: "/more/businesses/business" },
+          { label: "Manufacturing", to: "/more/businesses/manufacturing" },
+          { label: "Garment-Textile", to: "/more/businesses/garment-textile" },
+          { label: "Services-BPO", to: "/more/businesses/services-bpo" },
+        ],
+      },
+      {
+        title: "Area Guides",
+        items: [
+          { label: "Maps of Sri Lanka", to: "/more/area-guides/maps-of-sri-lanka" },
+          { label: "Area Guide", to: "/more/area-guides/area-guide" },
+          { label: "Point of Interests", to: "/more/area-guides/points-of-interest" },
+        ],
+      },
+          {
+            title: "Guides & Indices",
+            items: [
+              { label: "Property Buying Guide", to: "/property-buying-guide" },
+              { label: "Foreign Buyers' Guide", to: "/sales/foreigners-guide" },
+              { label: "Capital Gains Tax", to: "/capital-gains-tax" },
+              { label: "Sri Lanka House Price Index", to: "/sales/house-price-index" },
+              { label: "Sri Lanka Land Price Index", to: "/landpriceindex" },
+              { label: "Membership Benefits", to: "/membership-benefits" },
+            ],
+          },
+      {
+        title: "Ideal Home",
+        items: [
+          { label: "Appliances & Electronics", to: "/more/ideal-home/appliances" },
+          { label: "Furniture", to: "/more/ideal-home/furniture" },
+          { label: "Household items", to: "/more/ideal-home/household-items" },
+          { label: "Solar & Hot Water", to: "/more/ideal-home/solar-hot-water" },
+          { label: "Bathrooms", to: "/more/ideal-home/bathrooms" },
+          { label: "Gardening", to: "/more/ideal-home/gardening" },
+          { label: "Kitchen", to: "/more/ideal-home/kitchen" },
+          { label: "Professionals", to: "/more/ideal-home/professionals" },
+          { label: "Flooring", to: "/more/ideal-home/flooring" },
+          { label: "House Construction", to: "/more/ideal-home/house-construction" },
+          { label: "Lighting", to: "/more/ideal-home/lighting" },
+          { label: "Service Providers", to: "/more/ideal-home/service-providers" },
+          { label: "Other Services", to: "/more/ideal-home/other-services" },
+        ],
+      },
+      {
+        title: "News & About",
+        items: [
+          { label: "News & Guides", to: "/news-and-guides" },
+          { label: "About us", to: "/aboutus" },
+          { label: "Careers", to: "/more/careers" },
+          { label: "Contact Us", to: "/contact" },
+          { label: "Events", to: "/more/events" },
+          { label: "FAQs", to: "/faqs" },
         ],
       },
     ],
@@ -677,7 +750,8 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  minWidth: "1080px",
+                  minWidth: "920px",
+                  maxWidth: "95vw",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
                   borderRadius: "20px",
@@ -685,7 +759,7 @@ export function Navbar() {
                   padding: "22px 24px 24px",
                   display: "grid",
                   gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
-                  gap: "22px",
+                  gap: "20px",
                   border: "1px solid rgba(148, 163, 184, 0.18)",
                 }}
               >
@@ -765,15 +839,16 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  minWidth: "820px",
+                  minWidth: "920px",
+                  maxWidth: "95vw",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
                   borderRadius: "20px",
                   boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
                   padding: "22px 24px 24px",
                   display: "grid",
-                  gridTemplateColumns: "1.2fr 1.2fr 0.8fr",
-                  gap: "22px",
+                  gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+                  gap: "20px",
                   border: "1px solid rgba(148, 163, 184, 0.18)",
                 }}
               >
@@ -853,14 +928,16 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  minWidth: "680px",
+                  minWidth: "920px",
+                  maxWidth: "95vw",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
                   borderRadius: "20px",
                   boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
-                  padding: "24px 28px 28px",
+                  padding: "22px 24px 24px",
                   display: "grid",
-                  gap: "16px",
+                  gridTemplateColumns: "1fr",
+                  gap: "14px",
                   border: "1px solid rgba(148, 163, 184, 0.18)",
                 }}
               >
@@ -877,7 +954,7 @@ export function Navbar() {
                       border: "none",
                       background: "transparent",
                       borderRadius: "12px",
-                      padding: "16px 18px",
+                      padding: "14px 16px",
                       color: "#334155",
                       cursor: "pointer",
                     }}
@@ -922,15 +999,16 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  minWidth: "760px",
+                  minWidth: "920px",
+                  maxWidth: "95vw",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
                   borderRadius: "20px",
                   boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
                   padding: "22px 24px 24px",
                   display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "22px",
+                  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                  gap: "18px",
                   border: "1px solid rgba(148, 163, 184, 0.18)",
                 }}
               >
@@ -1010,15 +1088,16 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  minWidth: "760px",
+                  minWidth: "920px",
+                  maxWidth: "95vw",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
                   borderRadius: "20px",
                   boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
                   padding: "22px 24px 24px",
                   display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "22px",
+                  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                  gap: "18px",
                   border: "1px solid rgba(148, 163, 184, 0.18)",
                 }}
               >
@@ -1098,15 +1177,16 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  minWidth: "680px",
+                  minWidth: "920px",
+                  maxWidth: "95vw",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
                   borderRadius: "20px",
                   boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
-                  padding: "24px 28px 28px",
+                  padding: "22px 24px 24px",
                   display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "24px",
+                  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                  gap: "18px",
                   border: "1px solid rgba(148, 163, 184, 0.18)",
                 }}
               >
@@ -1114,13 +1194,13 @@ export function Navbar() {
                   <div key={column.title}>
                     <div
                       style={{
-                        fontSize: "12px",
+                        fontSize: "11px",
                         fontWeight: "800",
                         textTransform: "uppercase",
                         letterSpacing: "0.16em",
                         color: "#0f172a",
-                        paddingBottom: "10px",
-                        marginBottom: "14px",
+                        paddingBottom: "8px",
+                        marginBottom: "12px",
                         borderBottom: "1px solid #d7dee8",
                       }}
                     >
@@ -1175,12 +1255,12 @@ export function Navbar() {
             >
               Rentals
             </button>
-            <div className="invisible absolute left-0 top-full z-50 w-[750px] rounded-xl bg-white p-8 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
-              <div className="grid grid-cols-3 gap-10">
+            <div className="invisible absolute left-0 top-full z-50 w-[920px] max-w-[95vw] rounded-[20px] bg-white px-6 py-5 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
+              <div className="grid grid-cols-2 gap-4">
                 {rentalsMenuColumns.map((column) => (
                   <div key={column.title}>
-                    <h3 className="mb-4 border-b pb-2 text-sm font-bold text-slate-800">{column.title}</h3>
-                    <ul className="space-y-3 text-sm text-slate-600">
+                    <h3 className="mb-3 border-b pb-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-slate-900">{column.title}</h3>
+                    <ul className="space-y-2 text-sm text-slate-600">
                       {column.items.map((item) => (
                         <li key={item.label}>
                           <Link to={item.to} className="block cursor-pointer hover:text-blue-700">
@@ -1207,11 +1287,11 @@ export function Navbar() {
               Apartment Finder
               <span className="rounded bg-blue-600 px-2 py-0.5 text-[10px] font-semibold uppercase text-white">New</span>
             </button>
-            <div className="invisible absolute left-0 top-full z-50 w-[750px] rounded-xl bg-white p-8 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
-              <div className="grid grid-cols-3 gap-10">
+            <div className="invisible absolute left-0 top-full z-50 w-[920px] max-w-[95vw] rounded-[20px] bg-white px-6 py-5 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
+              <div className="grid grid-cols-1 gap-4">
                 <div>
-                  <h3 className="mb-4 border-b pb-2 text-sm font-bold text-slate-800">Find New Projects</h3>
-                  <ul className="space-y-3 text-sm text-slate-600">
+                  <h3 className="mb-3 border-b pb-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-slate-900">Find New Projects</h3>
+                  <ul className="space-y-2 text-sm text-slate-600">
                     {apartmentFinderMenuItems.map((item) => (
                       <li key={item.label}>
                         <Link to={item.to} className="block cursor-pointer hover:text-blue-700">
@@ -1236,12 +1316,12 @@ export function Navbar() {
             >
               Land
             </button>
-            <div className="invisible absolute left-0 top-full z-50 w-[750px] rounded-xl bg-white p-8 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
-              <div className="grid grid-cols-3 gap-10">
+            <div className="invisible absolute left-0 top-full z-50 w-[920px] max-w-[95vw] rounded-[20px] bg-white px-6 py-5 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
+              <div className="grid grid-cols-2 gap-4">
                 {landMenuColumns.map((column) => (
                   <div key={column.title}>
-                    <h3 className="mb-4 border-b pb-2 text-sm font-bold text-slate-800">{column.title}</h3>
-                    <ul className="space-y-3 text-sm text-slate-600">
+                    <h3 className="mb-3 border-b pb-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-slate-900">{column.title}</h3>
+                    <ul className="space-y-2 text-sm text-slate-600">
                       {column.items.map((item) => (
                         <li key={item.label}>
                           <Link to={item.to} className="block cursor-pointer hover:text-blue-700">
@@ -1267,12 +1347,12 @@ export function Navbar() {
             >
               Invest
             </button>
-            <div className="invisible absolute left-0 top-full z-50 w-[750px] rounded-xl bg-white p-8 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
-              <div className="grid grid-cols-2 gap-10">
+            <div className="invisible absolute left-0 top-full z-50 w-[920px] max-w-[95vw] rounded-[20px] bg-white px-6 py-5 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
+              <div className="grid grid-cols-2 gap-4">
                 {investMenuColumns.map((column) => (
                   <div key={column.title}>
-                    <h3 className="mb-4 border-b pb-2 text-sm font-bold text-slate-800">{column.title}</h3>
-                    <ul className="space-y-3 text-sm text-slate-600">
+                    <h3 className="mb-3 border-b pb-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-slate-900">{column.title}</h3>
+                    <ul className="space-y-2 text-sm text-slate-600">
                       {column.items.map((item) => (
                         <li
                           key={item.label}
@@ -1289,14 +1369,95 @@ export function Navbar() {
             </div>
           </div>
 
-          <button
-            type="button"
-            className="border-0 bg-transparent px-0 py-3 text-sm font-semibold text-white transition hover:text-sky-300"
-            style={{ order: navItemOrder.More }}
-            onClick={() => navigate("/more")}
+          <div
+            style={{ position: "relative", order: navItemOrder.More }}
+            onMouseEnter={() => setMoreMenuOpen(true)}
+            onMouseLeave={() => setMoreMenuOpen(false)}
           >
-            More
-          </button>
+            <button
+              type="button"
+              className="border-0 bg-transparent px-0 py-3 text-sm font-semibold text-white transition hover:text-sky-300"
+              onClick={() => {
+                setMoreMenuOpen(false);
+                navigate("/more");
+              }}
+            >
+              More
+            </button>
+
+            {moreMenuOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "100%",
+                  left: 0,
+                  minWidth: "560px",
+                  maxHeight: "70vh",
+                  backgroundColor: "#ffffff",
+                  color: "#0f172a",
+                  borderRadius: "20px",
+                  boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
+                  padding: "22px 24px 24px",
+                  display: "grid",
+                  gridTemplateColumns: "1fr",
+                  gap: "18px",
+                  border: "1px solid rgba(148, 163, 184, 0.18)",
+                  overflowY: "auto",
+                }}
+              >
+                {moreMenuColumns.map((column) => (
+                  <div key={column.title}>
+                    <div
+                      style={{
+                        fontSize: "11px",
+                        fontWeight: "800",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.16em",
+                        color: "#0f172a",
+                        paddingBottom: "8px",
+                        marginBottom: "12px",
+                        borderBottom: "1px solid #d7dee8",
+                      }}
+                    >
+                      {column.title}
+                    </div>
+
+                    <div style={{ display: "grid", gap: "10px" }}>
+                      {column.items.map((item) => (
+                        <button
+                          key={item.label}
+                          type="button"
+                          onClick={() => {
+                            setMoreMenuOpen(false);
+                            navigate(item.to);
+                          }}
+                          style={{
+                            textAlign: "left",
+                            border: "none",
+                            background: "transparent",
+                            padding: "0",
+                            fontSize: "14px",
+                            lineHeight: "1.35",
+                            color: "#334155",
+                            cursor: "pointer",
+                            fontWeight: 500,
+                          }}
+                          onMouseEnter={(event) => {
+                            event.currentTarget.style.color = primary;
+                          }}
+                          onMouseLeave={(event) => {
+                            event.currentTarget.style.color = "#334155";
+                          }}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {isMobile && (
@@ -1695,6 +1856,51 @@ export function Navbar() {
               </div>
             )}
 
+            <div style={{ display: "flex", gap: "8px", alignItems: "center", order: navItemOrder["More"] }}>
+              <button
+                type="button"
+                style={{ ...mobileLinkStyle, flex: 1 }}
+                onClick={() => {
+                  navigate("/more");
+                  setMobileMenuOpen(false);
+                }}
+              >
+                More
+              </button>
+              <button
+                type="button"
+                aria-label="Open more dropdown"
+                style={{
+                  ...mobileLinkStyle,
+                  width: "48px",
+                  padding: "12px 0",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                onClick={() => setMobileMoreOpen((value) => !value)}
+              >
+                <ChevronDown style={{ width: "16px", height: "16px" }} />
+              </button>
+            </div>
+            {mobileMoreOpen && (
+              <div style={{ display: "grid", gap: "8px", paddingLeft: "8px", order: navItemOrder["More"] }}>
+                {moreMenuColumns.flatMap((column) => column.items).map((item) => (
+                  <button
+                    key={item.label}
+                    type="button"
+                    style={mobileSubLinkStyle}
+                    onClick={() => {
+                      navigate(item.to);
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            )}
+
             {topLinks.map((item) => (
               item.label === "Find Agent" || item.label === "Market Insights" ? null : (
                 <button
@@ -1754,3 +1960,4 @@ export function Navbar() {
 }
 
 export default Navbar;
+

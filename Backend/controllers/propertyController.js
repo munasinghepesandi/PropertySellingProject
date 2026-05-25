@@ -143,6 +143,79 @@ const createProperty = async (req, res) => {
   }
 };
 
+    // ── POST /api/properties/public (no auth) ────────────────────
+    const createPropertyPublic = async (req, res) => {
+      try {
+        const {
+          title, description, type, listing_type,
+          price, price_type, district_id, city, address,
+          bedrooms, bathrooms, land_area, floor_area,
+          agent_name, agent_phone, is_featured, allow_inquiries,
+          status
+        } = req.body;
+
+        if (!title || !type || !price)
+          return res.status(400).json({ message: 'title, type and price are required' });
+
+        // Resolve district_id: allow passing district_id or location/district name
+        let finalDistrictId = district_id || null;
+        const districtName = req.body.district || req.body.location || null;
+        if (!finalDistrictId && districtName) {
+          const [existing] = await pool.query('SELECT id FROM districts WHERE name = ? LIMIT 1', [districtName]);
+          if (existing.length) {
+            finalDistrictId = existing[0].id;
+          } else {
+            const [ins] = await pool.query('INSERT INTO districts (name) VALUES (?)', [districtName]);
+            finalDistrictId = ins.insertId;
+          }
+        }
+
+        const [result] = await pool.query(
+          `INSERT INTO properties
+            (title, description, type, listing_type, price, price_type,
+             district_id, city, address, bedrooms, bathrooms,
+             land_area, floor_area, agent_name, agent_phone,
+             is_featured, allow_inquiries, user_id, status)
+           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+          [
+            title,
+            description || null,
+            type,
+            listing_type || 'sale',
+            price,
+            price_type || 'total',
+            finalDistrictId,
+            city || null,
+            address || null,
+            bedrooms || null,
+            bathrooms || null,
+            // map provided area to floor_area if present
+            land_area || null,
+            floor_area || req.body.area || null,
+            agent_name || null,
+            agent_phone || null,
+            is_featured ? 1 : 0,
+            allow_inquiries !== undefined ? (allow_inquiries ? 1 : 0) : 1,
+            null, // public posts have no user_id
+            status || 'active' // public posts active by default
+          ]
+        );
+
+        // Save uploaded images
+        if (req.files && req.files.length) {
+          const imageValues = req.files.map(f => [result.insertId, `/uploads/${f.filename}`]);
+          await pool.query(
+            'INSERT INTO property_images (property_id, url) VALUES ?',
+            [imageValues]
+          );
+        }
+
+        res.status(201).json({ id: result.insertId, message: 'Property created successfully' });
+      } catch (err) {
+        res.status(500).json({ message: err.message });
+      }
+    };
+
 // ── PUT /api/properties/:id ──────────────────────────────────
 const updateProperty = async (req, res) => {
   try {
@@ -242,6 +315,7 @@ module.exports = {
   getProperties,
   getPropertyById,
   createProperty,
+  createPropertyPublic,
   updateProperty,
   deleteProperty,
   updateStatus

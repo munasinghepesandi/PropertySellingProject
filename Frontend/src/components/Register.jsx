@@ -1,21 +1,5 @@
 import { useState } from 'react'
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
-
-const AUTH_STORAGE_KEY = 'lanka_property_current_user'
-const REGISTERED_USERS_KEY = 'lanka_property_registered_users'
-
-function readRegisteredUsers() {
-  if (typeof window === 'undefined') {
-    return []
-  }
-
-  try {
-    const storedUsers = window.localStorage.getItem(REGISTERED_USERS_KEY)
-    return storedUsers ? JSON.parse(storedUsers) : []
-  } catch (error) {
-    return []
-  }
-}
+import { registerUser } from '../utils/auth'
 
 export default function Register({ onSwitchToLogin }) {
   const [userType, setUserType] = useState('owner')
@@ -50,37 +34,30 @@ export default function Register({ onSwitchToLogin }) {
     }
 
     setLoading(true)
-    setTimeout(() => {
-      const currentUser = {
-        fullName: formData.fullName,
-        email: formData.email,
-        userType,
+    const doRegister = async () => {
+      try {
+        const payload = {
+          name: formData.fullName,
+          email: formData.email,
+          password: formData.password,
+          phone: formData.phone || null,
+          user_type: userType || null,
+        }
+        await registerUser(payload)
+        setSuccess('Account created successfully')
+        window.dispatchEvent(new Event('storage'))
+        setFormData({ fullName: '', email: '', password: '', phone: '', acceptTerms: false, newsletter: false })
+      } catch (err) {
+        setError(err.message || 'Registration failed')
+      } finally {
+        setLoading(false)
       }
-      const storedUsers = readRegisteredUsers()
-      const nextUsers = [
-        ...storedUsers.filter((user) => user.email?.toLowerCase() !== formData.email.toLowerCase()),
-        currentUser,
-      ]
+    }
 
-      window.localStorage.setItem(REGISTERED_USERS_KEY, JSON.stringify(nextUsers))
-      window.localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(currentUser))
-      window.dispatchEvent(new Event('storage'))
-      setSuccess('Account created successfully! Please check your email to verify.')
-      setLoading(false)
-      setFormData({
-        fullName: '',
-        email: '',
-        password: '',
-        phone: '',
-        acceptTerms: false,
-        newsletter: false,
-      })
-    }, 1000)
+    doRegister()
   }
 
-  const handleGoogleSuccess = (credentialResponse) => {
-    console.log('Google Registration Success:', credentialResponse)
-  }
+  // Google registration not connected in this build
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f]">

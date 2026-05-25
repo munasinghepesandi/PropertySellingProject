@@ -392,7 +392,7 @@ router.get('/users', async (req, res) => {
     if (status) { where += ' AND u.status = ?'; params.push(status); }
 
     const [users] = await db.query(
-      `SELECT u.id, u.name, u.email, u.phone, u.status, u.created_at,
+      `SELECT u.id, u.name, u.email, u.phone, u.status, u.created_at, u.user_type,
               COUNT(DISTINCT p.id) AS listingCount
        FROM   users u
        LEFT JOIN properties p ON p.user_id = u.id

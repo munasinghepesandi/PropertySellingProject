@@ -19,21 +19,21 @@ const featuredProjects = [
   {
     id: 1,
     title: "Ocean Heights",
-    location: "Colombo 03",
+    location: "Kandy 03",
     image:
       "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: 2,
     title: "Skyline Residencies",
-    location: "Colombo 05",
+    location: "Kandy 05",
     image:
       "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: 3,
     title: "Blue Ocean Towers",
-    location: "Colombo 07",
+    location: "Kandy 07",
     image:
       "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1200&auto=format&fit=crop",
   },
