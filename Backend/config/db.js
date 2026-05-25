@@ -79,6 +79,21 @@ async function ensureDistrictsTable() {
         INDEX idx_property_images_property_id (property_id)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
+    await bootstrap.query(`
+      CREATE TABLE IF NOT EXISTS \`${dbName}\`.\`inquiries\` (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        property_id INT DEFAULT NULL,
+        name VARCHAR(200) NOT NULL,
+        email VARCHAR(200) NOT NULL,
+        phone VARCHAR(60) DEFAULT NULL,
+        message TEXT NOT NULL,
+        status VARCHAR(30) NOT NULL DEFAULT 'new',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_inquiries_property_id (property_id),
+        INDEX idx_inquiries_status (status),
+        CONSTRAINT fk_inquiries_property FOREIGN KEY (property_id) REFERENCES \`${dbName}\`.properties(id) ON DELETE SET NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `);
   } finally {
     await bootstrap.end();
   }

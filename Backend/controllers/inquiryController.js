@@ -4,12 +4,14 @@ const pool = require('../config/db');
 const createInquiry = async (req, res) => {
   try {
     const { property_id, name, email, phone, message } = req.body;
-    if (!property_id || !name || !email || !message)
-      return res.status(400).json({ message: 'property_id, name, email, message are required' });
+    if (!name || !email || !message)
+      return res.status(400).json({ message: 'name, email, message are required' });
+
+    const normalizedPropertyId = property_id || null;
 
     const [result] = await pool.query(
       'INSERT INTO inquiries (property_id, name, email, phone, message) VALUES (?,?,?,?,?)',
-      [property_id, name, email, phone || null, message]
+      [normalizedPropertyId, name, email, phone || null, message]
     );
     res.status(201).json({ id: result.insertId, message: 'Inquiry submitted successfully' });
   } catch (err) {

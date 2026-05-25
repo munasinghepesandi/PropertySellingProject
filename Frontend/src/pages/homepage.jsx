@@ -77,8 +77,12 @@ const highlights = [
 ];
 
 const homepage = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const navigate = useNavigate();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [searchQuery, setSearchQuery] = useState("");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [contactStatus, setContactStatus] = useState("");
 
   const handleHeroSearch = (event) => {
     event.preventDefault();
@@ -86,15 +90,43 @@ const homepage = () => {
     navigate(query ? `/sales?search=${encodeURIComponent(query)}` : "/sales");
   };
 
-  const handleContactSubmit = (event) => {
+  const handleContactSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const name = formData.get("name")?.toString().trim() || "Lanka Property visitor";
-    const email = formData.get("email")?.toString().trim() || "";
-    const message = formData.get("message")?.toString().trim() || "I need help with a property search.";
-    const subject = encodeURIComponent("Home page contact request");
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email || "Not provided"}\n\n${message}`);
-    window.location.href = `mailto:info@lankapropertyweb.com?subject=${subject}&body=${body}`;
+    setContactStatus("");
+
+    const form = event.currentTarget; // capture before async to avoid synthetic event pooling
+    const formData = new FormData(form);
+    const payload = {
+      property_id: null,
+      name: formData.get("name")?.toString().trim() || "",
+      email: formData.get("email")?.toString().trim() || "",
+      message: formData.get("message")?.toString().trim() || "",
+    };
+
+    if (!payload.name || !payload.email || !payload.message) {
+      setContactStatus("Please fill in your name, email, and message.");
+      return;
+    }
+
+    try {
+      const apiBase = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const response = await fetch(`${apiBase}/api/inquiries`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to submit message");
+      }
+
+      setContactStatus("Thanks — your message was sent successfully.");
+      try { form.reset(); } catch { /* ignore reset errors */ }
+    } catch (error) {
+      setContactStatus(error.message || "Failed to submit message.");
+    }
   };
 
   return (
@@ -315,24 +347,17 @@ const homepage = () => {
           <div className="contact-card float-card">
             <p className="section-kicker">Send a quick message</p>
             <form className="contact-form" onSubmit={handleContactSubmit}>
-              <input type="text" name="name" placeholder="Your name" />
-              <input type="email" name="email" placeholder="Email address" />
-              <textarea rows="5" name="message" placeholder="How can we help you?" />
+              <input type="text" name="name" placeholder="Your name" required />
+              <input type="email" name="email" placeholder="Email address" required />
+              <textarea rows="5" name="message" placeholder="How can we help you?" required />
               <button type="submit">Send Message</button>
             </form>
+            {contactStatus ? <p className="contact-status">{contactStatus}</p> : null}
           </div>
         </div>
       </section>
 
-      <section className="cta">
-        <div className="cta-content">
-          <p className="section-kicker">Ready to list?</p>
-          <h2>Put your property in front of more serious buyers.</h2>
-          <p>Reach thousands of visitors across Sri Lanka with one clean listing flow.</p>
-        </div>
-
-        <button className="btn-premium">Post Your Ad</button>
-      </section>
+      
 
       <Footer />
     </div>
