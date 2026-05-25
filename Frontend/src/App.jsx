@@ -64,6 +64,8 @@ import InvestHomePage from './pages/investhome'
 import BusinessAdvisoryPage from './pages/BusinessAdvisoryPage'
 import Login from './components/Login'
 import Register from './components/Register'
+import MorePage from './pages/MorePage'
+import MoreIndex from './pages/MoreIndex'
 import BecomeAgentPage from './pages/BecomeAgentPage'
 import ForgotPassword from './components/ForgotPassword'
 import WantedPropertiesPage from './pages/WantedPropertiesPage'
@@ -207,7 +209,56 @@ function App() {
           <Route path="/market-outlook-report" element={<MarketOutlookReportPage />} />
           <Route path="/businessforsale" element={<BusinessAdvisoryPage />} />
           <Route path="/wanted" element={<WantedPropertiesPage />} />
-          <Route path="/more" element={<Homepage />} />
+          <Route path="/more/buyer-seller-assistance" element={<MorePage title={"Buyer & Seller Assistance"} />} />
+          <Route path="/more/promote-your-property" element={<MorePage title={"Promote your property"} />} />
+
+          <Route path="/more/businesses" element={<MorePage title={"Businesses for Sale"} />} />
+          <Route path="/more/businesses/new" element={<MorePage title={"New Businesses for Sale"} />} />
+          <Route path="/more/businesses/real-estate" element={<MorePage title={"Real Estate"} />} />
+          <Route path="/more/businesses/restaurant" element={<MorePage title={"Restaurant"} />} />
+          <Route path="/more/businesses/construction" element={<MorePage title={"Construction"} />} />
+          <Route path="/more/businesses/agriculture" element={<MorePage title={"Agriculture"} />} />
+          <Route path="/more/businesses/tech" element={<MorePage title={"Tech"} />} />
+          <Route path="/more/businesses/hospitality" element={<MorePage title={"Hospitality"} />} />
+          <Route path="/more/businesses/business" element={<MorePage title={"Business"} />} />
+          <Route path="/more/businesses/manufacturing" element={<MorePage title={"Manufacturing"} />} />
+          <Route path="/more/businesses/garment-textile" element={<MorePage title={"Garment-Textile"} />} />
+          <Route path="/more/businesses/services-bpo" element={<MorePage title={"Services-BPO"} />} />
+
+          <Route path="/more/area-guides/maps-of-sri-lanka" element={<MorePage title={"Maps of Sri Lanka"} />} />
+          <Route path="/more/area-guides/area-guide" element={<MorePage title={"Area Guide"} />} />
+          <Route path="/more/area-guides/points-of-interest" element={<MorePage title={"Point of Interests"} />} />
+
+          <Route path="/more/guides/property-buying-guide" element={<MorePage title={"Property Buying Guide"} />} />
+          <Route path="/more/guides/foreign-buyers-guide" element={<MorePage title={"Foreign Buyers' Guide"} />} />
+          <Route path="/more/guides/capital-gains-tax" element={<MorePage title={"Capital Gains Tax"} />} />
+          <Route path="/more/guides/house-price-index" element={<MorePage title={"Sri Lanka House Price Index"} />} />
+          <Route path="/more/guides/land-price-index" element={<MorePage title={"Sri Lanka Land Price Index"} />} />
+          <Route path="/more/guides/membership-benefits" element={<MorePage title={"Membership Benefits"} />} />
+
+          <Route path="/more/news-and-guides" element={<MorePage title={"News & Guides"} />} />
+          <Route path="/more/about-us" element={<MorePage title={"About us"} />} />
+          <Route path="/more/careers" element={<MorePage title={"Careers"} />} />
+          <Route path="/more/contact-us" element={<MorePage title={"Contact Us"} />} />
+          <Route path="/more/events" element={<MorePage title={"Events"} />} />
+          <Route path="/more/faqs" element={<MorePage title={"FAQs"} />} />
+
+          <Route path="/more/ideal-home" element={<MorePage title={"Ideal Home"} />} />
+          <Route path="/more/ideal-home/appliances" element={<MorePage title={"Appliances & Electronics"} />} />
+          <Route path="/more/ideal-home/furniture" element={<MorePage title={"Furniture"} />} />
+          <Route path="/more/ideal-home/household-items" element={<MorePage title={"Household items"} />} />
+          <Route path="/more/ideal-home/solar-hot-water" element={<MorePage title={"Solar & Hot Water"} />} />
+          <Route path="/more/ideal-home/bathrooms" element={<MorePage title={"Bathrooms"} />} />
+          <Route path="/more/ideal-home/gardening" element={<MorePage title={"Gardening"} />} />
+          <Route path="/more/ideal-home/kitchen" element={<MorePage title={"Kitchen"} />} />
+          <Route path="/more/ideal-home/professionals" element={<MorePage title={"Professionals"} />} />
+          <Route path="/more/ideal-home/flooring" element={<MorePage title={"Flooring"} />} />
+          <Route path="/more/ideal-home/house-construction" element={<MorePage title={"House Construction"} />} />
+          <Route path="/more/ideal-home/lighting" element={<MorePage title={"Lighting"} />} />
+          <Route path="/more/ideal-home/service-providers" element={<MorePage title={"Service Providers"} />} />
+          <Route path="/more/ideal-home/other-services" element={<MorePage title={"Other Services"} />} />
+
+          <Route path="/more" element={<MoreIndex />} />
           <Route path="/aboutus" element={<Homepage />} />
           <Route path="/faqs" element={<Homepage />} />
           <Route path="/privacy-policy" element={<Homepage />} />
