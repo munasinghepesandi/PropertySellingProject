@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
@@ -21,6 +21,7 @@ import {
   Layers3,
 } from "lucide-react";
 import "../styles/homepage.css";
+import { readPostedAds } from "../utils/postedAds";
 
 const propertyTypes = [
   {
@@ -45,7 +46,7 @@ const propertyTypes = [
   },
 ];
 
-const featuredProperties = [
+const defaultFeaturedProperties = [
   {
     title: "Modern Family House",
     area: "Colombo 05",
@@ -76,13 +77,23 @@ const highlights = [
   "Trusted across Sri Lanka",
 ];
 
-const homepage = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+const Homepage = () => {
   const navigate = useNavigate();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [searchQuery, setSearchQuery] = useState("");
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [contactStatus, setContactStatus] = useState("");
+  const [featuredProperties, setFeaturedProperties] = useState(defaultFeaturedProperties);
+
+  useEffect(() => {
+    const syncFeaturedProperties = () => {
+      const postedAds = readPostedAds();
+      setFeaturedProperties([...postedAds, ...defaultFeaturedProperties]);
+    };
+
+    syncFeaturedProperties();
+    window.addEventListener('storage', syncFeaturedProperties);
+
+    return () => window.removeEventListener('storage', syncFeaturedProperties);
+  }, []);
 
   const handleHeroSearch = (event) => {
     event.preventDefault();
@@ -364,4 +375,4 @@ const homepage = () => {
   );
 };
 
-export default homepage;
+export default Homepage;

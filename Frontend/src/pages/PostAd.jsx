@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { API_BASE_URL } from "../utils/auth";
+import { savePostedAd } from "../utils/postedAds";
 
 const initialForm = {
   title: "",
@@ -134,6 +135,14 @@ export function PostAd() {
       setSuccessMessage(
         "Your property ad has been posted successfully. Redirecting to homepage...",
       );
+      savePostedAd({
+        title: payload.title,
+        area: payload.location,
+        price: `Rs. ${Number(payload.price).toLocaleString('en-LK')}`,
+        image: payload.image_url || undefined,
+        tag: 'New',
+        description: payload.description,
+      });
       setForm(initialForm);
 
       setTimeout(() => {
@@ -164,7 +173,7 @@ export function PostAd() {
     <div className="min-h-screen  text-slate-900">
       <Navbar />
 
-      <section className="relative min-h-[340px] overflow-hidden text-white sm:min-h-[420px]">
+      <section className="relative min-h-85 overflow-hidden text-white sm:min-h-105">
         <div className="absolute inset-0 bg-black/60 " />
         <img
           src="https://cdn.home-designing.com/wp-content/uploads/2023/04/modern-houses.jpg"
