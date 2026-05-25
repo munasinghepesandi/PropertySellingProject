@@ -525,17 +525,17 @@ export function Navbar() {
           { label: "Point of Interests", to: "/more/area-guides/points-of-interest" },
         ],
       },
-      {
-        title: "Guides & Indices",
-        items: [
-          { label: "Property Buying Guide", to: "/more/guides/property-buying-guide" },
-          { label: "Foreign Buyers' Guide", to: "/more/guides/foreign-buyers-guide" },
-          { label: "Capital Gains Tax", to: "/more/guides/capital-gains-tax" },
-          { label: "Sri Lanka House Price Index", to: "/more/guides/house-price-index" },
-          { label: "Sri Lanka Land Price Index", to: "/more/guides/land-price-index" },
-          { label: "Membership Benefits", to: "/more/guides/membership-benefits" },
-        ],
-      },
+          {
+            title: "Guides & Indices",
+            items: [
+              { label: "Property Buying Guide", to: "/property-buying-guide" },
+              { label: "Foreign Buyers' Guide", to: "/sales/foreigners-guide" },
+              { label: "Capital Gains Tax", to: "/capital-gains-tax" },
+              { label: "Sri Lanka House Price Index", to: "/sales/house-price-index" },
+              { label: "Sri Lanka Land Price Index", to: "/landpriceindex" },
+              { label: "Membership Benefits", to: "/membership-benefits" },
+            ],
+          },
       {
         title: "Ideal Home",
         items: [
@@ -557,12 +557,12 @@ export function Navbar() {
       {
         title: "News & About",
         items: [
-          { label: "News & Guides", to: "/more/news-and-guides" },
-          { label: "About us", to: "/more/about-us" },
+          { label: "News & Guides", to: "/news-and-guides" },
+          { label: "About us", to: "/aboutus" },
           { label: "Careers", to: "/more/careers" },
-          { label: "Contact Us", to: "/more/contact-us" },
+          { label: "Contact Us", to: "/contact" },
           { label: "Events", to: "/more/events" },
-          { label: "FAQs", to: "/more/faqs" },
+          { label: "FAQs", to: "/faqs" },
         ],
       },
     ],
@@ -750,18 +750,17 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  minWidth: "360px",
-                  maxHeight: "70vh",
+                  minWidth: "920px",
+                  maxWidth: "95vw",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
                   borderRadius: "20px",
                   boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
                   padding: "22px 24px 24px",
                   display: "grid",
-                  gridTemplateColumns: "1fr",
-                  gap: "18px",
+                  gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+                  gap: "20px",
                   border: "1px solid rgba(148, 163, 184, 0.18)",
-                  overflowY: "auto",
                 }}
               >
                 {megaMenuColumns.map((column) => (
@@ -840,18 +839,17 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  minWidth: "360px",
-                  maxHeight: "70vh",
+                  minWidth: "920px",
+                  maxWidth: "95vw",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
                   borderRadius: "20px",
                   boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
                   padding: "22px 24px 24px",
                   display: "grid",
-                  gridTemplateColumns: "1fr",
-                  gap: "18px",
+                  gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+                  gap: "20px",
                   border: "1px solid rgba(148, 163, 184, 0.18)",
-                  overflowY: "auto",
                 }}
               >
                 {ourServicesMenuColumns.map((column) => (
@@ -930,8 +928,8 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  minWidth: "360px",
-                  maxHeight: "70vh",
+                  minWidth: "920px",
+                  maxWidth: "95vw",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
                   borderRadius: "20px",
@@ -941,7 +939,6 @@ export function Navbar() {
                   gridTemplateColumns: "1fr",
                   gap: "14px",
                   border: "1px solid rgba(148, 163, 184, 0.18)",
-                  overflowY: "auto",
                 }}
               >
                 {homeLoansMenuItems.map((item) => (
@@ -1002,18 +999,17 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  minWidth: "360px",
-                  maxHeight: "70vh",
+                  minWidth: "920px",
+                  maxWidth: "95vw",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
                   borderRadius: "20px",
                   boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
                   padding: "22px 24px 24px",
                   display: "grid",
-                  gridTemplateColumns: "1fr",
+                  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
                   gap: "18px",
                   border: "1px solid rgba(148, 163, 184, 0.18)",
-                  overflowY: "auto",
                 }}
               >
                 {marketInsightsMenuColumns.map((column) => (
@@ -1092,18 +1088,17 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  minWidth: "360px",
-                  maxHeight: "70vh",
+                  minWidth: "920px",
+                  maxWidth: "95vw",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
                   borderRadius: "20px",
                   boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
                   padding: "22px 24px 24px",
                   display: "grid",
-                  gridTemplateColumns: "1fr",
+                  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
                   gap: "18px",
                   border: "1px solid rgba(148, 163, 184, 0.18)",
-                  overflowY: "auto",
                 }}
               >
                 {wantedMenuColumns.map((column) => (
@@ -1182,18 +1177,17 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  minWidth: "360px",
-                  maxHeight: "70vh",
+                  minWidth: "920px",
+                  maxWidth: "95vw",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
                   borderRadius: "20px",
                   boxShadow: "0 18px 45px rgba(15, 23, 42, 0.16)",
                   padding: "22px 24px 24px",
                   display: "grid",
-                  gridTemplateColumns: "1fr",
+                  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
                   gap: "18px",
                   border: "1px solid rgba(148, 163, 184, 0.18)",
-                  overflowY: "auto",
                 }}
               >
                 {agentMenuItems.map((column) => (
@@ -1261,8 +1255,8 @@ export function Navbar() {
             >
               Rentals
             </button>
-            <div className="invisible absolute left-0 top-full z-50 w-[360px] max-h-[70vh] overflow-y-auto rounded-[20px] bg-white px-6 py-5 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
-              <div className="grid grid-cols-1 gap-4 max-h-[70vh] overflow-y-auto">
+            <div className="invisible absolute left-0 top-full z-50 w-[920px] max-w-[95vw] rounded-[20px] bg-white px-6 py-5 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
+              <div className="grid grid-cols-2 gap-4">
                 {rentalsMenuColumns.map((column) => (
                   <div key={column.title}>
                     <h3 className="mb-3 border-b pb-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-slate-900">{column.title}</h3>
@@ -1293,7 +1287,7 @@ export function Navbar() {
               Apartment Finder
               <span className="rounded bg-blue-600 px-2 py-0.5 text-[10px] font-semibold uppercase text-white">New</span>
             </button>
-            <div className="invisible absolute left-0 top-full z-50 w-[360px] max-h-[70vh] overflow-y-auto rounded-[20px] bg-white px-6 py-5 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
+            <div className="invisible absolute left-0 top-full z-50 w-[920px] max-w-[95vw] rounded-[20px] bg-white px-6 py-5 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
               <div className="grid grid-cols-1 gap-4">
                 <div>
                   <h3 className="mb-3 border-b pb-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-slate-900">Find New Projects</h3>
@@ -1322,8 +1316,8 @@ export function Navbar() {
             >
               Land
             </button>
-            <div className="invisible absolute left-0 top-full z-50 w-[360px] max-h-[70vh] overflow-y-auto rounded-[20px] bg-white px-6 py-5 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
-              <div className="grid grid-cols-1 gap-4 max-h-[70vh] overflow-y-auto">
+            <div className="invisible absolute left-0 top-full z-50 w-[920px] max-w-[95vw] rounded-[20px] bg-white px-6 py-5 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
+              <div className="grid grid-cols-2 gap-4">
                 {landMenuColumns.map((column) => (
                   <div key={column.title}>
                     <h3 className="mb-3 border-b pb-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-slate-900">{column.title}</h3>
@@ -1353,8 +1347,8 @@ export function Navbar() {
             >
               Invest
             </button>
-            <div className="invisible absolute left-0 top-full z-50 w-[360px] max-h-[70vh] overflow-y-auto rounded-[20px] bg-white px-6 py-5 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
-              <div className="grid grid-cols-1 gap-4 max-h-[70vh] overflow-y-auto">
+            <div className="invisible absolute left-0 top-full z-50 w-[920px] max-w-[95vw] rounded-[20px] bg-white px-6 py-5 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
+              <div className="grid grid-cols-2 gap-4">
                 {investMenuColumns.map((column) => (
                   <div key={column.title}>
                     <h3 className="mb-3 border-b pb-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-slate-900">{column.title}</h3>
@@ -1397,7 +1391,7 @@ export function Navbar() {
                   position: "absolute",
                   top: "100%",
                   left: 0,
-                  minWidth: "360px",
+                  minWidth: "560px",
                   maxHeight: "70vh",
                   backgroundColor: "#ffffff",
                   color: "#0f172a",
@@ -1966,3 +1960,4 @@ export function Navbar() {
 }
 
 export default Navbar;
+
