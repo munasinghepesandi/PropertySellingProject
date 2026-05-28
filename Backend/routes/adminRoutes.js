@@ -632,14 +632,14 @@ router.get('/reports', async (req, res) => {
     const byType = typeRows.map(r => ({ name:r.name, count:r.cnt, pct:Math.round(r.cnt/maxT*100) }));
 
     const [monthRows] = await db.query(`
-      SELECT DATE_FORMAT(created_at,'%b %Y') AS month,
+      SELECT DATE_FORMAT(MIN(created_at),'%b %Y') AS month,
              COUNT(*) AS total,
              SUM(status='replied') AS resolved,
              SUM(status IN ('new','read')) AS pending
       FROM   inquiries
       WHERE  created_at >= DATE_SUB(NOW(),INTERVAL 6 MONTH)
-      GROUP  BY DATE_FORMAT(created_at,'%Y-%m')
-      ORDER  BY MIN(created_at) DESC
+      GROUP  BY YEAR(created_at), MONTH(created_at)
+      ORDER  BY YEAR(created_at) DESC, MONTH(created_at) DESC
     `);
     const monthlyInquiries = monthRows.map(r => ({
       ...r, responseRate: r.total ? Math.round(r.resolved/r.total*100) : 0,

@@ -101,6 +101,18 @@ async function ensureDistrictsTable() {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
     await bootstrap.query(`
+      CREATE TABLE IF NOT EXISTS \`${dbName}\`.\`agents\` (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(200) NOT NULL,
+        email VARCHAR(200) NOT NULL UNIQUE,
+        phone VARCHAR(60) DEFAULT NULL,
+        status VARCHAR(30) NOT NULL DEFAULT 'active',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_agents_status (status),
+        INDEX idx_agents_created_at (created_at)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `);
+    await bootstrap.query(`
       CREATE TABLE IF NOT EXISTS \`${dbName}\`.\`property_images\` (
         id INT AUTO_INCREMENT PRIMARY KEY,
         property_id INT NOT NULL,
@@ -123,6 +135,22 @@ async function ensureDistrictsTable() {
         INDEX idx_inquiries_property_id (property_id),
         INDEX idx_inquiries_status (status),
         CONSTRAINT fk_inquiries_property FOREIGN KEY (property_id) REFERENCES \`${dbName}\`.properties(id) ON DELETE SET NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `);
+    await bootstrap.query(`
+      CREATE TABLE IF NOT EXISTS \`${dbName}\`.\`featured_ads\` (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        property_id INT NOT NULL,
+        package VARCHAR(30) NOT NULL,
+        start_date DATETIME NOT NULL,
+        end_date DATETIME NOT NULL,
+        status VARCHAR(30) NOT NULL DEFAULT 'active',
+        impressions INT NOT NULL DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_featured_ads_property_id (property_id),
+        INDEX idx_featured_ads_status (status),
+        INDEX idx_featured_ads_created_at (created_at),
+        CONSTRAINT fk_featured_ads_property FOREIGN KEY (property_id) REFERENCES \`${dbName}\`.properties(id) ON DELETE CASCADE
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
   } finally {
