@@ -28,15 +28,22 @@ const salesSections = {
     ]
   ),
   houses: createSection(
-    'Houses for Sale',
-    'Family homes, villas, and bungalows',
-    'Find family homes in Colombo, Kandy, Negombo, and other popular residential areas.',
-    ['Family homes', 'Villas and bungalows', 'Suburban and city options'],
+    'Houses for sale in Kandy',
+    'Family homes and bungalows in Kandy',
+    'Browse current house listings across Kandy and nearby suburbs. Filter by price, location and property type.',
+    ['Family homes', 'Villas & bungalows', 'Kandy area listings'],
     '#2171B5',
-    'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1600&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1494526585095-c41746248156?w=1600&q=80&auto=format&fit=crop',
     [
-      { title: 'Spacious Family House - Colombo', price: 'Rs. 18.5M', image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=500&q=80', badge: 'Featured' },
-      { title: 'Villa with Garden - Kandy', price: 'Rs. 12.8M', image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&q=80', badge: 'Popular' },
+      { title: 'Spacious Family House - Peradeniya', price: 'Rs. 18.5M', image: 'https://images.unsplash.com/photo-1560184897-6b5f9f3b6f7b?w=800&q=80', badge: 'Featured' },
+      { title: 'Villa with Garden - Katugastota', price: 'Rs. 12.8M', image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80', badge: 'Popular' },
+      { title: 'Modern House - Ampitiya', price: 'Rs. 9.2M', image: 'https://images.unsplash.com/photo-1501183638710-841dd1904471?w=800&q=80', badge: 'New' },
+      { title: 'Colonial Home - Kundasale', price: 'Rs. 14.0M', image: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&q=80', badge: 'Verified' },
+      { title: 'Lake View Family Home - Peradeniya', price: 'Rs. 11.5M', image: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80', badge: 'Urgent' },
+      { title: 'Bungalow with Garden - Digana', price: 'Rs. 7.8M', image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80', badge: 'Popular' },
+      { title: 'Luxury Villa with Pool - Kandy', price: 'Rs. 45M+', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80', badge: 'Premium' },
+      { title: 'Townhouse - Deiyannewela', price: 'Rs. 6.3M', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80', badge: 'Verified' },
+      { title: 'Renovated Family Home - Hunnasgiriya', price: 'Rs. 5.4M', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80', badge: 'Affordable' },
     ]
   ),
   apartments: createSection(
@@ -246,8 +253,8 @@ export default function SalesSectionPage({ sectionSlug: sectionSlugProp } = {}) 
       <Navbar />
 
       <section className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center gap-3 text-[13px] text-slate-500">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-3 text-[13px] text-slate-500">
             <span className="font-semibold text-slate-700">Home</span>
             <span>›</span>
             <span className="font-semibold text-slate-700">Sales</span>
@@ -255,61 +262,47 @@ export default function SalesSectionPage({ sectionSlug: sectionSlugProp } = {}) 
             <span className="text-slate-500">{section.title}</span>
           </div>
 
-          <div className="mt-4 grid gap-3 lg:grid-cols-[1.45fr_1fr_auto] lg:items-center">
-            <div className="grid grid-cols-2 gap-2 md:grid-cols-4 lg:col-span-2">
-              <label className="min-h-[60px] rounded border border-[#d9e8f6] bg-white px-3 py-2 text-left shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
-                <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-slate-400">Location</div>
-                <select value={locationFilter} onChange={(event) => setLocationFilter(event.target.value)} className="mt-1 w-full bg-transparent text-[15px] font-semibold text-slate-700 outline-none">
-                  <option>Any</option>
-                  {kandyLocations.map((location) => (
-                    <option key={location}>{location}</option>
-                  ))}
-                </select>
-              </label>
+          <div className="mt-6 rounded-lg bg-white p-6 shadow-sm">
+            <div className="grid gap-4 lg:grid-cols-[1fr_320px] lg:items-center">
+              <div>
+                <div className="mb-4 text-2xl font-bold text-slate-900">{section.title}</div>
+                <p className="text-sm text-slate-600">{section.subtitle} — {section.description}</p>
 
-              <label className="min-h-[60px] rounded border border-[#d9e8f6] bg-white px-3 py-2 text-left shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
-                <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-slate-400">Property Type</div>
-                <select value={propertyTypeFilter} onChange={(event) => setPropertyTypeFilter(event.target.value)} className="mt-1 w-full bg-transparent text-[15px] font-semibold text-slate-700 outline-none">
-                  <option>Any</option>
-                  <option>House</option>
-                  <option>Apartment</option>
-                  <option>Villa</option>
-                  <option>Commercial</option>
-                  <option>Land</option>
-                </select>
-              </label>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <input placeholder="Search by suburb or keyword" value={''} className="rounded border border-slate-300 px-4 py-3 text-sm outline-none" />
+                  <select className="rounded border border-slate-300 px-4 py-3 text-sm outline-none">
+                    <option>Any radius</option>
+                  </select>
+                  <select className="rounded border border-slate-300 px-4 py-3 text-sm outline-none">
+                    <option>House</option>
+                  </select>
+                  <select className="rounded border border-slate-300 px-4 py-3 text-sm outline-none">
+                    <option>Price range</option>
+                  </select>
+                </div>
 
-              <label className="min-h-[60px] rounded border border-[#d9e8f6] bg-white px-3 py-2 text-left shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
-                <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-slate-400">Budget</div>
-                <select value={budgetFilter} onChange={(event) => setBudgetFilter(event.target.value)} className="mt-1 w-full bg-transparent text-[15px] font-semibold text-slate-700 outline-none">
-                  <option>Any</option>
-                  <option>Under 15M</option>
-                  <option>15M - 30M</option>
-                  <option>30M+</option>
-                </select>
-              </label>
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  <button className="rounded-md bg-[#2171B5] px-4 py-2 text-sm font-semibold text-white">Search</button>
+                  <button className="rounded-md border border-[#2171B5] px-4 py-2 text-sm text-[#2171B5]">Advanced</button>
+                  <button className="rounded-md border px-4 py-2 text-sm">Reset</button>
+                </div>
 
-              <label className="min-h-[60px] rounded border border-[#d9e8f6] bg-white px-3 py-2 text-left shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
-                <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-slate-400">Tag</div>
-                <select value={tagFilter} onChange={(event) => setTagFilter(event.target.value)} className="mt-1 w-full bg-transparent text-[15px] font-semibold text-slate-700 outline-none">
-                  <option>Any</option>
-                  <option>Featured</option>
-                  <option>Popular</option>
-                  <option>Premium</option>
-                  <option>Hot</option>
-                  <option>New</option>
-                </select>
-              </label>
-            </div>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <button className="rounded-full border border-[#dbeafe] bg-white px-4 py-1 text-sm">+ Apartments (4177)</button>
+                  <button className="rounded-full border border-[#dbeafe] bg-white px-4 py-1 text-sm">+ Commercial (1094)</button>
+                  <button className="rounded-full border border-[#dbeafe] bg-white px-4 py-1 text-sm">+ Villas (414)</button>
+                  <button className="rounded-full border border-[#dbeafe] bg-white px-4 py-1 text-sm">+ Bungalows (74)</button>
+                </div>
+              </div>
 
-            <div className="flex items-center gap-2">
-              <button type="button" onClick={handleSearchClick} className="inline-flex items-center gap-2 rounded-lg bg-[#2171B5] px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-[#08306B]">
-                <Search className="h-4 w-4" />
-                Search
-              </button>
-              <div className="ml-auto inline-flex overflow-hidden rounded-full border border-slate-300 bg-white text-sm font-semibold text-slate-700">
-                <button type="button" onClick={() => setViewMode('list')} className={`px-4 py-2 ${viewMode === 'list' ? 'bg-[#2171B5] text-white' : ''}`}>List</button>
-                <button type="button" onClick={() => setViewMode('map')} className={`px-4 py-2 ${viewMode === 'map' ? 'bg-[#2171B5] text-white' : ''}`}>Map</button>
+              <div className="hidden rounded-lg border border-slate-200 bg-[#f8fafc] p-4 text-sm lg:block">
+                <div className="font-semibold text-slate-700">Top Cities</div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <span className="rounded-full bg-white px-3 py-1 text-sm ring-1 ring-slate-200">Kandy</span>
+                  <span className="rounded-full bg-white px-3 py-1 text-sm ring-1 ring-slate-200">Peradeniya</span>
+                  <span className="rounded-full bg-white px-3 py-1 text-sm ring-1 ring-slate-200">Katugastota</span>
+                  <span className="rounded-full bg-white px-3 py-1 text-sm ring-1 ring-slate-200">Digana</span>
+                </div>
               </div>
             </div>
           </div>

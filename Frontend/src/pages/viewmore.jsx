@@ -94,58 +94,8 @@ export default function PropertyDetails() {
 
       <div className="max-w-[1500px] mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-        {/* LEFT SIDEBAR */}
-        <aside className="lg:col-span-3 sticky top-6 h-fit">
-          <div className="bg-white rounded-2xl shadow-md p-5">
-            <button className="flex items-center gap-2 text-[#08306B] font-semibold mb-6">
-              <ArrowLeft size={16} />
-              Back
-            </button>
-
-            <h2 className="text-xl font-bold text-[#08306B]">
-              The Elizabeth
-            </h2>
-
-            <p className="text-gray-500 flex items-center gap-2 mt-1">
-              <MapPin size={14} /> Colombo 07
-            </p>
-
-            <h3 className="text-2xl font-bold text-[#2171B5] mt-3">
-              LKR 129.75 M
-            </h3>
-
-            <div className="grid grid-cols-3 gap-2 mt-6 text-center">
-              <div className="bg-[#f4f7fb] p-2 rounded-lg">
-                <BedDouble size={14} className="mx-auto text-[#2171B5]" />
-                <p className="text-xs">4</p>
-              </div>
-
-              <div className="bg-[#f4f7fb] p-2 rounded-lg">
-                <Bath size={14} className="mx-auto text-[#2171B5]" />
-                <p className="text-xs">3</p>
-              </div>
-
-              <div className="bg-[#f4f7fb] p-2 rounded-lg">
-                <Maximize size={14} className="mx-auto text-[#2171B5]" />
-                <p className="text-xs">3200</p>
-              </div>
-            </div>
-
-            <div className="mt-6 space-y-2">
-              {sections.map((s, i) => (
-                <button
-                  key={i}
-                  className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium hover:bg-[#e0ecff] text-[#08306B]"
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
-          </div>
-        </aside>
-
         {/* MAIN CONTENT */}
-        <main className="lg:col-span-9 space-y-6">
+        <main className="lg:col-span-8 space-y-6">
 
           {/* IMAGES */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
@@ -312,24 +262,64 @@ export default function PropertyDetails() {
 
           {/* CTA */}
           <div className="bg-gradient-to-r from-[#2171B5] to-[#08306B] text-white p-6 rounded-2xl">
-            <h2 className="text-2xl font-bold">
-              Interested in this property?
-            </h2>
-            <p className="mt-2 text-white/80">
-              Contact us for viewing or details.
-            </p>
-
+            <h2 className="text-2xl font-bold">Interested in this property?</h2>
+            <p className="mt-2 text-white/80">Contact us for viewing or details.</p>
             <div className="flex gap-3 mt-4">
-              <button className="bg-white text-[#08306B] px-4 py-2 rounded-lg">
-                Enquire
-              </button>
-              <button className="border px-4 py-2 rounded-lg">
-                Download
-              </button>
+              <button className="bg-white text-[#08306B] px-4 py-2 rounded-lg">Enquire</button>
+              <button className="border px-4 py-2 rounded-lg">Download</button>
             </div>
           </div>
 
         </main>
+
+        {/* RIGHT STICKY PANEL */}
+        <aside className="lg:col-span-4 sticky top-6 h-fit">
+          <div className="bg-white rounded-2xl shadow-md p-5 space-y-4">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <h2 className="text-xl font-bold text-[#08306B]">The Elizabeth</h2>
+                <p className="text-gray-500 flex items-center gap-2 mt-1"><MapPin size={14} /> Kandy (example)</p>
+              </div>
+              <div className="flex gap-2">
+                <button className="rounded-md border px-3 py-2 text-sm">Save</button>
+                <button className="rounded-md border px-3 py-2 text-sm">Share</button>
+              </div>
+            </div>
+
+            <div>
+              <div className="text-2xl font-bold text-[#2171B5]">LKR 129.75 M</div>
+              <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+                <div className="bg-[#f4f7fb] p-2 rounded-lg"><BedDouble size={14} className="mx-auto text-[#2171B5]" /><p className="text-xs">4</p></div>
+                <div className="bg-[#f4f7fb] p-2 rounded-lg"><Bath size={14} className="mx-auto text-[#2171B5]" /><p className="text-xs">3</p></div>
+                <div className="bg-[#f4f7fb] p-2 rounded-lg"><Maximize size={14} className="mx-auto text-[#2171B5]" /><p className="text-xs">3200 sqft</p></div>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <button className="w-full rounded-md bg-[#2171B5] px-4 py-3 text-white font-semibold">Contact Agent</button>
+              <button className="w-full mt-2 rounded-md border px-4 py-3">Request Call</button>
+            </div>
+
+            <div className="border-t pt-4">
+              <h4 className="text-sm font-semibold text-slate-700">Agent</h4>
+              <div className="mt-3 flex items-center gap-3">
+                <div className="h-12 w-12 rounded-full bg-slate-200" />
+                <div>
+                  <div className="font-semibold">John Doe</div>
+                  <div className="text-xs text-gray-500">ABC Realtors</div>
+                  <div className="mt-2 text-sm font-medium text-[#08306B]">077 123 4567</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t pt-4">
+              <h4 className="text-sm font-semibold text-slate-700">Location</h4>
+              <div className="mt-2 h-36 overflow-hidden rounded-md">
+                <iframe title="map" src="https://maps.google.com/maps?q=Kandy&t=&z=13&ie=UTF8&iwloc=&output=embed" className="w-full h-full" />
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   );
