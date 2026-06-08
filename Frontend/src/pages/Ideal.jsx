@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   Sun,
   Truck,
@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 
 export default function Ideal() {
+  const location = useLocation()
+  const isActive = (path) => location.pathname.startsWith(path)
   const categories = [
     { name: "Sofas", img: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc" },
     { name: "Chairs & Stools", img: "https://images.unsplash.com/photo-1503602642458-232111445657" },
@@ -55,11 +57,11 @@ export default function Ideal() {
         <h1 className="text-2xl font-bold">ideal <span className="text-white/80">home</span></h1>
 
         <div className="hidden md:flex gap-8 text-sm font-medium">
-          <p className="hover:text-gray-200 cursor-pointer">PRODUCTS</p>
-          <p className="hover:text-gray-200 cursor-pointer">HOUSE CONSTRUCTION</p>
-          <p className="hover:text-gray-200 cursor-pointer">FIND PROFESSIONALS</p>
-          <p className="hover:text-gray-200 cursor-pointer">INSPIRATIONS</p>
-          <p className="hover:text-gray-200 cursor-pointer">MORE</p>
+          <Link to="/more/ideal-home/appliances" className={`hover:text-gray-200 ${isActive('/more/ideal-home') ? 'text-white underline' : ''}`}>PRODUCTS</Link>
+          <Link to="/more/ideal-home/house-construction" className={`hover:text-gray-200 ${isActive('/more/ideal-home/house-construction') ? 'text-white underline' : ''}`}>HOUSE CONSTRUCTION</Link>
+          <Link to="/more/ideal-home/professionals" className={`hover:text-gray-200 ${isActive('/more/ideal-home/professionals') ? 'text-white underline' : ''}`}>FIND PROFESSIONALS</Link>
+          <Link to="/inspiration" className={`hover:text-gray-200 ${isActive('/inspiration') ? 'text-white underline' : ''}`}>INSPIRATIONS</Link>
+          <Link to="/more" className={`hover:text-gray-200 ${isActive('/more') ? 'text-white underline' : ''}`}>MORE</Link>
         </div>
 
         <button className="bg-white text-[#08306B] px-5 py-2 rounded-lg font-semibold hover:bg-gray-200 transition">POST YOUR AD</button>
