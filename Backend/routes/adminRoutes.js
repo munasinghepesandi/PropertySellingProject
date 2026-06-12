@@ -443,7 +443,7 @@ router.get('/agents', async (req, res) => {
     if (status) { where += ' AND a.status = ?'; params.push(status); }
 
     const [agents] = await db.query(
-      `SELECT a.id, a.name, a.email, a.phone, a.status, a.created_at,
+      `SELECT a.id, a.name, a.email, a.phone, a.message, a.status, a.created_at,
               COUNT(DISTINCT p.id) AS listingCount
        FROM   agents a
        LEFT JOIN properties p ON p.agent_name = a.name
