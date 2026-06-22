@@ -40,7 +40,7 @@ export default function BecomeAgentPage() {
       name: 'Pro', 
       price: 'Rs 19,900', 
       subtext: '/month',
-      border: 'border-2 border-[#2171B5]',
+      border: 'border-2 border-[#2A6F86]',
       bg: 'bg-white',
       features: ['Concurrent ads: 20', '2 Phone Numbers', '2 WhatsApp Live Chat', 'Free Website', 'Basic Analytics']
     },
@@ -72,7 +72,7 @@ export default function BecomeAgentPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#08306B] to-[#2171B5] py-20 text-white">
+      <section className="bg-gradient-to-r from-[#123B44] to-[#2A6F86] py-20 text-white">
         <div className="max-w-6xl mx-auto px-6">
           <h1 className="text-4xl sm:text-5xl font-extrabold mb-6">Grow Your Real Estate Business</h1>
           <p className="text-lg text-blue-100 max-w-3xl">Join 2,500+ agents using LankaPropertyWeb to reach buyers, manage listings, and close deals faster.</p>
@@ -85,7 +85,7 @@ export default function BecomeAgentPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {metrics.map((m) => (
               <div key={m.label} className="text-center">
-                <div className="text-5xl font-extrabold text-[#08306B]">{m.value}</div>
+                <div className="text-5xl font-extrabold text-[#123B44]">{m.value}</div>
                 <div className="text-gray-700 mt-3 font-medium">{m.label}</div>
               </div>
             ))}
@@ -96,19 +96,19 @@ export default function BecomeAgentPage() {
       {/* Benefits Section with Progress Bars */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-[#08306B] mb-16 text-center">Why Join LankaPropertyWeb?</h2>
+          <h2 className="text-3xl font-bold text-[#123B44] mb-16 text-center">Why Join LankaPropertyWeb?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {benefits.map((benefit) => (
               <div key={benefit.title} className="bg-white p-8 rounded-xl border border-[#e0ecf7] hover:shadow-lg transition">
-                <h3 className="font-bold text-[#08306B] text-lg mb-3">{benefit.title}</h3>
+                <h3 className="font-bold text-[#123B44] text-lg mb-3">{benefit.title}</h3>
                 <p className="text-sm text-gray-600 mb-6">{benefit.desc}</p>
                 <div className="bg-[#f0f5fb] rounded-full h-4 overflow-hidden">
                   <div 
-                    className="bg-gradient-to-r from-[#2171B5] to-[#08306B] h-full rounded-full transition-all duration-500"
+                    className="bg-gradient-to-r from-[#2A6F86] to-[#123B44] h-full rounded-full transition-all duration-500"
                     style={{ width: `${benefit.pct}%` }}
                   />
                 </div>
-                <div className="text-right mt-3 text-sm font-bold text-[#2171B5]">{benefit.pct}% of agents</div>
+                <div className="text-right mt-3 text-sm font-bold text-[#2A6F86]">{benefit.pct}% of agents</div>
               </div>
             ))}
           </div>
@@ -118,12 +118,12 @@ export default function BecomeAgentPage() {
       {/* Add-ons Section */}
       <section className="py-20 bg-[#f8fbff]">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-[#08306B] mb-14 text-center">Premium Add-ons</h2>
+          <h2 className="text-3xl font-bold text-[#123B44] mb-14 text-center">Premium Add-ons</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {addOns.map((add) => (
-              <div key={add.title} className="bg-white rounded-xl p-8 text-center border border-blue-100 hover:border-[#2171B5] transition">
+              <div key={add.title} className="bg-white rounded-xl p-8 text-center border border-blue-100 hover:border-[#2A6F86] transition">
                 <div className="text-5xl mb-4">{add.icon}</div>
-                <h4 className="font-bold text-[#08306B] text-lg">{add.title}</h4>
+                <h4 className="font-bold text-[#123B44] text-lg">{add.title}</h4>
                 <p className="text-sm text-gray-600 mt-3">{add.desc}</p>
               </div>
             ))}
@@ -134,19 +134,19 @@ export default function BecomeAgentPage() {
       {/* Package Comparison with Check marks */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-[#08306B] mb-16 text-center">Choose Your Plan</h2>
+          <h2 className="text-3xl font-bold text-[#123B44] mb-16 text-center">Choose Your Plan</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {packages.map((pkg) => (
               <div key={pkg.name} className={`${pkg.bg} ${pkg.border} rounded-xl p-8`}>
-                <h3 className="text-2xl font-bold text-[#08306B]">{pkg.name}</h3>
+                <h3 className="text-2xl font-bold text-[#123B44]">{pkg.name}</h3>
                 <div className="mt-4">
-                  <div className="text-4xl font-extrabold text-[#2171B5]">{pkg.price}</div>
+                  <div className="text-4xl font-extrabold text-[#2A6F86]">{pkg.price}</div>
                   <div className="text-sm text-gray-500 font-medium">{pkg.subtext}</div>
                 </div>
                 <ul className="mt-8 space-y-4">
                   {pkg.features.map((feat, idx) => (
                     <li key={idx} className="flex items-center gap-3">
-                      <Check className="w-5 h-5 text-[#2171B5] flex-shrink-0" />
+                      <Check className="w-5 h-5 text-[#2A6F86] flex-shrink-0" />
                       <span className="text-gray-700 text-sm">{feat}</span>
                     </li>
                   ))}
@@ -199,7 +199,7 @@ export default function BecomeAgentPage() {
                   value={contact.name} 
                   onChange={handleChange} 
                   placeholder="Full Name" 
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#2171B5]" 
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#2A6F86]" 
                   required 
                 />
                 <input 
@@ -207,7 +207,7 @@ export default function BecomeAgentPage() {
                   value={contact.email} 
                   onChange={handleChange} 
                   placeholder="Email" 
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#2171B5]" 
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#2A6F86]" 
                   required 
                 />
               </div>
@@ -216,7 +216,7 @@ export default function BecomeAgentPage() {
                 value={contact.phone} 
                 onChange={handleChange} 
                 placeholder="Phone Number" 
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#2171B5]" 
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#2A6F86]" 
               />
               <textarea 
                 name="message" 
@@ -228,7 +228,7 @@ export default function BecomeAgentPage() {
               />
               <div className="flex gap-3 pt-2">
                 <button 
-                  className="flex-1 bg-[#08306B] hover:bg-[#062852] text-white py-3 rounded-lg font-semibold transition disabled:opacity-60" 
+                  className="flex-1 bg-[#123B44] hover:bg-[#0f2f36] text-white py-3 rounded-lg font-semibold transition disabled:opacity-60" 
                   disabled={loading}
                 >
                   {loading ? 'Sending...' : 'Contact Sales'}

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Search, Home, ChevronDown, Menu, X } from "lucide-react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 const AUTH_STORAGE_KEY = 'lanka_property_current_user';
 const REGISTERED_USERS_KEY = 'lanka_property_registered_users';
@@ -52,6 +52,8 @@ export function Navbar() {
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location?.pathname === "/";
 
   function handleNavigate(path, openInEdge = false) {
     if (openInEdge && typeof window !== 'undefined') {
@@ -114,8 +116,8 @@ export function Navbar() {
     navigate('/login?redirect=%2Fpost-ad');
   };
 
-  const primary = "#2171B5";
-  const dark = "#08306B";
+  const primary = "#2A6F86";
+  const dark = "#123B44";
 
   const navStyle = {
     position: "sticky",
@@ -126,9 +128,9 @@ export function Navbar() {
   };
 
   const topBarStyle = {
-    backgroundColor: "white",
-    color: "#0f172a",
-    borderBottom: "1px solid #e2e8f0",
+    backgroundColor: isHome ? '#000000' : 'white',
+    color: isHome ? 'white' : '#0f172a',
+    borderBottom: isHome ? 'none' : '1px solid #e2e8f0',
   };
 
   const topBarInnerStyle = {
@@ -156,7 +158,7 @@ export function Navbar() {
     cursor: "pointer",
     fontWeight: 800,
     fontSize: "22px",
-    color: "#0f172a",
+    color: isHome ? 'white' : '#0f172a',
   };
 
   const brandAccentStyle = {
@@ -632,7 +634,7 @@ export function Navbar() {
   const topLinkStyle = {
     fontSize: "14px",
     fontWeight: 600,
-    color: "#0f172a",
+    color: isHome ? 'white' : '#0f172a',
     background: "transparent",
     border: "none",
     cursor: "pointer",
@@ -703,9 +705,6 @@ export function Navbar() {
               <>
                 <button type="button" style={topLinkStyle} onClick={() => navigate('/login') }>
                   Login
-                </button>
-                <button type="button" style={topLinkStyle} onClick={() => navigate('/register') }>
-                  Register
                 </button>
               </>
             )}

@@ -7,7 +7,7 @@ export default function AreaGuideKandy(){
     <>
       <Navbar />
       <main className="min-h-screen bg-gray-50">
-        <header className="bg-gradient-to-r from-[#08306B] to-[#2171B5] text-white py-16">
+        <header className="bg-gradient-to-r from-[#123B44] to-[#2A6F86] text-white py-16">
           <div className="max-w-6xl mx-auto px-6">
             <h1 className="text-3xl md:text-4xl font-bold">Kandy — Area Guide</h1>
             <p className="mt-3 text-gray-100 max-w-2xl">Discover neighbourhoods, transport links, schools and local amenities to help you find the right place in Kandy.</p>
@@ -18,7 +18,7 @@ export default function AreaGuideKandy(){
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 bg-white rounded-lg shadow p-6">
               <div className="text-sm text-gray-500 mb-3">
-                <Link to="/more/area-guides" className="text-[#2171B5] hover:underline">Area Guides</Link>
+                <Link to="/more/area-guides" className="text-[#2A6F86] hover:underline">Area Guides</Link>
                 <span className="mx-2">/</span>
                 <span>Kandy</span>
               </div>
@@ -56,7 +56,7 @@ export default function AreaGuideKandy(){
               </div>
 
               <div className="mt-6">
-                <Link to="/more/area-guides/points-of-interest" className="text-sm text-[#2171B5] hover:underline">See Points of Interest in Kandy</Link>
+                <Link to="/more/area-guides/points-of-interest" className="text-sm text-[#2A6F86] hover:underline">See Points of Interest in Kandy</Link>
               </div>
             </div>
 

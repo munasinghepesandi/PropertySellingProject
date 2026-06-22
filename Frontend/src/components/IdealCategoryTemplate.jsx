@@ -29,16 +29,16 @@ export default function IdealCategoryTemplate({
               <p className="text-sm font-semibold text-gray-700">{cat.name}</p>
             </div>
           ))}
-          <div className="flex items-center justify-center min-w-[60px]"><ChevronRight className="text-[#2171B5]" /></div>
+          <div className="flex items-center justify-center min-w-[60px]"><ChevronRight className="text-[#2A6F86]" /></div>
         </div>
       )}
 
       <div className="flex px-6 gap-6 pb-10">
         <div className="w-64 bg-white p-5 rounded-xl shadow-md">
-          <h3 className="font-bold text-[#08306B] mb-4">{sidebarTitle}</h3>
+          <h3 className="font-bold text-[#123B44] mb-4">{sidebarTitle}</h3>
           <ul className="space-y-3 text-gray-600 text-sm">
             {sidebarItems.map((item, index) => (
-              <li key={index} className={item.active ? 'text-[#2171B5] font-semibold cursor-pointer' : 'hover:text-[#2171B5] cursor-pointer'}>
+              <li key={index} className={item.active ? 'text-[#2A6F86] font-semibold cursor-pointer' : 'hover:text-[#2A6F86] cursor-pointer'}>
                 {item.label}
               </li>
             ))}
@@ -47,10 +47,10 @@ export default function IdealCategoryTemplate({
 
         <div className="flex-1">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold text-[#08306B]">{title} Listings</h2>
+            <h2 className="text-xl font-bold text-[#123B44]">{title} Listings</h2>
             <div className="flex gap-3 bg-white p-2 rounded-lg shadow">
-              <button onClick={() => setView('grid')}><Grid className={view === 'grid' ? 'text-[#2171B5]' : 'text-gray-500'} /></button>
-              <button onClick={() => setView('list')}><List className={view === 'list' ? 'text-[#2171B5]' : 'text-gray-500'} /></button>
+              <button onClick={() => setView('grid')}><Grid className={view === 'grid' ? 'text-[#2A6F86]' : 'text-gray-500'} /></button>
+              <button onClick={() => setView('list')}><List className={view === 'list' ? 'text-[#2A6F86]' : 'text-gray-500'} /></button>
             </div>
           </div>
 
@@ -62,7 +62,7 @@ export default function IdealCategoryTemplate({
                   <div className="p-4">
                     <h3 className="font-semibold text-gray-800">{item.title}</h3>
                     <p className="text-sm text-gray-500">{item.location}</p>
-                    <p className="text-[#2171B5] font-bold mt-2 text-lg">{item.price}</p>
+                      <p className="text-[#2A6F86] font-bold mt-2 text-lg">{item.price}</p>
                   </div>
                 </div>
               ))}
@@ -77,7 +77,7 @@ export default function IdealCategoryTemplate({
                       <h3 className="font-semibold text-gray-800">{item.title}</h3>
                       <p className="text-gray-500 text-sm">{item.location}</p>
                     </div>
-                    <p className="text-[#2171B5] font-bold text-lg">{item.price}</p>
+                    <p className="text-[#2A6F86] font-bold text-lg">{item.price}</p>
                   </div>
                 </div>
               ))}

@@ -74,7 +74,7 @@ main article:has(img[alt="Moving and home services"]) .bg-slate-50 {
 }
 
 main section:has(img[alt="Market research and advisory"]) .text-slate-700 {
-  color: #08306b !important;
+  color: #123b44 !important;
 }
 
 main form:has(select) {
@@ -86,7 +86,7 @@ main .text-orange-500,
 main .text-orange-600,
 main .text-amber-900,
 main .text-amber-950 {
-  color: #08306b !important;
+  color: #123b44 !important;
 }
 
 main .bg-emerald-50,
@@ -104,6 +104,10 @@ main .border-emerald-200 {
 :root {
   color-scheme: light;
   font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* JProperty-like global text colors */
+  --jp-text: #0f172a; /* primary body text (dark) */
+  --jp-muted: #6b7280; /* muted text */
+  --jp-accent: #2a6f86; /* accent (kept for buttons) */
 }
 
 body {
@@ -118,4 +122,19 @@ body {
 
 #root {
   min-height: 100vh;
+}
+
+/* Override common explicit color utility classes to match JProperty text color */
+[class*="text-[#123B44]"],
+[class*="text-[#08306B]"],
+[class*="text-[#2171B5]"],
+[class*="text-[#2A6F86]"] {
+  color: var(--jp-text) !important;
+}
+
+/* Muted text fallback overrides */
+[class*="text-gray-600"],
+[class*="text-gray-700"],
+[class*="text-gray-500"] {
+  color: var(--jp-muted) !important;
 }

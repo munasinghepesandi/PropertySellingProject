@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Navbar } from '../components/Navbar'
 import { Footer } from '../components/Footer'
@@ -202,7 +202,11 @@ export default function SalesSectionPage({ sectionSlug: sectionSlugProp } = {}) 
     'Pilimathalawa',
     'Kundasale',
     'Nawalapitiya',
+    'Wela Nane',
   ]
+  const [searchTerm, setSearchTerm] = useState('')
+  const [page, setPage] = useState(1)
+  const pageSize = 6
 
   const handleSearchClick = () => {
     document.getElementById('sales-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -248,6 +252,11 @@ export default function SalesSectionPage({ sectionSlug: sectionSlugProp } = {}) 
     return 0
   })
 
+  const paginated = useMemo(() => {
+    const start = (page - 1) * pageSize
+    return sortedProperties.slice(start, start + pageSize)
+  }, [sortedProperties, page])
+
   return (
     <div className="min-h-screen bg-[#f4f4f4] text-slate-900">
       <Navbar />
@@ -269,7 +278,15 @@ export default function SalesSectionPage({ sectionSlug: sectionSlugProp } = {}) 
                 <p className="text-sm text-slate-600">{section.subtitle} — {section.description}</p>
 
                 <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                  <input placeholder="Search by suburb or keyword" value={''} className="rounded border border-slate-300 px-4 py-3 text-sm outline-none" />
+                  <div className="relative">
+                    <input
+                      placeholder="Search by suburb or keyword"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="rounded border border-slate-300 px-4 py-3 text-sm outline-none w-full"
+                    />
+                    <Search className="absolute right-3 top-3 text-slate-400" size={16} />
+                  </div>
                   <select className="rounded border border-slate-300 px-4 py-3 text-sm outline-none">
                     <option>Any radius</option>
                   </select>
@@ -282,9 +299,9 @@ export default function SalesSectionPage({ sectionSlug: sectionSlugProp } = {}) 
                 </div>
 
                 <div className="mt-4 flex flex-wrap items-center gap-3">
-                  <button className="rounded-md bg-[#2171B5] px-4 py-2 text-sm font-semibold text-white">Search</button>
+                  <button className="rounded-md bg-[#2171B5] px-4 py-2 text-sm font-semibold text-white" onClick={() => { setPage(1); handleSearchClick(); }}>Search</button>
                   <button className="rounded-md border border-[#2171B5] px-4 py-2 text-sm text-[#2171B5]">Advanced</button>
-                  <button className="rounded-md border px-4 py-2 text-sm">Reset</button>
+                  <button className="rounded-md border px-4 py-2 text-sm" onClick={() => { setSearchTerm(''); setLocationFilter('Any'); setPropertyTypeFilter('Any'); setBudgetFilter('Any'); setTagFilter('Any'); setPage(1); }}>Reset</button>
                 </div>
 
                 <div className="mt-5 flex flex-wrap gap-3">
@@ -298,10 +315,9 @@ export default function SalesSectionPage({ sectionSlug: sectionSlugProp } = {}) 
               <div className="hidden rounded-lg border border-slate-200 bg-[#f8fafc] p-4 text-sm lg:block">
                 <div className="font-semibold text-slate-700">Top Cities</div>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <span className="rounded-full bg-white px-3 py-1 text-sm ring-1 ring-slate-200">Kandy</span>
-                  <span className="rounded-full bg-white px-3 py-1 text-sm ring-1 ring-slate-200">Peradeniya</span>
-                  <span className="rounded-full bg-white px-3 py-1 text-sm ring-1 ring-slate-200">Katugastota</span>
-                  <span className="rounded-full bg-white px-3 py-1 text-sm ring-1 ring-slate-200">Digana</span>
+                  {kandyLocations.slice(0, 6).map((c) => (
+                    <button key={c} onClick={() => { setLocationFilter(c); setPage(1); }} className="rounded-full bg-white px-3 py-1 text-sm ring-1 ring-slate-200 hover:bg-[#eef6ff]">{c}</button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -343,7 +359,7 @@ export default function SalesSectionPage({ sectionSlug: sectionSlugProp } = {}) 
           </div>
 
           <div className="mt-8 space-y-4">
-            {sortedProperties.map((property, idx) => (
+            {paginated.map((property, idx) => (
               <article
                 key={`${property.title}-${idx}`}
                 className="overflow-hidden rounded-xl bg-white shadow-[0_1px_3px_rgba(15,23,42,0.06)] ring-1 ring-slate-200 transition hover:shadow-[0_10px_30px_rgba(15,23,42,0.08)]"
@@ -400,6 +416,16 @@ export default function SalesSectionPage({ sectionSlug: sectionSlugProp } = {}) 
                 </div>
               </article>
             ))}
+            {sortedProperties.length === 0 && (
+              <div className="rounded-lg bg-white p-6 text-center text-slate-600">No listings found. Try changing filters or search terms.</div>
+            )}
+            {sortedProperties.length > 0 && (
+              <div className="mt-6 flex items-center justify-center gap-3">
+                <button disabled={page === 1} onClick={() => setPage((p) => Math.max(1, p - 1))} className="px-4 py-2 rounded border bg-white">Previous</button>
+                <div className="text-sm text-slate-600">Page {page} of {Math.max(1, Math.ceil(sortedProperties.length / pageSize))}</div>
+                <button disabled={page >= Math.ceil(sortedProperties.length / pageSize)} onClick={() => setPage((p) => p + 1)} className="px-4 py-2 rounded border bg-white">Next</button>
+              </div>
+            )}
           </div>
         </div>
       </section>

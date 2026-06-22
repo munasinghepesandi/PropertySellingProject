@@ -45,7 +45,7 @@ function ApartmentsWantedPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <Navbar />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#08306B] via-[#2171B5] to-[#0d4a9f] text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#123B44] via-[#2A6F86] to-[#163E4A] text-white">
         <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
           <p className="text-xs font-bold uppercase tracking-wider text-blue-100">🏢 Apartments wanted</p>
           <h1 className="mt-3 text-4xl font-black leading-tight sm:text-5xl">List of Apartments wanted</h1>
@@ -57,7 +57,7 @@ function ApartmentsWantedPage() {
         <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm lg:p-8">
           <div className="grid gap-4 lg:grid-cols-[1fr_320px] lg:items-end">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#2171B5]">🔍 Search apartments wanted</p>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#2A6F86]">🔍 Search apartments wanted</p>
               <h2 className="mt-2 text-2xl font-black text-slate-900">Search and filter apartment wanted ads</h2>
             </div>
             <div className="rounded-2xl bg-[#f7fbff] p-4 ring-1 ring-[#d9e8f6]">
@@ -76,7 +76,7 @@ function ApartmentsWantedPage() {
 
         <section className="mt-8 grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
           <aside className="h-fit rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#2171B5]">Top Cities</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#2A6F86]">Top Cities</p>
             <h3 className="mt-2 text-xl font-black text-slate-900">Popular apartment areas</h3>
             <div className="mt-5 space-y-3">
               {topCities.map((city) => (
@@ -86,8 +86,8 @@ function ApartmentsWantedPage() {
                 </button>
               ))}
             </div>
-            <div className="mt-6 rounded-2xl bg-[#f7fbff] p-4 ring-1 ring-[#d9e8f6]">
-              <div className="flex items-center gap-2 text-sm font-semibold text-[#08306B]"><Bell size={16} /> Be the first to know</div>
+              <div className="mt-6 rounded-2xl bg-[#f7fbff] p-4 ring-1 ring-[#d9e8f6]">
+              <div className="flex items-center gap-2 text-sm font-semibold text-[#123B44]"><Bell size={16} /> Be the first to know</div>
               <p className="mt-2 text-sm leading-6 text-slate-600">Get an instant alert when tenants or buyers post apartment requirements.</p>
             </div>
           </aside>
@@ -96,10 +96,10 @@ function ApartmentsWantedPage() {
             <div className="mb-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#2171B5]">Apartments wanted</p>
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#2A6F86]">Apartments wanted</p>
                   <h3 className="mt-1 text-xl font-black text-slate-900">Showing page {currentPage} of {totalPages}</h3>
                 </div>
-                <div className="rounded-full bg-[#eff6fd] px-4 py-2 text-sm font-semibold text-[#08306B]"><ShieldCheck size={16} /> Ultimate listings</div>
+                <div className="rounded-full bg-[#eff6fd] px-4 py-2 text-sm font-semibold text-[#123B44]"><ShieldCheck size={16} /> Ultimate listings</div>
               </div>
             </div>
 
@@ -109,7 +109,7 @@ function ApartmentsWantedPage() {
                   <div className="relative h-44 lg:h-full">
                     <img src={l.image} alt={l.title} className="h-full w-full object-cover" />
                     <div className="absolute left-4 top-4">
-                      <span className="rounded-full bg-white/95 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[#08306B]">Apartment</span>
+                      <span className="rounded-full bg-white/95 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[#123B44]">Apartment</span>
                     </div>
                     <div className="absolute bottom-4 left-4 right-4 rounded-xl bg-black/45 p-3 text-white">
                       <p className="text-xs font-bold">{l.badge}</p>
@@ -120,7 +120,7 @@ function ApartmentsWantedPage() {
                     <p className="mt-2 text-sm font-semibold text-slate-500">Area: {l.area}</p>
                     <p className="mt-4 text-sm text-slate-600">{l.summary}</p>
                     <div className="mt-4 flex flex-wrap gap-3">
-                      <button onClick={() => handleView(l)} className="rounded-full bg-[#08306B] px-4 py-2 text-white font-bold">View ad</button>
+                      <button onClick={() => handleView(l)} className="rounded-full bg-[#123B44] px-4 py-2 text-white font-bold">View ad</button>
                       <button onClick={() => handleSave(l)} className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold">{savedIds.includes(l.id) ? 'Saved' : 'Save'}</button>
                       <button onClick={() => handleContact(l)} className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold">Contact</button>
                     </div>
@@ -131,7 +131,7 @@ function ApartmentsWantedPage() {
 
             <div className="mt-8 flex items-center justify-between">
               <button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1} className="inline-flex items-center gap-2 rounded-xl border px-4 py-2"> <ChevronLeft size={16} /> Back</button>
-              <div className="flex items-center gap-2"><span className="rounded-full bg-[#08306B] px-3 py-1 text-white">{currentPage}</span><span>{totalPages}</span></div>
+              <div className="flex items-center gap-2"><span className="rounded-full bg-[#123B44] px-3 py-1 text-white">{currentPage}</span><span>{totalPages}</span></div>
               <button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages} className="inline-flex items-center gap-2 rounded-xl border px-4 py-2">Next <ChevronRight size={16} /></button>
             </div>
 

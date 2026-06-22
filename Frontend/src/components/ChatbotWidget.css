@@ -13,7 +13,7 @@
   border: none;
   border-radius: 999px;
   padding: 12px 16px 12px 12px;
-  background: linear-gradient(135deg, #08306b 0%, #2171b5 100%);
+  background: linear-gradient(135deg, #123b44 0%, #2a6f86 100%);
   color: #ffffff;
   box-shadow: 0 18px 40px rgba(8, 48, 107, 0.28);
   cursor: pointer;
@@ -71,7 +71,7 @@
   gap: 12px;
   padding: 18px 18px 16px;
   color: #ffffff;
-  background: linear-gradient(135deg, #08306b 0%, #0b3d82 55%, #2171b5 100%);
+  background: linear-gradient(135deg, #123b44 0%, #163e4a 55%, #2a6f86 100%);
 }
 
 .qa-chatbot-header-copy {
@@ -152,7 +152,7 @@
 
 .qa-chatbot-message.user {
   justify-self: end;
-  background: linear-gradient(135deg, #08306b 0%, #2171b5 100%);
+  background: linear-gradient(135deg, #123b44 0%, #2a6f86 100%);
   color: #ffffff;
 }
 
@@ -177,7 +177,7 @@
 
 .qa-chatbot-quick-replies button:hover {
   background: rgba(33, 113, 181, 0.08);
-  color: #08306b;
+  color: #123b44;
   transform: translateY(-1px);
 }
 
@@ -207,7 +207,7 @@
   width: 46px;
   border: none;
   border-radius: 14px;
-  background: linear-gradient(135deg, #08306b 0%, #2171b5 100%);
+  background: linear-gradient(135deg, #123b44 0%, #2a6f86 100%);
   color: #ffffff;
   cursor: pointer;
   display: inline-flex;
