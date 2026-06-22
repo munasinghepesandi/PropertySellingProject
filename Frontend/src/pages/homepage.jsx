@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
@@ -19,6 +19,11 @@ import {
   Clock3,
   BadgeCheck,
   Layers3,
+  BedDouble,
+  Bath,
+  Maximize2,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import "../styles/homepage.css";
 import { readPostedAds } from "../utils/postedAds";
@@ -99,21 +104,126 @@ const highlights = [
   "Trusted across Sri Lanka",
 ];
 
+const heroImages = [
+  {
+    url: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=1800&q=85",
+    subtitle: "Find Your Dream Home in Sri Lanka",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85",
+    subtitle: "Luxury Beachfront Properties",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1800&q=85",
+    subtitle: "Premium Villas & Estates",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1800&q=85",
+    subtitle: "Modern City Apartments",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1800&q=85",
+    subtitle: "Investment Land & Plots",
+  },
+];
+
+const whyStats = [
+  { icon: "🏠", number: "1,200+", label: "Properties Listed" },
+  { icon: "👥", number: "500+",   label: "Verified Agents" },
+  { icon: "✅", number: "2,000+", label: "Successful Deals" },
+  { icon: "⭐", number: "4.8/5",  label: "Customer Rating" },
+];
+
+const howSteps = [
+  {
+    step: 1,
+    title: "Search",
+    description: "Browse thousands of verified property listings",
+  },
+  {
+    step: 2,
+    title: "Connect",
+    description: "Contact agents or owners directly",
+  },
+  {
+    step: 3,
+    title: "Move In",
+    description: "Close the deal with our guidance",
+  },
+];
+
+const topLocations = [
+  {
+    city: "Colombo",
+    count: "450+ Properties",
+    image: "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    city: "Kandy",
+    count: "180+ Properties",
+    image: "https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    city: "Galle",
+    count: "120+ Properties",
+    image: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    city: "Negombo",
+    count: "95+ Properties",
+    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    city: "Nuwara Eliya",
+    count: "65+ Properties",
+    image: "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    city: "Trincomalee",
+    count: "55+ Properties",
+    image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=600&q=80",
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      "LankaPropertyWeb made finding our dream home in Colombo so easy. The listings were accurate and the agent response was fast!",
+    name: "Priya Fernando",
+    role: "Home Buyer",
+    initial: "P",
+  },
+  {
+    quote:
+      "I sold my property within 2 weeks of listing. The platform brings serious buyers.",
+    name: "Rajan Perera",
+    role: "Property Seller",
+    initial: "R",
+  },
+  {
+    quote:
+      "As an agent, this platform has transformed my business. Quality leads every week.",
+    name: "Amara Silva",
+    role: "Real Estate Agent",
+    initial: "A",
+  },
+];
+
 const Homepage = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [contactStatus, setContactStatus] = useState("");
   const [featuredProperties, setFeaturedProperties] = useState(defaultFeaturedProperties);
-  const [selectedProperty, setSelectedProperty] = useState(null); // New state for modal
+  const [selectedProperty, setSelectedProperty] = useState(null);
+  const [heroSlide, setHeroSlide] = useState(0);
+  const timerRef = useRef(null);
 
   useEffect(() => {
     const syncFeaturedProperties = () => {
       const postedAds = readPostedAds();
-      // Ensure posted ads also have an 'id' for consistency if they don't already
       const postedAdsWithIds = postedAds.map((ad, index) => ({
-        id: `posted-${index}-${Date.now()}`, // Generate a unique ID
+        id: `posted-${index}-${Date.now()}`,
         ...ad,
-        // Add dummy details if missing for consistency with modal
         beds: ad.beds || 'N/A',
         baths: ad.baths || 'N/A',
         sqft: ad.area || 'N/A',
@@ -126,9 +236,35 @@ const Homepage = () => {
 
     syncFeaturedProperties();
     window.addEventListener('storage', syncFeaturedProperties);
-
     return () => window.removeEventListener('storage', syncFeaturedProperties);
   }, []);
+
+  // Slideshow auto-advance
+  const startTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setHeroSlide((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+  };
+
+  useEffect(() => {
+    startTimer();
+    return () => clearInterval(timerRef.current);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const goToSlide = (index) => {
+    setHeroSlide(index);
+    startTimer();
+  };
+
+  const prevSlide = () => {
+    goToSlide((heroSlide - 1 + heroImages.length) % heroImages.length);
+  };
+
+  const nextSlide = () => {
+    goToSlide((heroSlide + 1) % heroImages.length);
+  };
 
   const handleHeroSearch = (event) => {
     event.preventDefault();
@@ -181,9 +317,37 @@ const Homepage = () => {
     <div className="home-page">
       <Navbar />
 
-      <section className="hero">
+      {/* ── HERO with slideshow ── */}
+      <section className="hero hero-slideshow">
+        {heroImages.map((slide, i) => (
+          <div
+            key={slide.url}
+            className={`hero-slide${i === heroSlide ? " active" : ""}`}
+            style={{ backgroundImage: `url(${slide.url})` }}
+          />
+        ))}
+        <div className="hero-slide-overlay" />
         <div className="hero-orb hero-orb-one" />
         <div className="hero-orb hero-orb-two" />
+
+        <button className="hero-arrow hero-arrow-prev" onClick={prevSlide} aria-label="Previous slide">
+          <ChevronLeft size={24} />
+        </button>
+        <button className="hero-arrow hero-arrow-next" onClick={nextSlide} aria-label="Next slide">
+          <ChevronRight size={24} />
+        </button>
+
+        <div className="hero-dots">
+          {heroImages.map((_, i) => (
+            <button
+              key={i}
+              className={`hero-dot${i === heroSlide ? " active" : ""}`}
+              onClick={() => goToSlide(i)}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
+
         <div className="hero-overlay hero-motion">
           <div className="hero-badge">
             <Sparkles size={14} />
@@ -193,6 +357,7 @@ const Homepage = () => {
           <div className="hero-grid">
             <div className="hero-copy">
               <h1>Find, compare, and act on the right property faster.</h1>
+              <p className="hero-slide-subtitle">{heroImages[heroSlide].subtitle}</p>
               <p>
                 Discover homes, rentals, land, and apartments with a cleaner search experience,
                 verified information, and practical support when you need it.
@@ -246,8 +411,8 @@ const Homepage = () => {
               </form>
 
               <div className="hero-actions">
-                <button 
-                  onClick={() => navigate('/post-ad')} 
+                <button
+                  onClick={() => navigate('/post-ad')}
                   className="hero-action-primary"
                 >
                   Post Your Ad
@@ -271,6 +436,26 @@ const Homepage = () => {
         </div>
       </section>
 
+      {/* ── WHY CHOOSE US ── */}
+      <section className="why-section">
+        <div className="section-header">
+          <div className="section-divider" />
+          <p className="section-kicker">Why choose us</p>
+          <h2>Numbers that speak for themselves.</h2>
+          <p>Trusted by thousands of buyers, sellers, and agents across Sri Lanka.</p>
+        </div>
+        <div className="why-grid">
+          {whyStats.map((stat) => (
+            <div key={stat.label} className="why-card float-card">
+              <span className="why-icon">{stat.icon}</span>
+              <strong className="why-number">{stat.number}</strong>
+              <span className="why-label">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── CATEGORIES ── */}
       <section className="categories">
         <div className="section-header">
           <div className="section-divider" />
@@ -295,6 +480,26 @@ const Homepage = () => {
         </div>
       </section>
 
+      {/* ── HOW IT WORKS ── */}
+      <section className="how-section">
+        <div className="section-header">
+          <div className="section-divider" />
+          <p className="section-kicker">How it works</p>
+          <h2>Three simple steps to your next property.</h2>
+          <p>We guide you from search to keys in hand.</p>
+        </div>
+        <div className="how-steps">
+          {howSteps.map((item, idx) => (
+            <div key={item.step} className="how-step float-card">
+              {idx < howSteps.length - 1 && <div className="how-connector" />}
+              <div className="how-step-number">{item.step}</div>
+              <h3 className="how-step-title">{item.title}</h3>
+              <p className="how-step-desc">{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="featured">
         <div className="section-header">
           <div className="section-divider" />
@@ -305,25 +510,92 @@ const Homepage = () => {
 
         <div className="property-grid">
           {featuredProperties.map((property) => (
-            <article 
-              key={property.id || property.title} 
+            <article
+              key={property.id || property.title}
               className="property-card float-card"
               onClick={() => setSelectedProperty(property)}
             >
               <div className="property-image-wrap">
                 <img src={property.image} alt={property.title} />
                 <span className="property-tag">{property.tag}</span>
+                <span className="property-price-badge">{property.price}</span>
               </div>
               <div className="property-info">
                 <h3>{property.title}</h3>
-                <p>{property.area}</p>
-                <span>{property.price}</span>
+                <p className="property-location">
+                  <MapPin size={13} />
+                  {property.area}
+                </p>
+                {(property.beds || property.baths || property.sqft) && (
+                  <div className="property-meta">
+                    {property.beds && property.beds !== "N/A" && (
+                      <span><BedDouble size={14} />{property.beds}</span>
+                    )}
+                    {property.baths && property.baths !== "N/A" && (
+                      <span><Bath size={14} />{property.baths}</span>
+                    )}
+                    {property.sqft && property.sqft !== "N/A" && (
+                      <span><Maximize2 size={13} />{property.sqft}</span>
+                    )}
+                  </div>
+                )}
               </div>
             </article>
           ))}
         </div>
       </section>
 
+      {/* ── TOP LOCATIONS ── */}
+      <section className="locations-section">
+        <div className="section-header">
+          <div className="section-divider" />
+          <p className="section-kicker">Top locations</p>
+          <h2>Sri Lanka's most sought-after property destinations.</h2>
+          <p>Explore listings in the cities and towns people love most.</p>
+        </div>
+        <div className="locations-grid">
+          {topLocations.map((loc) => (
+            <button
+              key={loc.city}
+              className="location-card float-card"
+              onClick={() => navigate(`/sales?search=${encodeURIComponent(loc.city)}`)}
+            >
+              <img src={loc.image} alt={loc.city} className="location-img" />
+              <div className="location-overlay">
+                <h3 className="location-city">{loc.city}</h3>
+                <span className="location-count">{loc.count}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ── */}
+      <section className="testimonials-section">
+        <div className="section-header">
+          <div className="section-divider" />
+          <p className="section-kicker">What our users say</p>
+          <h2>Real stories from real people.</h2>
+          <p>Thousands of buyers, sellers, and agents trust LankaPropertyWeb every day.</p>
+        </div>
+        <div className="testimonials-grid">
+          {testimonials.map((t) => (
+            <div key={t.name} className="testimonial-card float-card">
+              <div className="testimonial-stars">★★★★★</div>
+              <p className="testimonial-quote">"{t.quote}"</p>
+              <div className="testimonial-author">
+                <div className="testimonial-avatar">{t.initial}</div>
+                <div>
+                  <strong className="testimonial-name">{t.name}</strong>
+                  <span className="testimonial-role">{t.role}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── ABOUT ── */}
       <section id="about-us" className="about-section">
         <div className="section-header compact">
           <div className="section-divider" />
