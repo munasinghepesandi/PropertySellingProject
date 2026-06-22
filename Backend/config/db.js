@@ -106,12 +106,20 @@ async function ensureDistrictsTable() {
         name VARCHAR(200) NOT NULL,
         email VARCHAR(200) NOT NULL UNIQUE,
         phone VARCHAR(60) DEFAULT NULL,
+        message TEXT DEFAULT NULL,
         status VARCHAR(30) NOT NULL DEFAULT 'active',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         INDEX idx_agents_status (status),
         INDEX idx_agents_created_at (created_at)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
+    try {
+      await bootstrap.query(`ALTER TABLE \`${dbName}\`.\`agents\` ADD COLUMN message TEXT DEFAULT NULL AFTER phone`);
+    } catch (error) {
+      if (error?.errno !== 1060) { // Ignore if column already exists
+        throw error;
+      }
+    }
     await bootstrap.query(`
       CREATE TABLE IF NOT EXISTS \`${dbName}\`.\`property_images\` (
         id INT AUTO_INCREMENT PRIMARY KEY,

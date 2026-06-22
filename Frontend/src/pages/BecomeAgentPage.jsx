@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Check } from 'lucide-react'
+import Navbar from '../components/Navbar'
 
 export default function BecomeAgentPage() {
   const navigate = useNavigate()
@@ -10,14 +11,34 @@ export default function BecomeAgentPage() {
 
   const handleChange = (e) => setContact(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
-      setSuccess('Thanks — we will contact you shortly')
+    setSuccess('')
+
+    try {
+      const apiBase = "http://localhost:5000"; 
+      const response = await fetch(`${apiBase}/api/agents`, { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contact),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Submission failed');
+      }
+
+      setSuccess('Thanks — your application has been submitted successfully!')
       setContact({ name: '', email: '', phone: '', message: '' })
-    }, 900)
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setLoading(false)
+    }
   }
 
   // Key metrics for visualization
@@ -71,6 +92,7 @@ export default function BecomeAgentPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <Navbar/>
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-[#123B44] to-[#2A6F86] py-20 text-white">
         <div className="max-w-6xl mx-auto px-6">
@@ -218,20 +240,13 @@ export default function BecomeAgentPage() {
                 placeholder="Phone Number" 
                 className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#2A6F86]" 
               />
-              <textarea 
-                name="message" 
-                value={contact.message} 
-                onChange={handleChange} 
-                placeholder="Tell us about your business..." 
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#2171B5]" 
-                rows={4} 
-              />
+              
               <div className="flex gap-3 pt-2">
                 <button 
                   className="flex-1 bg-[#123B44] hover:bg-[#0f2f36] text-white py-3 rounded-lg font-semibold transition disabled:opacity-60" 
                   disabled={loading}
                 >
-                  {loading ? 'Sending...' : 'Contact Sales'}
+                  {loading ? 'Sending...' : 'Become an Agent'}
                 </button>
                 <button 
                   type="button" 

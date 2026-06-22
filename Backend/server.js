@@ -18,6 +18,7 @@ const userRoutes     = require('./routes/userRoutes');
 const inquiryRoutes  = require('./routes/inquiryRoutes');
 const statsRoutes    = require('./routes/statsRoutes');
 const adminRoutes    = require('./routes/adminRoutes');   // ← ADD
+const agentApplicationRoutes = require('./config/agentApplicationRoutes');
 
 // ── Error middleware ─────────────────────────────────────────
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
@@ -55,6 +56,7 @@ app.use('/api/properties', propertyRoutes);
 app.use('/api/users',      userRoutes);
 app.use('/api/inquiries',  inquiryRoutes);
 app.use('/api/stats',      statsRoutes);
+app.use('/api/agents',     agentApplicationRoutes);
 
 // ── Health Check ─────────────────────────────────────────────
 app.get('/api/health', (req, res) => {

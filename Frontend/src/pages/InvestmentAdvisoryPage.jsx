@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import { BarChart3, Lightbulb, MapPin, TrendingUp, Calculator, Phone, Shield, Users } from "lucide-react";
+import { API_BASE_URL } from "../utils/auth";
 
 const topInvestmentProperties = [
   {
@@ -99,6 +101,69 @@ const investmentStats = [
 ];
 
 export default function InvestmentAdvisoryPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '', // This will be the user's additional message
+    investmentAmount: '',
+    currency: 'LKR', // Default currency
+  });
+  const [selectedPurpose, setSelectedPurpose] = useState('');
+  const [agreedToPolicy, setAgreedToPolicy] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handlePurposeChange = (purpose) => {
+    setSelectedPurpose(purpose);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setSuccessMessage('');
+    setErrorMessage('');
+
+    if (!formData.name || !formData.email || !selectedPurpose || !agreedToPolicy) {
+      setErrorMessage('Please fill in all required fields and agree to the Privacy Policy.');
+      setLoading(false);
+      return;
+    }
+
+    let fullMessage = `Investment Inquiry:\n`;
+    fullMessage += `Purpose: ${selectedPurpose}\n`;
+    if (formData.investmentAmount) {
+      fullMessage += `Amount: ${formData.currency} ${formData.investmentAmount}\n`;
+    }
+    if (formData.message) {
+      fullMessage += `User Message: ${formData.message}\n`;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/inquiries`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ property_id: null, name: formData.name, email: formData.email, phone: formData.phone || null, message: fullMessage }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message || 'Failed to submit inquiry.');
+      setSuccessMessage('Your investment inquiry has been submitted successfully! Our team will contact you shortly.');
+      setFormData({ name: '', email: '', phone: '', message: '', investmentAmount: '', currency: 'LKR' });
+      setSelectedPurpose('');
+      setAgreedToPolicy(false);
+    } catch (err) {
+      console.error('Investment Inquiry Error:', err);
+      setErrorMessage(err.message || 'An unexpected error occurred.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#f4f7fb] text-slate-900">
       <Navbar />
@@ -157,7 +222,7 @@ export default function InvestmentAdvisoryPage() {
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {topInvestmentProperties.map((prop) => (
               <article key={prop.location} className="overflow-hidden rounded-[1.75rem] border border-[#d9e8f6] bg-[#f8fbff] shadow-[0_16px_40px_rgba(8,48,107,0.05)]">
-                <div className="relative h-48 bg-gradient-to-br from-[#2171B5] to-[#08306B]" />
+                <div className="relative h-48 bg-linear-to-br from-[#2171B5] to-[#08306B]" />
                 <div className="p-5">
                   <div className="flex items-start justify-between gap-3">
                     <div>
@@ -238,8 +303,20 @@ export default function InvestmentAdvisoryPage() {
               Share your investment preferences and let our expert team help you find the best opportunities that match your budget and goals.
             </p>
 
-            <form className="mt-6 space-y-4 rounded-[1.5rem] bg-white p-5 text-slate-900 shadow-lg">
+            <form onSubmit={handleSubmit} className="mt-6 space-y-4 rounded-[1.5rem] bg-white p-5 text-slate-900 shadow-lg">
               <h3 className="text-xl font-black">Investment Preference</h3>
+              
+              {successMessage && (
+                <div className="rounded-lg bg-green-50 p-3 text-sm font-bold text-green-700 ring-1 ring-green-200">
+                  {successMessage}
+                </div>
+              )}
+              {errorMessage && (
+                <div className="rounded-lg bg-red-50 p-3 text-sm font-bold text-red-700 ring-1 ring-red-200">
+                  {errorMessage}
+                </div>
+              )}
+
               <div className="space-y-2">
                 {[
                   "Property with high ROI",
@@ -248,22 +325,30 @@ export default function InvestmentAdvisoryPage() {
                   "Land development",
                 ].map((pref) => (
                   <label key={pref} className="flex items-center gap-2 rounded-xl bg-[#f8fbff] px-3 py-2">
-                    <input type="radio" name="preference" className="accent-[#2171B5]" />
+                    <input 
+                      type="radio" 
+                      name="preference" 
+                      value={pref}
+                      checked={selectedPurpose === pref}
+                      onChange={() => handlePurposeChange(pref)}
+                      className="accent-[#2171B5]" 
+                      required
+                    />
                     <span className="text-sm font-bold">{pref}</span>
                   </label>
                 ))}
               </div>
               <div className="grid gap-4">
-                <input className="rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Name" />
-                <input className="rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Email" />
-                <input className="rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Phone" />
+                <input name="name" value={formData.name} onChange={handleInputChange} required className="rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Name" />
+                <input name="email" type="email" value={formData.email} onChange={handleInputChange} required className="rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Email" />
+                <input name="phone" value={formData.phone} onChange={handleInputChange} className="rounded-xl border border-[#d9e8f6] px-4 py-3 outline-none focus:border-[#2171B5]" placeholder="Phone" />
               </div>
               <label className="flex items-start gap-2 text-sm text-slate-600">
-                <input type="checkbox" className="mt-1 accent-[#2171B5]" />
+                <input type="checkbox" checked={agreedToPolicy} onChange={(e) => setAgreedToPolicy(e.target.checked)} required className="mt-1 accent-[#2171B5]" />
                 <span>I agree to LankaPropertyWeb's Privacy Policy</span>
               </label>
-              <button type="button" className="w-full rounded-xl bg-[#2171B5] px-5 py-3 font-black text-white transition hover:bg-[#194d7a]">
-                Connect with Adviser
+              <button type="submit" disabled={loading} className="w-full rounded-xl bg-[#2171B5] px-5 py-3 font-black text-white transition hover:bg-[#194d7a] disabled:opacity-70">
+                {loading ? 'Sending...' : 'Connect with Adviser'}
               </button>
             </form>
           </div>

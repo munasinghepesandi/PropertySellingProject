@@ -48,25 +48,47 @@ const propertyTypes = [
 
 const defaultFeaturedProperties = [
   {
+    id: 'hp-1', // Add unique IDs for featured properties
     title: "Modern Family House",
     area: "Colombo 05",
     price: "Rs. 45,000,000",
     image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994",
     tag: "Featured",
+    // Add some dummy details for the modal, similar to SalesPage
+    beds: '4 Beds',
+    baths: '3 Baths',
+    sqft: '2,300 sqft',
+    description: 'A beautiful modern family house located in a prime residential area of Colombo 05. Features spacious living areas, a well-maintained garden, and easy access to schools and amenities.',
+    contact: { name: 'John Doe', phone: '+94 77 123 4567', posted: '1 week ago' },
+    features: ['Garden', 'Parking', 'CCTV', 'Air Conditioning'],
   },
   {
+    id: 'hp-2',
     title: "Luxury Villa",
     area: "Negombo",
     price: "Rs. 85,000,000",
     image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914",
     tag: "Premium",
+    beds: '5 Beds',
+    baths: '4 Baths',
+    sqft: '4,500 sqft',
+    description: 'An exquisite luxury villa in Negombo offering stunning views and high-end finishes. Includes a private pool, multiple living spaces, and proximity to the beach.',
+    contact: { name: 'Jane Smith', phone: '+94 71 987 6543', posted: '3 days ago' },
+    features: ['Private Pool', 'Sea View', 'Smart Home', 'Gym'],
   },
   {
+    id: 'hp-3',
     title: "Beachfront Apartment",
     area: "Mount Lavinia",
     price: "Rs. 25,000,000",
     image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
     tag: "New",
+    beds: '3 Beds',
+    baths: '2 Baths',
+    sqft: '1,800 sqft',
+    description: 'Brand new beachfront apartment in Mount Lavinia with direct access to the beach. Modern design, spacious balconies, and panoramic ocean views.',
+    contact: { name: 'Peter Jones', phone: '+94 76 543 2109', posted: '2 days ago' },
+    features: ['Beach Access', 'Ocean View', 'Balcony', '24/7 Security'],
   },
 ];
 
@@ -82,11 +104,24 @@ const Homepage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [contactStatus, setContactStatus] = useState("");
   const [featuredProperties, setFeaturedProperties] = useState(defaultFeaturedProperties);
+  const [selectedProperty, setSelectedProperty] = useState(null); // New state for modal
 
   useEffect(() => {
     const syncFeaturedProperties = () => {
       const postedAds = readPostedAds();
-      setFeaturedProperties([...postedAds, ...defaultFeaturedProperties]);
+      // Ensure posted ads also have an 'id' for consistency if they don't already
+      const postedAdsWithIds = postedAds.map((ad, index) => ({
+        id: `posted-${index}-${Date.now()}`, // Generate a unique ID
+        ...ad,
+        // Add dummy details if missing for consistency with modal
+        beds: ad.beds || 'N/A',
+        baths: ad.baths || 'N/A',
+        sqft: ad.area || 'N/A',
+        description: ad.description || 'No description available.',
+        contact: ad.contact || { name: 'Owner', phone: 'N/A', posted: 'Recently' },
+        features: ad.features || [],
+      }));
+      setFeaturedProperties([...postedAdsWithIds, ...defaultFeaturedProperties]);
     };
 
     syncFeaturedProperties();
@@ -139,6 +174,8 @@ const Homepage = () => {
       setContactStatus(error.message || "Failed to submit message.");
     }
   };
+
+  const closeModal = () => setSelectedProperty(null);
 
   return (
     <div className="home-page">
@@ -268,7 +305,11 @@ const Homepage = () => {
 
         <div className="property-grid">
           {featuredProperties.map((property) => (
-            <article key={property.title} className="property-card float-card">
+            <article 
+              key={property.id || property.title} 
+              className="property-card float-card"
+              onClick={() => setSelectedProperty(property)}
+            >
               <div className="property-image-wrap">
                 <img src={property.image} alt={property.title} />
                 <span className="property-tag">{property.tag}</span>
@@ -368,7 +409,82 @@ const Homepage = () => {
         </div>
       </section>
 
-      
+      {/* Property Details Modal */}
+      {selectedProperty && (
+        <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-slate-950/55 p-3 md:p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-3xl rounded-t-3xl md:rounded-[1.75rem] bg-white p-4 md:p-6 shadow-2xl ring-1 ring-[#d9e8f6] max-h-[85vh] md:max-h-[90vh] overflow-y-auto">
+            <button
+              className="absolute right-4 md:right-5 top-4 md:top-5 text-2xl font-bold text-slate-400 transition hover:text-slate-700"
+              onClick={closeModal}
+              aria-label="Close"
+            >
+              ×
+            </button>
+            <img
+              src={selectedProperty.image}
+              alt={selectedProperty.title}
+              className="mb-4 h-48 md:h-56 w-full rounded-2xl object-cover"
+            />
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-600">{selectedProperty.area}</p>
+            <h2 className="mt-2 text-2xl font-black text-slate-900">{selectedProperty.title}</h2>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <span className="rounded-full bg-slate-200 px-3 py-1 text-xs font-bold text-slate-800">{selectedProperty.tag}</span>
+              <span className="rounded-full bg-slate-900 px-3 py-1 text-xs font-bold text-white">{selectedProperty.price}</span>
+            </div>
+            <p className="mt-4 text-sm leading-6 text-slate-600">{selectedProperty.description}</p>
+
+            <div className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-3 text-center text-xs md:text-sm">
+              {selectedProperty.beds && <div className="rounded-xl md:rounded-2xl bg-slate-50 px-2 md:px-3 py-2 md:py-3 font-semibold text-slate-600 ring-1 ring-slate-200">{selectedProperty.beds}</div>}
+              {selectedProperty.baths && <div className="rounded-xl md:rounded-2xl bg-slate-50 px-2 md:px-3 py-2 md:py-3 font-semibold text-slate-600 ring-1 ring-slate-200">{selectedProperty.baths}</div>}
+              {selectedProperty.sqft && <div className="rounded-xl md:rounded-2xl bg-slate-50 px-2 md:px-3 py-2 md:py-3 font-semibold text-slate-600 ring-1 ring-slate-200">{selectedProperty.sqft}</div>}
+            </div>
+
+            {selectedProperty.features && selectedProperty.features.length > 0 && (
+              <div className="mt-5">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#2171B5]">Key Features</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {selectedProperty.features.map((feature) => (
+                    <span key={feature} className="rounded-full bg-[#eff6fd] px-3 py-1.5 text-xs font-semibold text-[#08306B] ring-1 ring-[#d9e8f6]">
+                      ✓ {feature}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {selectedProperty.contact && (
+              <div className="mt-5 rounded-2xl bg-[#f8fbff] p-4 ring-1 ring-[#d9e8f6]">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#2171B5]">Seller Contact</p>
+                <div className="mt-3 space-y-2 text-sm text-slate-600">
+                  <p><span className="font-bold text-slate-800">Agent:</span> {selectedProperty.contact.name}</p>
+                  <p><span className="font-bold text-slate-800">Phone:</span> {selectedProperty.contact.phone}</p>
+                  <p><span className="font-bold text-slate-800">Posted:</span> {selectedProperty.contact.posted}</p>
+                </div>
+              </div>
+            )}
+
+            <button
+              className="mt-6 w-full rounded-lg md:rounded-2xl bg-gradient-to-r from-[#2171B5] to-[#08306B] px-4 py-3 md:py-3.5 font-bold text-sm md:text-base text-white transition hover:shadow-lg hover:shadow-[#08306B]/20"
+              onClick={() => {
+                // Implement actual contact logic here, e.g., navigate to a contact form or open dialer
+                if (selectedProperty.contact?.phone) {
+                  window.location.href = `tel:${selectedProperty.contact.phone.replace(/[^\d+]/g, '')}`;
+                } else {
+                  alert('Contact number not available.');
+                }
+              }}
+            >
+              Call Now
+            </button>
+            <button
+              className="mt-3 w-full rounded-lg md:rounded-2xl bg-slate-900 px-4 py-3 md:py-3.5 font-bold text-sm md:text-base text-white transition hover:bg-slate-800"
+              onClick={closeModal}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>
