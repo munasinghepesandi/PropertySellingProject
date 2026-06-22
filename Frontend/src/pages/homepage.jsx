@@ -106,24 +106,24 @@ const highlights = [
 
 const heroImages = [
   {
-    url: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=1800&q=85",
+    url: "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1800&q=90",
     subtitle: "Find Your Dream Home in Sri Lanka",
   },
   {
-    url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85",
-    subtitle: "Luxury Beachfront Properties",
+    url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=90",
+    subtitle: "Luxury Villas with Private Pools",
   },
   {
-    url: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1800&q=85",
-    subtitle: "Premium Villas & Estates",
+    url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1800&q=90",
+    subtitle: "Premium Beachfront Properties",
   },
   {
-    url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1800&q=85",
-    subtitle: "Modern City Apartments",
+    url: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1800&q=90",
+    subtitle: "Modern Luxury Interiors",
   },
   {
-    url: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1800&q=85",
-    subtitle: "Investment Land & Plots",
+    url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1800&q=90",
+    subtitle: "Exclusive High-End Estates",
   },
 ];
 
