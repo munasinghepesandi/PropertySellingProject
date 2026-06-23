@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 
-/* ---------------- HERO SLIDER DATA ---------------- */
+
 const HERO_SLIDES = [
   {
     image:
@@ -70,7 +70,7 @@ export default function CompleteHomepage() {
     maxPrice: "",
   });
 
-  /* ---------------- AUTO SLIDER ---------------- */
+ 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
@@ -89,7 +89,7 @@ export default function CompleteHomepage() {
 
       <Navbar />
 
-      {/* ---------------- HERO IMAGE SLIDER ---------------- */}
+      
       <section className="relative h-[85vh] overflow-hidden">
 
         {HERO_SLIDES.map((slide, index) => (
@@ -121,7 +121,7 @@ export default function CompleteHomepage() {
         </div>
       </section>
 
-      {/* ---------------- SEARCH ---------------- */}
+      
       <section className="max-w-6xl mx-auto px-4 -mt-28 relative z-20">
         <form
           onSubmit={handleSearch}
@@ -187,7 +187,7 @@ export default function CompleteHomepage() {
         </form>
       </section>
 
-      {/* ---------------- STATS ---------------- */}
+      
       <section className="max-w-6xl mx-auto px-4 mt-20 grid grid-cols-2 md:grid-cols-4 text-center">
         <div>
           <h3 className="text-4xl font-black">$3.8B+</h3>
@@ -234,6 +234,165 @@ export default function CompleteHomepage() {
         </div>
       </section>
 
+<section className="bg-[#1a3a4b] text-white py-20">
+  <div className="max-w-6xl mx-auto px-4">
+    <div className="text-center mb-14">
+      <h2 className="text-4xl font-bold">Why Choose Us</h2>
+      <p className="mt-4 text-gray-300">
+        We provide premium real estate services with unmatched professionalism.
+      </p>
+    </div>
+
+    <div className="grid md:grid-cols-3 gap-8">
+      <div className="bg-white/10 rounded-xl p-8 text-center hover:bg-white/20 transition">
+        <div className="text-5xl mb-4">🏡</div>
+        <h3 className="text-2xl font-bold mb-3">Luxury Properties</h3>
+        <p className="text-gray-300">
+          Discover exclusive villas, apartments, and penthouses in the world's
+          most desirable locations.
+        </p>
+      </div>
+
+      <div className="bg-white/10 rounded-xl p-8 text-center hover:bg-white/20 transition">
+        <div className="text-5xl mb-4">🤝</div>
+        <h3 className="text-2xl font-bold mb-3">Trusted Agents</h3>
+        <p className="text-gray-300">
+          Our experienced agents guide you through every step of buying,
+          renting, or investing.
+        </p>
+      </div>
+
+      <div className="bg-white/10 rounded-xl p-8 text-center hover:bg-white/20 transition">
+        <div className="text-5xl mb-4">💎</div>
+        <h3 className="text-2xl font-bold mb-3">Best Investment</h3>
+        <p className="text-gray-300">
+          Invest in high-value properties with strong returns and long-term
+          growth potential.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section className="py-20 bg-gray-100">
+  <div className="max-w-6xl mx-auto px-4">
+
+    <div className="text-center mb-14">
+      <h2 className="text-4xl font-bold">
+        What Our Clients Say
+      </h2>
+      <p className="text-gray-500 mt-3">
+        Trusted by hundreds of satisfied buyers and investors.
+      </p>
+    </div>
+
+    <div className="grid md:grid-cols-3 gap-8">
+
+      <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="text-yellow-500 text-xl mb-4">
+          ★★★★★
+        </div>
+
+        <p className="text-gray-600 italic">
+          "The team helped us find our dream villa. The process was smooth and
+          completely stress-free."
+        </p>
+
+        <div className="mt-6 flex items-center gap-4">
+          <img
+            src="https://randomuser.me/api/portraits/women/44.jpg"
+            alt=""
+            className="w-14 h-14 rounded-full"
+          />
+          <div>
+            <h4 className="font-bold">Sarah Williams</h4>
+            <p className="text-sm text-gray-500">
+              Property Buyer
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="text-yellow-500 text-xl mb-4">
+          ★★★★★
+        </div>
+
+        <p className="text-gray-600 italic">
+          "Professional service with amazing property options. Highly recommend
+          this company."
+        </p>
+
+        <div className="mt-6 flex items-center gap-4">
+          <img
+            src="https://randomuser.me/api/portraits/men/52.jpg"
+            alt=""
+            className="w-14 h-14 rounded-full"
+          />
+          <div>
+            <h4 className="font-bold">David Johnson</h4>
+            <p className="text-sm text-gray-500">
+              Investor
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="text-yellow-500 text-xl mb-4">
+          ★★★★★
+        </div>
+
+        <p className="text-gray-600 italic">
+          "Excellent customer support and beautiful luxury properties. We found
+          exactly what we wanted."
+        </p>
+
+        <div className="mt-6 flex items-center gap-4">
+          <img
+            src="https://randomuser.me/api/portraits/women/65.jpg"
+            alt=""
+            className="w-14 h-14 rounded-full"
+          />
+          <div>
+            <h4 className="font-bold">Emily Brown</h4>
+            <p className="text-sm text-gray-500">
+              Home Owner
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<section
+  className="relative py-28 bg-cover bg-center"
+  style={{
+    backgroundImage:
+      "url('https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=1600')",
+  }}
+>
+  <div className="absolute inset-0 bg-[#1a3a4b]/80"></div>
+
+  <div className="relative max-w-5xl mx-auto px-4 text-center text-white">
+    <h2 className="text-5xl font-bold">
+      Ready to Find Your Dream Home?
+    </h2>
+
+    <p className="mt-6 text-lg text-gray-200">
+      Browse hundreds of luxury properties and connect with experienced real
+      estate professionals today.
+    </p>
+
+    <button className="mt-10 bg-[#b3925c] hover:bg-[#9c7b49] px-10 py-4 rounded-lg font-semibold text-lg transition">
+      Explore Properties
+    </button>
+  </div>
+</section>
       <Footer />
     </div>
   );
