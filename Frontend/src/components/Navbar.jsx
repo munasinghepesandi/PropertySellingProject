@@ -326,9 +326,6 @@ export function Navbar() {
     Rentals: 1,
     Land: 2,
     "Apartment Finder": 3,
-    "Our Services": 4,
-    Invest: 5,
-    "Home Loans": 6,
     "Market Insights": 7,
     Wanted: 8,
     "Find Agent": 9,
@@ -821,16 +818,7 @@ export function Navbar() {
             onMouseEnter={() => setOurServicesMenuOpen(true)}
             onMouseLeave={() => setOurServicesMenuOpen(false)}
           >
-            <button
-              type="button"
-              style={{ ...menuLinkStyle, fontSize: "15px" }}
-              onClick={() => {
-                setOurServicesMenuOpen(false);
-                navigate("/our-services");
-              }}
-            >
-              Our Services
-            </button>
+           
 
             {ourServicesMenuOpen && (
               <div
@@ -910,16 +898,7 @@ export function Navbar() {
             onMouseEnter={() => setHomeLoansMenuOpen(true)}
             onMouseLeave={() => setHomeLoansMenuOpen(false)}
           >
-            <button
-              type="button"
-              style={{ ...menuLinkStyle, fontSize: "15px" }}
-              onClick={() => {
-                setHomeLoansMenuOpen(false);
-                navigate("/home-loans");
-              }}
-            >
-              Home Loans
-            </button>
+           
 
             {homeLoansMenuOpen && (
               <div
@@ -1339,13 +1318,7 @@ export function Navbar() {
             className="group relative"
             style={{ order: navItemOrder.Invest }}
           >
-            <button
-              type="button"
-              className="inline-flex items-center gap-1 border-0 bg-transparent px-0 py-3 text-sm font-semibold text-white transition hover:text-sky-300"
-              onClick={() => navigate("/invest")}
-            >
-              Invest
-            </button>
+            
             <div className="invisible absolute left-0 top-full z-50 w-[920px] max-w-[95vw] rounded-[20px] bg-white px-6 py-5 text-black opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
               <div className="grid grid-cols-2 gap-4">
                 {investMenuColumns.map((column) => (
@@ -1631,16 +1604,7 @@ export function Navbar() {
             )}
 
             <div style={{ display: "flex", gap: "8px", alignItems: "center", order: navItemOrder["Our Services"] }}>
-              <button
-                type="button"
-                style={{ ...mobileLinkStyle, flex: 1 }}
-                onClick={() => {
-                  navigate("/our-services");
-                  setMobileMenuOpen(false);
-                }}
-              >
-                Our Services
-              </button>
+            
               <button
                 type="button"
                 aria-label="Open our services dropdown"
@@ -1957,6 +1921,9 @@ export function Navbar() {
     </nav>
   );
 }
+
+
+
 
 export default Navbar;
 
