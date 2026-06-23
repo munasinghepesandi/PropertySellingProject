@@ -60,36 +60,35 @@ export default function Featurednew() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f4f7fb] to-white">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#4A4A4A]">
       <Navbar />
 
       {/* HERO */}
       <div className="mx-auto max-w-7xl px-4 pt-10">
-        <div className="rounded-[32px] bg-gradient-to-r from-[#08306B] via-[#0b3f82] to-[#2171B5] p-10 text-white shadow-2xl">
+        <div className="rounded-[32px] bg-gradient-to-r from-[#203F52] via-[#2D4F63] to-[#2A6FA3] p-10 text-white shadow-2xl">
           <h1 className="text-3xl font-bold md:text-5xl">
             Featured Projects in
-            <span className="block text-blue-200">Kandy, Sri Lanka</span>
+            <span className="block text-[#F3D319]">Kandy, Sri Lanka</span>
           </h1>
 
-          <p className="mt-4 max-w-2xl text-blue-100">
-            Discover premium apartments and luxury developments across
-            Hanthana, Peradeniya, and Kandy City.
+          <p className="mt-4 max-w-2xl text-[#EAEAEA]">
+            Discover premium apartments and luxury developments across Kandy.
           </p>
 
           <div className="mt-6 flex gap-4">
             <div className="rounded-xl bg-white/10 px-4 py-2">
-              <p className="text-xl font-bold">15+</p>
-              <span className="text-xs">Projects</span>
+              <p className="text-xl font-bold text-[#F3D319]">15+</p>
+              <span className="text-xs text-[#EAEAEA]">Projects</span>
             </div>
 
             <div className="rounded-xl bg-white/10 px-4 py-2">
-              <p className="text-xl font-bold">3</p>
-              <span className="text-xs">Prime Areas</span>
+              <p className="text-xl font-bold text-[#F3D319]">3</p>
+              <span className="text-xs text-[#EAEAEA]">Prime Areas</span>
             </div>
 
             <div className="rounded-xl bg-white/10 px-4 py-2">
-              <p className="text-xl font-bold">Luxury</p>
-              <span className="text-xs">Living</span>
+              <p className="text-xl font-bold text-[#F3D319]">Luxury</p>
+              <span className="text-xs text-[#EAEAEA]">Living</span>
             </div>
           </div>
         </div>
@@ -97,23 +96,23 @@ export default function Featurednew() {
 
       {/* FILTER BAR */}
       <div className="mx-auto mt-10 max-w-7xl px-4">
-        <div className="flex flex-wrap items-center gap-3 rounded-2xl border bg-white p-4 shadow-sm">
+        <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-[#EAEAEA] bg-[#FFFFFF] p-4 shadow-sm">
 
           <input
             placeholder="Search projects in Kandy..."
-            className="flex-1 rounded-xl border px-4 py-2 text-sm outline-none"
+            className="flex-1 rounded-xl border border-[#B8B8B8] px-4 py-2 text-sm outline-none focus:border-[#2A6FA3]"
           />
 
-          <button className="flex items-center gap-2 rounded-xl bg-[#2171B5] px-5 py-2 text-white">
+          <button className="flex items-center gap-2 rounded-xl bg-[#2A6FA3] px-5 py-2 text-white hover:bg-[#203F52]">
             <Search size={16} />
             Search
           </button>
 
-          <div className="ml-auto flex overflow-hidden rounded-xl border">
-            <button className="flex items-center gap-2 bg-[#08306B] px-4 py-2 text-white">
+          <div className="ml-auto flex overflow-hidden rounded-xl border border-[#B8B8B8]">
+            <button className="flex items-center gap-2 bg-[#203F52] px-4 py-2 text-white">
               <List size={16} /> List
             </button>
-            <button className="flex items-center gap-2 bg-white px-4 py-2 text-[#2171B5]">
+            <button className="flex items-center gap-2 bg-[#FFFFFF] px-4 py-2 text-[#2A6FA3]">
               <Map size={16} /> Map
             </button>
           </div>
@@ -125,9 +124,8 @@ export default function Featurednew() {
         {projects.map((project) => (
           <div
             key={project.id}
-            className="group overflow-hidden rounded-3xl bg-white shadow-sm transition hover:-translate-y-2 hover:shadow-2xl"
+            className="group overflow-hidden rounded-3xl bg-[#FFFFFF] shadow-sm border border-[#EAEAEA] transition hover:-translate-y-2 hover:shadow-2xl"
           >
-            {/* IMAGE */}
             <div className="h-56 overflow-hidden">
               <img
                 src={project.image}
@@ -136,29 +134,27 @@ export default function Featurednew() {
               />
             </div>
 
-            {/* CONTENT */}
             <div className="p-5">
-              <h2 className="text-lg font-bold text-[#08306B]">
+              <h2 className="text-lg font-bold text-[#203F52]">
                 {project.title}
               </h2>
 
-              <div className="mt-1 flex items-center gap-2 text-sm text-[#2171B5]">
+              <div className="mt-1 flex items-center gap-2 text-sm text-[#2A6FA3]">
                 <MapPin size={14} />
                 {project.location}
               </div>
 
-              <p className="mt-3 text-xl font-bold text-[#08306B]">
+              <p className="mt-3 text-xl font-bold text-[#203F52]">
                 {project.price}
               </p>
 
-              {/* UNITS */}
               <div className="mt-4 space-y-2">
                 {project.units.map((u, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between rounded-xl bg-[#f6f9ff] px-3 py-2 text-sm"
+                    className="flex items-center justify-between rounded-xl bg-[#EAEAEA] px-3 py-2 text-sm"
                   >
-                    <div className="flex gap-4 text-[#08306B]">
+                    <div className="flex gap-4 text-[#203F52]">
                       <span className="flex items-center gap-1">
                         <BedDouble size={14} /> {u.bed}
                       </span>
@@ -166,16 +162,16 @@ export default function Featurednew() {
                         <Bath size={14} /> {u.bath}
                       </span>
                     </div>
-                    <span className="font-semibold text-[#2171B5]">
+
+                    <span className="font-semibold text-[#2A6FA3]">
                       {u.sqft}
                     </span>
                   </div>
                 ))}
               </div>
 
-              {/* FOOTER */}
               <div className="mt-5 flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs text-gray-500">
+                <div className="flex items-center gap-2 text-xs text-[#B8B8B8]">
                   <Calendar size={14} />
                   {project.status === "completed"
                     ? "Completed"
@@ -184,7 +180,7 @@ export default function Featurednew() {
 
                 <button
                   onClick={() => navigate("/viewmore")}
-                  className="rounded-xl bg-[#2171B5] px-4 py-2 text-xs font-semibold text-white hover:bg-[#08306B]"
+                  className="rounded-xl bg-[#2A6FA3] px-4 py-2 text-xs font-semibold text-white hover:bg-[#203F52]"
                 >
                   View More
                 </button>

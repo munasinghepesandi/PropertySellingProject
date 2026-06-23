@@ -37,41 +37,51 @@ export default function CapitalGainsTaxPage() {
   const faqs = [
     { q: "What is capital gains tax?", a: "It's a tax on the profit from selling an asset at a higher price than you paid for it. Applied to property sales in Sri Lanka." },
     { q: "How is capital gain calculated?", a: "Capital gain = Sale Price - Cost Basis (Purchase price + acquisition costs + improvement costs - deductions)" },
-    { q: "Is my principal residence exempt?", a: "Yes, usually. Your primary residence where you've lived is often exempt from capital gains tax." },
-    { q: "Can I reduce my taxable gain?", a: "Yes, by deducting all acquisition costs, improvement costs, and selling expenses from the sale price." },
-    { q: "What if I hold the property 10+ years?", a: "Properties held over 10 years are typically fully exempt from capital gains tax." },
-    { q: "Do I need to report capital gains?", a: "Yes, you must report property sales in your income tax return for the relevant year." },
+    { q: "Is my principal residence exempt?", a: "Yes, usually. Your primary residence is often exempt." },
+    { q: "Can I reduce my taxable gain?", a: "Yes, by deducting acquisition, improvement, and selling costs." },
+    { q: "What if I hold the property 10+ years?", a: "Properties held over 10 years are typically fully exempt." },
+    { q: "Do I need to report capital gains?", a: "Yes, it must be reported in your tax return." },
   ];
 
   return (
     <div className="min-h-screen bg-[#f4f7fb]">
       <Navbar />
 
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#08306B] to-[#1a4d8f] py-16 md:py-24">
+      {/* HERO */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#08306B] to-[#2171B5] py-16 md:py-24">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-white" />
         </div>
+
         <div className="relative mx-auto max-w-7xl px-5 md:px-8">
-          <div className="max-w-2xl">
-            <h1 className="text-4xl font-black text-white md:text-5xl">Capital Gains Tax</h1>
-            <p className="mt-4 text-lg text-blue-100">Understand property sale taxation in Sri Lanka</p>
-          </div>
+          <h1 className="text-4xl font-black text-white md:text-5xl">
+            Capital Gains Tax
+          </h1>
+          <p className="mt-4 text-lg text-blue-100">
+            Understand property sale taxation in Sri Lanka
+          </p>
         </div>
       </section>
 
+      {/* TAX RATES */}
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-          <div className="mb-8">
-            <div className="h-1 w-16 rounded-full bg-[#2171B5]" />
-            <p className="mt-4 text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Tax Structure</p>
-            <h2 className="mt-3 text-3xl font-black text-slate-900">Capital gains tax rates</h2>
-          </div>
+          <h2 className="text-3xl font-black text-[#08306B]">
+            Capital gains tax rates
+          </h2>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
             {taxRates.map((rate, i) => (
-              <div key={i} className="rounded-xl border border-[#d9e8f6] bg-[#f8fbff] p-6">
-                <p className="text-xs font-black text-[#2171B5]">{rate.period}</p>
-                <p className="mt-3 text-2xl font-black text-slate-900">{rate.rate}</p>
+              <div
+                key={i}
+                className="rounded-xl border border-[#d9e8f6] bg-[#f8fbff] p-6"
+              >
+                <p className="text-xs font-black text-[#2171B5]">
+                  {rate.period}
+                </p>
+                <p className="mt-3 text-2xl font-black text-[#08306B]">
+                  {rate.rate}
+                </p>
                 <p className="mt-2 text-sm text-slate-600">{rate.desc}</p>
               </div>
             ))}
@@ -79,114 +89,94 @@ export default function CapitalGainsTaxPage() {
         </div>
       </section>
 
+      {/* EXAMPLE */}
       <section className="bg-[#f4f7fb]">
         <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-          <div className="mb-8">
-            <div className="h-1 w-16 rounded-full bg-[#2171B5]" />
-            <p className="mt-4 text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Example</p>
-            <h2 className="mt-3 text-3xl font-black text-slate-900">Sample calculation</h2>
-          </div>
+          <h2 className="text-3xl font-black text-[#08306B]">
+            Sample calculation
+          </h2>
 
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
             <div className="rounded-2xl border border-[#d9e8f6] bg-white p-8">
-              <div className="space-y-4">
-                <div>
-                  <p className="text-xs text-slate-600">Purchase Price</p>
-                  <p className="text-2xl font-black text-slate-900">Rs. {(example.purchasePrice / 1000000).toFixed(1)}M</p>
-                </div>
-                <div className="border-t border-[#d9e8f6] pt-4">
-                  <p className="text-xs text-slate-600">Sale Price</p>
-                  <p className="text-2xl font-black text-slate-900">Rs. {(example.salePrice / 1000000).toFixed(1)}M</p>
-                </div>
-                <div className="border-t border-[#d9e8f6] pt-4">
-                  <p className="text-xs text-slate-600">Capital Gain</p>
-                  <p className="text-2xl font-black text-[#2171B5]">Rs. {(example.gain / 1000000).toFixed(1)}M</p>
-                </div>
-              </div>
+              <p className="text-sm text-slate-600">Capital Gain</p>
+              <p className="text-3xl font-black text-[#2171B5]">
+                Rs. {(example.gain / 1000000).toFixed(1)}M
+              </p>
             </div>
 
             <div className="rounded-2xl border border-[#d9e8f6] bg-white p-8">
-              <div className="space-y-4">
-                <div>
-                  <p className="text-xs text-slate-600">Holding Period</p>
-                  <p className="text-2xl font-black text-slate-900">{example.holdingPeriod}</p>
-                </div>
-                <div className="border-t border-[#d9e8f6] pt-4">
-                  <p className="text-xs text-slate-600">Applicable Tax Rate</p>
-                  <p className="text-2xl font-black text-slate-900">{example.taxRate}</p>
-                </div>
-                <div className="border-t border-[#d9e8f6] pt-4">
-                  <p className="text-xs text-slate-600">Capital Gains Tax Due</p>
-                  <p className="text-2xl font-black text-[#2171B5]">Rs. {(example.capitalGainsTax / 100000).toFixed(1)}L</p>
-                </div>
-              </div>
+              <p className="text-sm text-slate-600">Tax Due</p>
+              <p className="text-3xl font-black text-[#08306B]">
+                Rs. {(example.capitalGainsTax / 100000).toFixed(1)}L
+              </p>
             </div>
           </div>
         </div>
       </section>
 
+      {/* DEDUCTIONS */}
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-          <div className="mb-8">
-            <div className="h-1 w-16 rounded-full bg-[#2171B5]" />
-            <p className="mt-4 text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Deductions</p>
-            <h2 className="mt-3 text-3xl font-black text-slate-900">Allowable deductions</h2>
-          </div>
+          <h2 className="text-3xl font-black text-[#08306B]">
+            Allowable deductions
+          </h2>
 
-          <div className="space-y-3">
-            {deductions.map((deduction, i) => (
-              <div key={i} className="rounded-xl border border-[#d9e8f6] bg-[#f8fbff] p-4">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="font-black text-slate-900">{deduction.item}</p>
-                    <p className="mt-1 text-sm text-slate-600">{deduction.desc}</p>
-                  </div>
-                  <span className={`flex-shrink-0 rounded-full px-3 py-1 text-xs font-black ${
-                    deduction.allowed
+          <div className="mt-8 space-y-3">
+            {deductions.map((d, i) => (
+              <div
+                key={i}
+                className="rounded-xl border border-[#d9e8f6] bg-[#f8fbff] p-4"
+              >
+                <p className="font-black text-[#08306B]">{d.item}</p>
+                <p className="text-sm text-slate-600">{d.desc}</p>
+                <span
+                  className={`mt-2 inline-block rounded-full px-3 py-1 text-xs font-black ${
+                    d.allowed
                       ? "bg-green-100 text-green-700"
                       : "bg-red-100 text-red-700"
-                  }`}>
-                    {deduction.allowed ? "Allowed" : "Not Allowed"}
-                  </span>
-                </div>
+                  }`}
+                >
+                  {d.allowed ? "Allowed" : "Not Allowed"}
+                </span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* EXEMPTIONS */}
       <section className="bg-[#f4f7fb]">
         <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-          <div className="mb-8">
-            <div className="h-1 w-16 rounded-full bg-[#2171B5]" />
-            <p className="mt-4 text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">Exemptions</p>
-            <h2 className="mt-3 text-3xl font-black text-slate-900">Tax exemptions</h2>
-          </div>
+          <h2 className="text-3xl font-black text-[#08306B]">
+            Tax exemptions
+          </h2>
 
-          <div className="grid gap-4 md:grid-cols-2">
-            {exemptions.map((exemption, i) => (
-              <div key={i} className="rounded-xl border border-[#d9e8f6] bg-white p-6">
-                <h3 className="font-black text-slate-900">{exemption.type}</h3>
-                <p className="mt-2 text-sm text-slate-600">{exemption.desc}</p>
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            {exemptions.map((e, i) => (
+              <div
+                key={i}
+                className="rounded-xl border border-[#d9e8f6] bg-white p-6"
+              >
+                <h3 className="font-black text-[#08306B]">{e.type}</h3>
+                <p className="text-sm text-slate-600">{e.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* FAQ */}
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
-          <div className="mb-8">
-            <div className="h-1 w-16 rounded-full bg-[#2171B5]" />
-            <p className="mt-4 text-xs font-black uppercase tracking-[0.28em] text-[#2171B5]">FAQ</p>
-            <h2 className="mt-3 text-3xl font-black text-slate-900">Common questions</h2>
-          </div>
+          <h2 className="text-3xl font-black text-[#08306B]">
+            Common questions
+          </h2>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            {faqs.map((faq, i) => (
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            {faqs.map((f, i) => (
               <div key={i}>
-                <h3 className="font-black text-slate-900">{faq.q}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{faq.a}</p>
+                <h3 className="font-black text-[#08306B]">{f.q}</h3>
+                <p className="text-sm text-slate-600">{f.a}</p>
               </div>
             ))}
           </div>

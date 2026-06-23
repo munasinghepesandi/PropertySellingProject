@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
+import { Link } from 'react-router-dom'
+
 
 import chartImage from "../assets/hero.png";
+
+const colors = {
+  primaryDark: "#203F52",
+  secondaryBlue: "#2A6FA3",
+  lightGray: "#EAEAEA",
+  text: "#4A4A4A",
+}
 
 const HousePriceIndexData = {
   "Dec 2025 (Q4)": [

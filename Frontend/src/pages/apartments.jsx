@@ -6,76 +6,76 @@ export default function Apartment() {
     <>
       <Navbar />
 
-      <div className="bg-slate-50 p-5 font-sans">
+      <div className="bg-[#EAEAEA] p-5 font-sans text-[#4A4A4A]">
         {/* SEARCH BAR */}
-        <div className="flex flex-wrap items-center gap-3 rounded-lg border border-slate-300 bg-white p-4">
+        <div className="flex flex-wrap items-center gap-3 rounded-lg border border-[#B8B8B8] bg-[#FFFFFF] p-4">
           <input
             type="text"
             placeholder="School or University"
-            className="rounded-md border border-slate-300 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+            className="rounded-md border border-[#B8B8B8] px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-[#2A6FA3]"
           />
 
-          <select className="rounded-md border border-slate-300 px-4 py-2 text-sm outline-none">
+          <select className="rounded-md border border-[#B8B8B8] px-4 py-2 text-sm">
             <option>Select Radius</option>
           </select>
 
-          <select className="rounded-md border border-slate-300 px-4 py-2 text-sm outline-none">
+          <select className="rounded-md border border-[#B8B8B8] px-4 py-2 text-sm">
             <option>Apartment</option>
           </select>
 
-          <select className="rounded-md border border-slate-300 px-4 py-2 text-sm outline-none">
+          <select className="rounded-md border border-[#B8B8B8] px-4 py-2 text-sm">
             <option>Price Range</option>
           </select>
 
-          <select className="rounded-md border border-slate-300 px-4 py-2 text-sm outline-none">
+          <select className="rounded-md border border-[#B8B8B8] px-4 py-2 text-sm">
             <option>Show More</option>
           </select>
 
-          <button className="rounded-md bg-blue-700 px-5 py-2 text-sm font-medium text-white transition hover:bg-blue-800">
+          <button className="rounded-md bg-[#203F52] px-5 py-2 text-sm font-medium text-[#FFFFFF] transition hover:bg-[#2D4F63]">
             Search
           </button>
         </div>
 
         {/* FILTERS */}
         <div className="my-4 flex items-center gap-3">
-          <span className="rounded-full border border-blue-700 bg-white px-4 py-1 text-sm">
+          <span className="rounded-full border border-[#2A6FA3] bg-[#FFFFFF] px-4 py-1 text-sm text-[#2A6FA3]">
             Kandy ✕
           </span>
 
-          <span className="cursor-pointer text-sm font-medium text-blue-700">
+          <span className="cursor-pointer text-sm font-medium text-[#2A6FA3]">
             RESET ALL
           </span>
         </div>
 
         {/* TITLE */}
-        <div className="mb-4 text-2xl font-bold text-slate-800">
+        <div className="mb-4 text-2xl font-bold text-[#203F52]">
           Apartments for rent in Kandy (6 properties)
         </div>
 
         {/* ACTION BUTTONS */}
         <div className="mb-5 flex flex-wrap gap-3">
-          <button className="rounded-md border border-blue-700 bg-white px-4 py-2 text-sm hover:bg-blue-50">
+          <button className="rounded-md border border-[#2A6FA3] bg-[#FFFFFF] px-4 py-2 text-sm hover:bg-[#EAEAEA]">
             Save Search
           </button>
 
-          <button className="rounded-md border border-blue-700 bg-white px-4 py-2 text-sm hover:bg-blue-50">
+          <button className="rounded-md border border-[#2A6FA3] bg-[#FFFFFF] px-4 py-2 text-sm hover:bg-[#EAEAEA]">
             Create E-Mail Alerts
           </button>
 
-          <button className="rounded-md border border-blue-700 bg-white px-4 py-2 text-sm hover:bg-blue-50">
+          <button className="rounded-md border border-[#2A6FA3] bg-[#FFFFFF] px-4 py-2 text-sm hover:bg-[#EAEAEA]">
             Share
           </button>
         </div>
 
         {/* CHIPS */}
         <div className="mb-6 flex flex-wrap gap-3">
-          <div className="rounded-full border border-blue-700 bg-white px-4 py-1 text-sm">
+          <div className="rounded-full border border-[#2A6FA3] bg-[#FFFFFF] px-4 py-1 text-sm">
             Apartments
           </div>
-          <div className="rounded-full border border-blue-700 bg-white px-4 py-1 text-sm">
+          <div className="rounded-full border border-[#2A6FA3] bg-[#FFFFFF] px-4 py-1 text-sm">
             Villas
           </div>
-          <div className="rounded-full border border-blue-700 bg-white px-4 py-1 text-sm">
+          <div className="rounded-full border border-[#2A6FA3] bg-[#FFFFFF] px-4 py-1 text-sm">
             Rooms
           </div>
         </div>
@@ -86,108 +86,68 @@ export default function Apartment() {
           <div className="lg:col-span-3">
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
 
-              {/* CARD 1 */}
-              <div className="overflow-hidden rounded-xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                <img
-                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
-                  className="h-[200px] w-full object-cover"
-                  alt="Hanthana apartment"
-                />
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Hanthana Hill View Apartment
-                  </h3>
-                  <p className="text-sm text-slate-500">Hanthana, Kandy</p>
+              {/* CARD */}
+              {[
+                {
+                  title: "Hanthana Hill View Apartment",
+                  location: "Hanthana, Kandy",
+                  img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+                },
+                {
+                  title: "Peradeniya Garden Residence",
+                  location: "Peradeniya, Kandy",
+                  img: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+                },
+                {
+                  title: "Katugastota Modern Suites",
+                  location: "Katugastota, Kandy",
+                  img: "https://images.unsplash.com/photo-1494526585095-c41746248156",
+                },
+                {
+                  title: "Kandy City Luxury Apartment",
+                  location: "Kandy City Center",
+                  img: "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6",
+                },
+                {
+                  title: "Digana Lake View Apartment",
+                  location: "Digana, Kandy",
+                  img: "https://images.unsplash.com/photo-1600566752355-35792bedcfea",
+                },
+                {
+                  title: "Ampitiya Green Residency",
+                  location: "Ampitiya, Kandy",
+                  img: "https://images.unsplash.com/photo-1501183638710-841dd1904471",
+                },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  className="overflow-hidden rounded-xl border border-[#B8B8B8] bg-[#FFFFFF] shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <img
+                    src={item.img}
+                    className="h-[200px] w-full object-cover"
+                    alt={item.title}
+                  />
+                  <div className="p-4">
+                    <h3 className="text-lg font-semibold text-[#203F52]">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-[#4A4A4A]">{item.location}</p>
+                  </div>
                 </div>
-              </div>
-
-              {/* CARD 2 */}
-              <div className="overflow-hidden rounded-xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                <img
-                  src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85"
-                  className="h-[200px] w-full object-cover"
-                  alt="Peradeniya apartment"
-                />
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Peradeniya Garden Residence
-                  </h3>
-                  <p className="text-sm text-slate-500">Peradeniya, Kandy</p>
-                </div>
-              </div>
-
-              {/* CARD 3 */}
-              <div className="overflow-hidden rounded-xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                <img
-                  src="https://images.unsplash.com/photo-1494526585095-c41746248156"
-                  className="h-[200px] w-full object-cover"
-                  alt="Katugastota apartment"
-                />
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Katugastota Modern Suites
-                  </h3>
-                  <p className="text-sm text-slate-500">Katugastota, Kandy</p>
-                </div>
-              </div>
-
-              {/* CARD 4 */}
-              <div className="overflow-hidden rounded-xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                <img
-                  src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6"
-                  className="h-[200px] w-full object-cover"
-                  alt="Kandy city apartment"
-                />
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Kandy City Luxury Apartment
-                  </h3>
-                  <p className="text-sm text-slate-500">Kandy City Center</p>
-                </div>
-              </div>
-
-              {/* CARD 5 */}
-              <div className="overflow-hidden rounded-xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                <img
-                  src="https://images.unsplash.com/photo-1600566752355-35792bedcfea"
-                  className="h-[200px] w-full object-cover"
-                  alt="Digana apartment"
-                />
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Digana Lake View Apartment
-                  </h3>
-                  <p className="text-sm text-slate-500">Digana, Kandy</p>
-                </div>
-              </div>
-
-              {/* CARD 6 */}
-              <div className="overflow-hidden rounded-xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                <img
-                  src="https://images.unsplash.com/photo-1501183638710-841dd1904471"
-                  className="h-[200px] w-full object-cover"
-                  alt="Ampitiya apartment"
-                />
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Ampitiya Green Residency
-                  </h3>
-                  <p className="text-sm text-slate-500">Ampitiya, Kandy</p>
-                </div>
-              </div>
-
+              ))}
             </div>
           </div>
 
           {/* RIGHT SIDEBAR */}
           <div className="flex flex-col gap-5">
-            <div className="rounded-xl bg-blue-950 p-6 text-center text-white">
+            <div className="rounded-xl bg-[#203F52] p-6 text-center text-[#FFFFFF]">
               <h3 className="text-xl font-bold">Kandy Market Report 2026</h3>
-              <p className="mt-2 text-blue-200">OUT NOW!</p>
+              <p className="mt-2 text-[#F3D319]">OUT NOW!</p>
             </div>
 
-            <div className="rounded-xl border bg-white p-4">
-              <h4 className="mb-4 text-lg font-semibold">
+            <div className="rounded-xl border border-[#B8B8B8] bg-[#FFFFFF] p-4">
+              <h4 className="mb-4 text-lg font-semibold text-[#203F52]">
                 Featured Kandy Projects
               </h4>
 

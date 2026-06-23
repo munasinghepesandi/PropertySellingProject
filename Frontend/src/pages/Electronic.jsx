@@ -27,100 +27,113 @@ export default function Electronic() {
   ];
 
   return (
-    <div className="bg-gray-50 min-h-screen font-sans">
+    <div className="min-h-screen font-sans bg-[#EAEAEA]">
       <Navbar />
 
-      <div className="bg-gradient-to-r from-[#08306B] to-[#2171B5] text-white px-8 py-4 flex justify-between items-center shadow-lg">
+      {/* TOP NAV */}
+      <div className="bg-[#203F52] text-white px-8 py-4 flex justify-between items-center shadow-lg">
         <h1 className="text-2xl font-bold">
-          ideal <span className="text-white/80">home</span>
+          ideal <span className="text-[#F3D319]">home</span>
         </h1>
 
-        <div className="hidden md:flex gap-8 text-sm font-medium">
-          <p className="hover:text-gray-200 cursor-pointer">PRODUCTS</p>
-          <p className="hover:text-gray-200 cursor-pointer">HOUSE CONSTRUCTION</p>
-          <p className="hover:text-gray-200 cursor-pointer">FIND PROFESSIONALS</p>
-          <p className="hover:text-gray-200 cursor-pointer">INSPIRATIONS</p>
-          <p className="hover:text-gray-200 cursor-pointer">MORE</p>
+        <div className="hidden md:flex gap-8 text-sm font-medium text-[#EAEAEA]">
+          <p className="hover:text-[#F3D319] cursor-pointer">PRODUCTS</p>
+          <p className="hover:text-[#F3D319] cursor-pointer">HOUSE CONSTRUCTION</p>
+          <p className="hover:text-[#F3D319] cursor-pointer">FIND PROFESSIONALS</p>
+          <p className="hover:text-[#F3D319] cursor-pointer">INSPIRATIONS</p>
+          <p className="hover:text-[#F3D319] cursor-pointer">MORE</p>
         </div>
 
-        <button className="bg-white text-[#08306B] px-5 py-2 rounded-lg font-semibold hover:bg-gray-200 transition">
+        <button className="bg-[#F3D319] text-[#203F52] px-5 py-2 rounded-lg font-semibold hover:opacity-90 transition">
           POST YOUR AD
         </button>
       </div>
 
-      <PageHeader title="Appliances & Electronics" subtitle="Find trusted suppliers and products for home appliances — refrigerators, washers, smart devices and more." image="https://images.unsplash.com/photo-1586201375761-83865001e17b" />
+      <PageHeader
+        title="Appliances & Electronics"
+        subtitle="Find trusted suppliers and products for home appliances — refrigerators, washers, smart devices and more."
+        image="https://images.unsplash.com/photo-1586201375761-83865001e17b"
+      />
 
-      <div className="px-6 py-6 flex gap-4 overflow-x-auto">
+      {/* CATEGORY SCROLL */}
+      <div className="px-6 py-6 flex gap-4 overflow-x-auto bg-[#FFFFFF]">
         {categories.map((cat, i) => (
           <div
             key={i}
-            className="min-w-[160px] bg-white rounded-xl shadow-md p-4 text-center hover:shadow-xl hover:-translate-y-1 transition"
+            className="min-w-[160px] bg-[#FFFFFF] rounded-xl shadow-md p-4 text-center hover:shadow-xl hover:-translate-y-1 transition border border-[#B8B8B8]"
           >
             <ImageWithFallback src={cat.img} alt={cat.name} className="h-16 mx-auto object-contain mb-3" />
-            <p className="text-sm font-semibold text-gray-700">{cat.name}</p>
+            <p className="text-sm font-semibold text-[#4A4A4A]">{cat.name}</p>
           </div>
         ))}
         <div className="flex items-center justify-center min-w-[60px]">
-          <ChevronRight className="text-[#2171B5]" />
+          <ChevronRight className="text-[#2A6FA3]" />
         </div>
       </div>
 
+      {/* MAIN */}
       <div className="flex px-6 gap-6 pb-10">
-        <div className="w-64 bg-white p-5 rounded-xl shadow-md">
-          <h3 className="font-bold text-[#08306B] mb-4">Categories</h3>
 
-          <ul className="space-y-3 text-gray-600 text-sm">
-            <li className="text-[#2171B5] font-semibold cursor-pointer">Water Filter (1)</li>
-            <li className="hover:text-[#2171B5] cursor-pointer">Air Conditioners</li>
-            <li className="hover:text-[#2171B5] cursor-pointer">CCTV & Security</li>
-            <li className="hover:text-[#2171B5] cursor-pointer">Fans</li>
-            <li className="hover:text-[#2171B5] cursor-pointer">Internet & TV</li>
+        {/* SIDEBAR */}
+        <div className="w-64 bg-[#FFFFFF] p-5 rounded-xl shadow-md border border-[#B8B8B8]">
+          <h3 className="font-bold text-[#203F52] mb-4">Categories</h3>
+
+          <ul className="space-y-3 text-sm text-[#4A4A4A]">
+            <li className="text-[#2A6FA3] font-semibold cursor-pointer">Water Filter (1)</li>
+            <li className="hover:text-[#2A6FA3] cursor-pointer">Air Conditioners</li>
+            <li className="hover:text-[#2A6FA3] cursor-pointer">CCTV & Security</li>
+            <li className="hover:text-[#2A6FA3] cursor-pointer">Fans</li>
+            <li className="hover:text-[#2A6FA3] cursor-pointer">Internet & TV</li>
           </ul>
         </div>
 
+        {/* CONTENT */}
         <div className="flex-1">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold text-[#08306B]">Appliances in Sri Lanka</h2>
 
-            <div className="flex gap-3 bg-white p-2 rounded-lg shadow">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold text-[#203F52]">Appliances in Sri Lanka</h2>
+
+            <div className="flex gap-3 bg-[#FFFFFF] p-2 rounded-lg shadow border border-[#B8B8B8]">
               <button onClick={() => setView("grid")}>
-                <Grid className={view === "grid" ? "text-[#2171B5]" : "text-gray-500"} />
+                <Grid className={view === "grid" ? "text-[#2A6FA3]" : "text-[#B8B8B8]"} />
               </button>
               <button onClick={() => setView("list")}>
-                <List className={view === "list" ? "text-[#2171B5]" : "text-gray-500"} />
+                <List className={view === "list" ? "text-[#2A6FA3]" : "text-[#B8B8B8]"} />
               </button>
             </div>
           </div>
 
+          {/* GRID */}
           {view === "grid" && (
             <div className="grid md:grid-cols-3 gap-6">
               {listings.map((item, i) => (
-                <div key={i} className="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
+                <div key={i} className="bg-[#FFFFFF] rounded-xl shadow-md hover:shadow-xl transition border border-[#B8B8B8]">
                   <ImageWithFallback src={item.img} alt={item.title} className="h-44 w-full object-cover" />
 
                   <div className="p-4">
-                    <h3 className="font-semibold text-gray-800">{item.title}</h3>
-                    <p className="text-sm text-gray-500">{item.location}</p>
-                    <p className="text-[#2171B5] font-bold mt-2 text-lg">{item.price}</p>
+                    <h3 className="font-semibold text-[#4A4A4A]">{item.title}</h3>
+                    <p className="text-sm text-[#B8B8B8]">{item.location}</p>
+                    <p className="text-[#2A6FA3] font-bold mt-2 text-lg">{item.price}</p>
                   </div>
                 </div>
               ))}
             </div>
           )}
 
+          {/* LIST */}
           {view === "list" && (
             <div className="space-y-4">
               {listings.map((item, i) => (
-                <div key={i} className="flex bg-white rounded-xl shadow-md p-4 gap-4 hover:shadow-lg transition">
+                <div key={i} className="flex bg-[#FFFFFF] rounded-xl shadow-md p-4 gap-4 border border-[#B8B8B8] hover:shadow-lg transition">
                   <ImageWithFallback src={item.img} alt={item.title} className="w-44 h-28 object-cover rounded-lg" />
 
                   <div className="flex flex-col justify-between">
                     <div>
-                      <h3 className="font-semibold text-gray-800">{item.title}</h3>
-                      <p className="text-gray-500 text-sm">{item.location}</p>
+                      <h3 className="font-semibold text-[#4A4A4A]">{item.title}</h3>
+                      <p className="text-[#B8B8B8] text-sm">{item.location}</p>
                     </div>
 
-                    <p className="text-[#2171B5] font-bold text-lg">{item.price}</p>
+                    <p className="text-[#2A6FA3] font-bold text-lg">{item.price}</p>
                   </div>
                 </div>
               ))}
