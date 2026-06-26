@@ -10,15 +10,14 @@ export const FACEBOOK_APP_ID = 'YOUR_FACEBOOK_APP_ID'
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'
 
 const AUTH_TOKEN_KEY = 'authToken'
-const AUTH_USER_KEY = 'authUser'
+const AUTH_USER_KEY = 'lanka_property_current_user'
 
 function storeSession(data) {
   if (data?.token) {
     localStorage.setItem(AUTH_TOKEN_KEY, data.token)
-  }
-
-  if (data?.data) {
-    localStorage.setItem(AUTH_USER_KEY, JSON.stringify(data.data))
+    // Backend returns user details directly in the response object along with the token.
+    const {  ...userData } = data
+    localStorage.setItem(AUTH_USER_KEY, JSON.stringify(userData))
   }
 }
 

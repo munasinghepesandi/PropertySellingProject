@@ -108,7 +108,7 @@ export function ChatbotWidget() {
           <span className="qa-chatbot-launcher-icon">
             <MessageCircle size={18} />
           </span>
-          <span>
+          <span className="qa-chatbot-launcher-text">
             <strong>Chat with us</strong>
             <small>Property assistant</small>
           </span>

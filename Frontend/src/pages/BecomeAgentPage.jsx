@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Check } from 'lucide-react'
 import Navbar from '../components/Navbar'
 
+
 export default function BecomeAgentPage() {
   const navigate = useNavigate()
   const [contact, setContact] = useState({ name: '', email: '', phone: '', message: '' })
@@ -18,9 +19,8 @@ export default function BecomeAgentPage() {
     setSuccess('')
 
     try {
-      const apiBase = "http://localhost:5000"
-
-      const response = await fetch(`${apiBase}/api/agents`, {
+      const apiBase = "http://localhost:5000"; 
+      const response = await fetch(`${apiBase}/api/agents`, { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(contact),

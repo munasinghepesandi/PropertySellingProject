@@ -35,7 +35,7 @@
   background: rgba(255, 255, 255, 0.15);
 }
 
-.qa-chatbot-launcher span {
+.qa-chatbot-launcher-text {
   display: grid;
   text-align: left;
 }
@@ -236,14 +236,20 @@
   .qa-chatbot {
     right: 12px;
     bottom: 12px;
-    left: 12px;
+    left: auto;
   }
 
   .qa-chatbot-launcher {
-    width: 100%;
+    width: 54px;
+    height: 54px;
+    padding: 0;
     justify-content: center;
-    border-radius: 18px;
-    padding: 11px 14px 11px 11px;
+    border-radius: 50%;
+    gap: 0;
+  }
+
+  .qa-chatbot-launcher-text {
+    display: none;
   }
 
   .qa-chatbot-launcher-icon {
@@ -342,12 +348,12 @@
   .qa-chatbot {
     right: 10px;
     bottom: 10px;
-    left: 10px;
+    left: auto;
   }
 
   .qa-chatbot-launcher {
-    padding: 10px 12px 10px 10px;
-    border-radius: 16px;
+    width: 50px;
+    height: 50px;
   }
 
   .qa-chatbot-launcher-icon {
