@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
+import ImageWithFallback from "../components/ImageWithFallback";
+import { API_BASE_URL } from "../utils/auth";
 
 
 const HERO_SLIDES = [
@@ -64,6 +66,9 @@ const FEATURED_PROPERTIES = [
 export default function CompleteHomepage() {
   const [activeTab, setActiveTab] = useState("SALES");
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [latestListings, setLatestListings] = useState([]);
+  const [latestLoading, setLatestLoading] = useState(true);
+  const [latestError, setLatestError] = useState("");
   const [filters, setFilters] = useState({
     location: "",
     type: "",
@@ -78,6 +83,55 @@ export default function CompleteHomepage() {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchLatestListings = async () => {
+      try {
+        setLatestLoading(true);
+        setLatestError("");
+
+        const response = await fetch(`${API_BASE_URL}/properties?status=active&limit=6`);
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data?.message || "Failed to load listings");
+        }
+
+        if (!isMounted) return;
+
+        setLatestListings(Array.isArray(data?.data) ? data.data : []);
+      } catch (error) {
+        if (!isMounted) return;
+        setLatestError(error.message || "Failed to load listings");
+      } finally {
+        if (isMounted) {
+          setLatestLoading(false);
+        }
+      }
+    };
+
+    fetchLatestListings();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const apiOrigin = API_BASE_URL.replace(/\/api\/?$/, "");
+
+  const resolveImage = (imagePath) => {
+    if (!imagePath) {
+      return "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1200&auto=format&fit=crop";
+    }
+
+    if (imagePath.startsWith("http")) {
+      return imagePath;
+    }
+
+    return `${apiOrigin}${imagePath}`;
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -205,6 +259,74 @@ export default function CompleteHomepage() {
           <h3 className="text-4xl font-black">320+</h3>
           <p className="text-xs uppercase">Properties Listed</p>
         </div>
+      </section>
+
+      <section className="max-w-6xl mx-auto px-4 py-20">
+        <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#b3925c]">
+              Fresh from Post Ad
+            </p>
+            <h2 className="mt-2 text-3xl font-bold text-[#1a3a4b]">
+              Latest Posted Properties
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm text-gray-600">
+              These listings are pulled straight from the backend, including the cover image uploaded when the ad was published.
+            </p>
+          </div>
+        </div>
+
+        {latestLoading ? (
+          <div className="grid gap-6 md:grid-cols-3">
+            {[...Array(3)].map((_, index) => (
+              <div key={index} className="h-88 animate-pulse rounded-xl bg-white shadow" />
+            ))}
+          </div>
+        ) : latestError ? (
+          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {latestError}
+          </div>
+        ) : latestListings.length ? (
+          <div className="grid gap-6 md:grid-cols-3">
+            {latestListings.map((property) => (
+              <div
+                key={property.id}
+                className="overflow-hidden rounded-xl bg-white shadow-lg transition hover:shadow-2xl"
+              >
+                <div className="relative">
+                  <ImageWithFallback
+                    src={resolveImage(property.cover_image)}
+                    alt={property.title}
+                    className="h-56 w-full object-cover"
+                  />
+                  {Number(property.image_count || 0) > 1 && (
+                    <span className="absolute left-4 top-4 rounded-full bg-[#1a3a4b]/90 px-3 py-1 text-xs font-bold text-white">
+                      {property.image_count} photos
+                    </span>
+                  )}
+                </div>
+                <div className="p-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#b3925c]">
+                    {property.district_name || property.city || property.location || "Sri Lanka"}
+                  </p>
+                  <h3 className="mt-2 text-lg font-bold text-[#1a3a4b]">
+                    {property.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-gray-600 line-clamp-2">
+                    {property.description}
+                  </p>
+                  <p className="mt-4 text-lg font-black text-[#1a3a4b]">
+                    Rs. {Number(property.price || 0).toLocaleString("en-LK")}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-xl border border-dashed border-slate-300 bg-white px-4 py-10 text-center text-sm text-slate-500">
+            No posted properties yet. Submit one from the Post Ad page and it will appear here.
+          </div>
+        )}
       </section>
 
       {/* ---------------- PROPERTIES ---------------- */}

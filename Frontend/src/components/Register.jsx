@@ -60,12 +60,12 @@ export default function Register({ onSwitchToLogin }) {
   // Google registration not connected in this build
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#123B44] via-[#2A6F86] to-[#163E4A]">
+    <div className="relative min-h-screen overflow-hidden bg-linear-to-br from-[#123B44] via-[#2A6F86] to-[#163E4A]">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.08)_0_14%,transparent_14%_100%),linear-gradient(315deg,rgba(255,255,255,0.06)_0_22%,transparent_22%_100%)]"></div>
-      <div className="pointer-events-none absolute -top-24 right-[-6rem] h-[30rem] w-[30rem] rotate-12 rounded-[4rem] bg-white/12 shadow-[0_0_80px_rgba(255,255,255,0.12)]"></div>
-      <div className="pointer-events-none absolute top-32 right-[8rem] h-56 w-[18rem] rotate-12 rounded-[3rem] bg-white/18"></div>
-      <div className="pointer-events-none absolute bottom-[-8rem] left-[-6rem] h-[20rem] w-[20rem] rounded-full bg-white/10"></div>
-      <div className="pointer-events-none absolute bottom-0 left-0 h-40 w-full bg-gradient-to-r from-white/20 via-white/8 to-transparent"></div>
+      <div className="pointer-events-none absolute -top-24 -right-24 h-120 w-120 rotate-12 rounded-[4rem] bg-white/12 shadow-[0_0_80px_rgba(255,255,255,0.12)]"></div>
+      <div className="pointer-events-none absolute top-32 right-32 h-56 w-[18rem] rotate-12 rounded-[3rem] bg-white/18"></div>
+      <div className="pointer-events-none absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-white/10"></div>
+      <div className="pointer-events-none absolute bottom-0 left-0 h-40 w-full bg-linear-to-r from-white/20 via-white/8 to-transparent"></div>
 
             <div className="relative z-10 flex min-h-screen items-center justify-center px-3 py-2 sm:px-4 sm:py-3">
                   <div className="w-full max-w-sm">
@@ -184,7 +184,7 @@ export default function Register({ onSwitchToLogin }) {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-[#2A6F86] to-[#123B44] py-1.5 font-bold text-white transition hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50"
+                className="w-full bg-linear-to-r from-[#2A6F86] to-[#123B44] py-1.5 font-bold text-white transition hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {loading ? 'REGISTERING...' : 'CLICK TO REGISTER'}
               </button>

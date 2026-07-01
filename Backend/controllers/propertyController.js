@@ -28,6 +28,8 @@ const getProperties = async (req, res) => {
              u.name AS owner_name,
              (SELECT url FROM property_images
               WHERE property_id = p.id LIMIT 1) AS cover_image
+             ,(SELECT COUNT(*) FROM property_images
+              WHERE property_id = p.id) AS image_count
       FROM properties p
       LEFT JOIN districts d ON p.district_id = d.id
       LEFT JOIN users u ON p.user_id = u.id
