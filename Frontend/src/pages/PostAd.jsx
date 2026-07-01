@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { API_BASE_URL } from "../utils/auth";
-import { savePostedAd } from "../utils/postedAds";
 
 const initialForm = {
   title: "",
@@ -14,7 +13,7 @@ const initialForm = {
   bedrooms: "",
   bathrooms: "",
   area: "",
-  image_url: "",
+  images: [],
 };
 
 const typeLabels = {
@@ -32,27 +31,24 @@ function toPositiveNumber(value) {
 }
 
 function buildPayload(form) {
-  const payload = {
-    title: form.title.trim(),
-    description: form.description.trim(),
-    location: form.location.trim(),
-    type: form.type,
-    price: toPositiveNumber(form.price),
-    image_url: form.image_url.trim() || null,
-  };
+  const payload = new FormData();
+
+  payload.append("title", form.title.trim());
+  payload.append("description", form.description.trim());
+  payload.append("location", form.location.trim());
+  payload.append("type", form.type);
+  payload.append("price", String(toPositiveNumber(form.price)));
+  payload.append("area", String(toPositiveNumber(form.area)));
 
   const bedrooms = toPositiveNumber(form.bedrooms);
   const bathrooms = toPositiveNumber(form.bathrooms);
-  const area = toPositiveNumber(form.area);
 
-  payload.bedrooms = bedrooms;
-  payload.bathrooms = bathrooms;
-  payload.area = area;
-
-  if (form.type === "land") {
-    payload.bedrooms = null;
-    payload.bathrooms = null;
+  if (form.type !== "land") {
+    payload.append("bedrooms", bedrooms ? String(bedrooms) : "");
+    payload.append("bathrooms", bathrooms ? String(bathrooms) : "");
   }
+
+  form.images.forEach((file) => payload.append("images", file));
 
   return payload;
 }
@@ -66,6 +62,8 @@ function validateForm(form) {
     errors.price = "Price must be a valid number greater than 0.";
   if (!toPositiveNumber(form.area))
     errors.area = "Area must be a valid number greater than 0.";
+  if (!form.images.length) errors.images = "Please upload at least one image.";
+  if (form.images.length > 10) errors.images = "You can upload up to 10 images.";
 
   if (form.type !== "land") {
     if (!toPositiveNumber(form.bedrooms))
@@ -93,6 +91,12 @@ export function PostAd() {
     setSubmitError("");
   };
 
+  const updateFiles = (files) => {
+    setForm((prev) => ({ ...prev, images: files }));
+    setErrors((prev) => ({ ...prev, images: undefined }));
+    setSubmitError("");
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -110,13 +114,9 @@ export function PostAd() {
       const payload = buildPayload(form);
       const url = `${API_BASE_URL}/properties/public`;
       console.log("Posting ad to:", url);
-      console.log("Payload:", payload);
       const response = await fetch(url, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+        body: payload,
       });
 
       let data = null;
@@ -135,14 +135,6 @@ export function PostAd() {
       setSuccessMessage(
         "Your property ad has been posted successfully. Redirecting to homepage...",
       );
-      savePostedAd({
-        title: payload.title,
-        area: payload.location,
-        price: `Rs. ${Number(payload.price).toLocaleString('en-LK')}`,
-        image: payload.image_url || undefined,
-        tag: 'New',
-        description: payload.description,
-      });
       setForm(initialForm);
 
       setTimeout(() => {
@@ -353,16 +345,37 @@ export function PostAd() {
 
             <div className="sm:col-span-2">
               <label className="mb-2 block text-sm font-bold text-slate-700">
-                Image URL
+                Images
               </label>
               <input
+                type="file"
+                accept="image/jpeg,image/jpg,image/png,image/webp"
+                multiple
                 className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-[#2171B5]"
-                placeholder="https://example.com/property-image.jpg"
-                value={form.image_url}
                 onChange={(event) =>
-                  updateField("image_url", event.target.value)
+                  updateFiles(Array.from(event.target.files || []))
                 }
               />
+              <p className="mt-2 text-xs text-slate-500">
+                Upload 1 to 10 images. Supported formats: JPG, JPEG, PNG, WEBP.
+              </p>
+              {form.images.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {form.images.map((file) => (
+                    <span
+                      key={file.name + file.lastModified}
+                      className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600"
+                    >
+                      {file.name}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {errors.images && (
+                <p className="mt-1 text-xs font-semibold text-red-600">
+                  {errors.images}
+                </p>
+              )}
             </div>
 
             <div className="sm:col-span-2">
@@ -423,7 +436,7 @@ export function PostAd() {
               Set a realistic price to receive more genuine inquiries.
             </li>
             <li className="rounded-xl bg-slate-50 px-4 py-3">
-              Add a good image URL so buyers can trust the listing faster.
+              Upload clear images so buyers can trust the listing faster.
             </li>
             <li className="rounded-xl bg-slate-50 px-4 py-3">
               Include key selling points in the description.

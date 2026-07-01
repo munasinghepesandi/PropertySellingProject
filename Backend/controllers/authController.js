@@ -9,20 +9,25 @@ const generateToken = (id) =>
 const register = async (req, res) => {
   try {
     const { name, email, password, phone, user_type } = req.body;
+    const normalizedEmail = email?.trim().toLowerCase();
     if (!name || !email || !password)
       return res.status(400).json({ message: 'Name, email and password are required' });
 
-    const [exists] = await pool.query('SELECT id FROM users WHERE email = ?', [email]);
+    if (!normalizedEmail) {
+      return res.status(400).json({ message: 'Email is required' });
+    }
+
+    const [exists] = await pool.query('SELECT id FROM users WHERE email = ?', [normalizedEmail]);
     if (exists.length) return res.status(400).json({ message: 'Email already registered' });
 
     const hashed = await bcrypt.hash(password, 12);
     const [result] = await pool.query(
       'INSERT INTO users (name, email, password, phone, role, user_type) VALUES (?, ?, ?, ?, ?, ?)',
-      [name, email, hashed, phone || null, 'user', user_type || null]
+      [name, normalizedEmail, hashed, phone || null, 'user', user_type || null]
     );
 
     res.status(201).json({
-      id: result.insertId, name, email,
+      id: result.insertId, name, email: normalizedEmail,
       role: 'user',
       token: generateToken(result.insertId),
     });
@@ -35,10 +40,18 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const loginIdentifier = email?.trim().toLowerCase();
     if (!email || !password)
       return res.status(400).json({ message: 'Email and password are required' });
 
-    const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+    if (!loginIdentifier) {
+      return res.status(400).json({ message: 'Email and password are required' });
+    }
+
+    const [rows] = await pool.query(
+      'SELECT * FROM users WHERE LOWER(email) = ? OR LOWER(name) = ? LIMIT 1',
+      [loginIdentifier, loginIdentifier]
+    );
     if (!rows.length) return res.status(401).json({ message: 'Invalid credentials' });
 
     const user = rows[0];
