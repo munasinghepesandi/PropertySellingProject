@@ -178,7 +178,7 @@ export default function CompleteHomepage() {
       <Navbar />
 
       {/* HERO */}
-      <section className="relative h-[85vh] overflow-hidden">
+      <section className="relative h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[85vh] overflow-hidden">
         {HERO_SLIDES.map((slide, index) => (
           <div
             key={`hero-slide-${index}`}
@@ -194,12 +194,12 @@ export default function CompleteHomepage() {
             />
           </div>
         ))}
-        <div className="absolute inset-0 flex items-center px-6 md:px-24">
+        <div className="absolute inset-0 flex items-center px-4 sm:px-12 md:px-24">
           <div className="text-white max-w-3xl">
-            <h1 className="text-4xl md:text-6xl font-black leading-tight">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black leading-tight">
               {HERO_SLIDES[currentSlide].title}
             </h1>
-            <p className="mt-4 text-lg text-[#b3925c] font-semibold">
+            <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-[#b3925c] font-semibold">
               {HERO_SLIDES[currentSlide].subtitle}
             </p>
           </div>
@@ -207,7 +207,7 @@ export default function CompleteHomepage() {
       </section>
 
       {/* SEARCH */}
-      <section className="max-w-6xl mx-auto px-4 -mt-28 relative z-20">
+      <section className="max-w-6xl mx-auto px-4 -mt-16 sm:-mt-24 md:-mt-28 relative z-20">
         <form onSubmit={handleSearch} className="bg-[#1a3a4b] rounded-xl p-6 md:p-8 shadow-2xl">
           <div className="flex gap-3 mb-6">
             {["SALES", "RENTALS", "LAND"].map((tab) => (
@@ -262,11 +262,23 @@ export default function CompleteHomepage() {
       </section>
 
       {/* STATS */}
-      <section className="max-w-6xl mx-auto px-4 mt-20 grid grid-cols-2 md:grid-cols-4 text-center">
-        <div><h3 className="text-4xl font-black">$3.8B+</h3><p className="text-xs uppercase">Total Sales</p></div>
-        <div><h3 className="text-4xl font-black">15+</h3><p className="text-xs uppercase">Years Experience</p></div>
-        <div><h3 className="text-4xl font-black">98%</h3><p className="text-xs uppercase">Client Satisfaction</p></div>
-        <div><h3 className="text-4xl font-black">320+</h3><p className="text-xs uppercase">Properties Listed</p></div>
+      <section className="max-w-6xl mx-auto px-4 mt-16 sm:mt-24 grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+        <div className="bg-white rounded-2xl p-6 shadow-md border border-slate-100 hover:shadow-lg transition duration-300">
+          <h3 className="text-3xl sm:text-4xl font-black text-[#1a3a4b]">$3.8B+</h3>
+          <p className="text-xs uppercase tracking-wider text-gray-500 mt-2 font-bold">Total Sales</p>
+        </div>
+        <div className="bg-white rounded-2xl p-6 shadow-md border border-slate-100 hover:shadow-lg transition duration-300">
+          <h3 className="text-3xl sm:text-4xl font-black text-[#1a3a4b]">15+</h3>
+          <p className="text-xs uppercase tracking-wider text-gray-500 mt-2 font-bold">Years Experience</p>
+        </div>
+        <div className="bg-white rounded-2xl p-6 shadow-md border border-slate-100 hover:shadow-lg transition duration-300">
+          <h3 className="text-3xl sm:text-4xl font-black text-[#1a3a4b]">98%</h3>
+          <p className="text-xs uppercase tracking-wider text-gray-500 mt-2 font-bold">Client Satisfaction</p>
+        </div>
+        <div className="bg-white rounded-2xl p-6 shadow-md border border-slate-100 hover:shadow-lg transition duration-300">
+          <h3 className="text-3xl sm:text-4xl font-black text-[#1a3a4b]">320+</h3>
+          <p className="text-xs uppercase tracking-wider text-gray-500 mt-2 font-bold">Properties Listed</p>
+        </div>
       </section>
 
       {/* LATEST PROPERTIES SECTION */}
@@ -286,7 +298,7 @@ export default function CompleteHomepage() {
         </div>
 
         {latestLoading ? (
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {[...Array(3)].map((_, index) => (
               <div key={index} className="h-88 animate-pulse rounded-xl bg-white shadow" />
             ))}
@@ -296,12 +308,13 @@ export default function CompleteHomepage() {
             {latestError}
           </div>
         ) : latestListings.length ? (
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {latestListings.map((property) => {
               const storedImages = parseListingImages(property.images);
               const coverImage = getListingImage(property);
-              const priceText = typeof property.price === "number"
-                ? `Rs. ${Number(property.price).toLocaleString("en-LK")}`
+              const numericPrice = Number(property.price);
+              const priceText = !isNaN(numericPrice) && numericPrice > 0
+                ? `Rs. ${numericPrice.toLocaleString("en-LK")}`
                 : property.price || "Price on request";
 
               return (
@@ -328,7 +341,7 @@ export default function CompleteHomepage() {
                       <p className="text-xs text-gray-500">
                         {property.district_name || property.location || property.city || "Sri Lanka"}
                       </p>
-                      <h3 className="font-bold text-gray-800">{property.title}</h3>
+                      <h3 className="font-bold text-gray-800 line-clamp-2">{property.title}</h3>
                     </div>
                   </div>
                   <div className="px-5 pb-5">
@@ -347,8 +360,8 @@ export default function CompleteHomepage() {
 
       {/* FEATURED PROPERTIES SECTION */}
       <section className="max-w-6xl mx-auto px-4 pb-20">
-        <h2 className="text-3xl font-bold mb-10 text-[#1a3a4b]">Featured Properties</h2>
-        <div className="grid md:grid-cols-3 gap-6">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-10 text-[#1a3a4b]">Featured Properties</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {FEATURED_PROPERTIES.map((p) => (
             <div
               key={`featured-${p.id}`}
@@ -359,7 +372,7 @@ export default function CompleteHomepage() {
                 <img src={p.image} alt={p.title} className="h-56 w-full object-cover" />
                 <div className="p-5">
                   <p className="text-xs text-gray-500">{p.location}</p>
-                  <h3 className="font-bold text-gray-800">{p.title}</h3>
+                  <h3 className="font-bold text-gray-800 line-clamp-2">{p.title}</h3>
                 </div>
               </div>
               <div className="px-5 pb-5">
@@ -371,55 +384,55 @@ export default function CompleteHomepage() {
       </section>
 
       {/* WHY CHOOSE US */}
-      <section className="bg-[#1a3a4b] text-white py-20">
+      <section className="bg-[#1a3a4b] text-white py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-14">
-            <h2 className="text-4xl font-bold">Why Choose Us</h2>
-            <p className="mt-4 text-gray-300">We provide premium real estate services with unmatched professionalism.</p>
+          <div className="text-center mb-10 sm:mb-14">
+            <h2 className="text-2xl sm:text-4xl font-bold">Why Choose Us</h2>
+            <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-300">We provide premium real estate services with unmatched professionalism.</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white/10 rounded-xl p-8 text-center hover:bg-white/20 transition">
-              <div className="text-5xl mb-4">🏡</div>
-              <h3 className="text-2xl font-bold mb-3">Luxury Properties</h3>
-              <p className="text-gray-300">Discover exclusive villas, apartments, and penthouses in the world's most desirable locations.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            <div className="bg-white/10 rounded-xl p-6 sm:p-8 text-center hover:bg-white/20 transition duration-300">
+              <div className="text-4xl sm:text-5xl mb-4">🏡</div>
+              <h3 className="text-xl sm:text-2xl font-bold mb-3">Luxury Properties</h3>
+              <p className="text-sm sm:text-base text-gray-300">Discover exclusive villas, apartments, and penthouses in the world's most desirable locations.</p>
             </div>
-            <div className="bg-white/10 rounded-xl p-8 text-center hover:bg-white/20 transition">
-              <div className="text-5xl mb-4">🤝</div>
-              <h3 className="text-2xl font-bold mb-3">Trusted Agents</h3>
-              <p className="text-gray-300">Our experienced agents guide you through every step of buying, renting, or investing.</p>
+            <div className="bg-white/10 rounded-xl p-6 sm:p-8 text-center hover:bg-white/20 transition duration-300">
+              <div className="text-4xl sm:text-5xl mb-4">🤝</div>
+              <h3 className="text-xl sm:text-2xl font-bold mb-3">Trusted Agents</h3>
+              <p className="text-sm sm:text-base text-gray-300">Our experienced agents guide you through every step of buying, renting, or investing.</p>
             </div>
-            <div className="bg-white/10 rounded-xl p-8 text-center hover:bg-white/20 transition">
-              <div className="text-5xl mb-4">💎</div>
-              <h3 className="text-2xl font-bold mb-3">Best Investment</h3>
-              <p className="text-gray-300">Invest in high-value properties with strong returns and long-term growth potential.</p>
+            <div className="bg-white/10 rounded-xl p-6 sm:p-8 text-center hover:bg-white/20 transition duration-300">
+              <div className="text-4xl sm:text-5xl mb-4">💎</div>
+              <h3 className="text-xl sm:text-2xl font-bold mb-3">Best Investment</h3>
+              <p className="text-sm sm:text-base text-gray-300">Invest in high-value properties with strong returns and long-term growth potential.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="py-20 bg-gray-100">
+      <section className="py-16 sm:py-20 bg-gray-100">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-14">
-            <h2 className="text-4xl font-bold text-[#1a3a4b]">What Our Clients Say</h2>
-            <p className="text-gray-500 mt-3">Trusted by hundreds of satisfied buyers and investors.</p>
+          <div className="text-center mb-10 sm:mb-14">
+            <h2 className="text-2xl sm:text-4xl font-bold text-[#1a3a4b]">What Our Clients Say</h2>
+            <p className="text-sm sm:text-base text-gray-500 mt-3">Trusted by hundreds of satisfied buyers and investors.</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {[
               { name: "Sarah Williams", role: "Property Buyer", img: "https://randomuser.me/api/portraits/women/44.jpg", text: "The team helped us find our dream villa. The process was smooth and completely stress-free." },
               { name: "David Johnson", role: "Investor", img: "https://randomuser.me/api/portraits/men/52.jpg", text: "Professional service with amazing property options. Highly recommend this company." },
               { name: "Emily Brown", role: "Home Owner", img: "https://randomuser.me/api/portraits/women/65.jpg", text: "Excellent customer support and beautiful luxury properties. We found exactly what we wanted." },
             ].map((t) => (
-              <div key={`testimonial-${t.name}`} className="bg-white rounded-xl shadow-lg p-8 flex flex-col justify-between h-full">
+              <div key={`testimonial-${t.name}`} className="bg-white rounded-xl shadow-lg p-6 sm:p-8 flex flex-col justify-between h-full hover:shadow-xl transition duration-300">
                 <div>
-                  <div className="text-yellow-500 text-xl mb-4">★★★★★</div>
-                  <p className="text-gray-600 italic">"{t.text}"</p>
+                  <div className="text-yellow-500 text-lg sm:text-xl mb-4">★★★★★</div>
+                  <p className="text-sm sm:text-base text-gray-600 italic">"{t.text}"</p>
                 </div>
                 <div className="mt-6 flex items-center gap-4">
-                  <img src={t.img} alt="" className="w-14 h-14 rounded-full" />
+                  <img src={t.img} alt="" className="w-12 h-12 sm:w-14 sm:h-14 rounded-full" />
                   <div>
-                    <h4 className="font-bold text-gray-800">{t.name}</h4>
-                    <p className="text-sm text-gray-500">{t.role}</p>
+                    <h4 className="font-bold text-gray-800 text-sm sm:text-base">{t.name}</h4>
+                    <p className="text-xs sm:text-sm text-gray-500">{t.role}</p>
                   </div>
                 </div>
               </div>
@@ -430,18 +443,18 @@ export default function CompleteHomepage() {
 
       {/* CTA */}
       <section
-        className="relative py-28 bg-cover bg-center"
+        className="relative py-20 sm:py-28 bg-cover bg-center"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=1600')" }}
       >
         <div className="absolute inset-0 bg-[#1a3a4b]/80"></div>
         <div className="relative max-w-5xl mx-auto px-4 text-center text-white">
-          <h2 className="text-5xl font-bold">Ready to Find Your Dream Home?</h2>
-          <p className="mt-6 text-lg text-gray-200">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">Ready to Find Your Dream Home?</h2>
+          <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-gray-200 max-w-2xl mx-auto">
             Browse hundreds of luxury properties and connect with experienced real estate professionals today.
           </p>
           <button
             onClick={() => navigate("/properties")}
-            className="mt-10 bg-[#b3925c] hover:bg-[#9c7b49] px-10 py-4 rounded-lg font-semibold text-lg transition text-white"
+            className="mt-8 sm:mt-10 bg-[#b3925c] hover:bg-[#9c7b49] px-6 py-3 sm:px-10 sm:py-4 rounded-lg font-semibold text-sm sm:text-lg transition text-white duration-200"
           >
             Explore Properties
           </button>
