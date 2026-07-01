@@ -55,6 +55,7 @@ async function ensureDistrictsTable() {
         bathrooms INT DEFAULT NULL,
         land_area VARCHAR(80) DEFAULT NULL,
         floor_area VARCHAR(80) DEFAULT NULL,
+          images LONGTEXT DEFAULT NULL,
         agent_name VARCHAR(150) DEFAULT NULL,
         agent_phone VARCHAR(50) DEFAULT NULL,
         assigned_agent_id INT DEFAULT NULL,
@@ -91,6 +92,13 @@ async function ensureDistrictsTable() {
         throw error;
       }
     }
+      try {
+        await bootstrap.query(`ALTER TABLE \`${dbName}\`.\`properties\` ADD COLUMN images LONGTEXT DEFAULT NULL AFTER floor_area`);
+      } catch (error) {
+        if (error?.errno !== 1060) {
+          throw error;
+        }
+      }
     await bootstrap.query(`
       CREATE TABLE IF NOT EXISTS \`${dbName}\`.\`admins\` (
         id INT AUTO_INCREMENT PRIMARY KEY,

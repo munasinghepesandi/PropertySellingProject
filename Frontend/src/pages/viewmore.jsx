@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import ImageWithFallback from "../components/ImageWithFallback";
+import { API_BASE_URL } from "../utils/auth";
 
 import {
   ArrowLeft,
@@ -10,26 +13,98 @@ import {
   Building2,
   LayoutGrid,
   Star,
-  Dumbbell,
-  UtensilsCrossed,
-  Waves,
-  Sparkles,
+ 
   Banknote,
   Percent,
   CalendarDays,
 } from "lucide-react";
 
 export default function PropertyDetails() {
+  const [searchParams] = useSearchParams();
+  const propertyId = searchParams.get("id");
+  const [property, setProperty] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [selectedImage, setSelectedImage] = useState(0);
   const [propertyValue, setPropertyValue] = useState(129750000);
   const [downPayment, setDownPayment] = useState(20000000);
   const [interestRate, setInterestRate] = useState(11.5);
   const [loanPeriod, setLoanPeriod] = useState(20);
 
-  const images = [
-    "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1400&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1200&auto=format&fit=crop",
-  ];
+  const apiOrigin = useMemo(() => API_BASE_URL.replace(/\/api\/?$/, ""), []);
+
+  const resolveImage = (imagePath) => {
+    if (!imagePath) {
+      return "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1400&auto=format&fit=crop";
+    }
+
+    if (imagePath.startsWith("http")) {
+      return imagePath;
+    }
+
+    return `${apiOrigin}${imagePath}`;
+  };
+
+  const parseImages = (value) => {
+    if (!value) return [];
+    if (Array.isArray(value)) return value;
+
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed : [value];
+    } catch {
+      return [value];
+    }
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchProperty = async () => {
+      if (!propertyId) {
+        if (isMounted) {
+          setLoading(false);
+          setError("No property selected.");
+        }
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError("");
+
+        const response = await fetch(`${API_BASE_URL}/properties/${propertyId}`);
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data?.message || "Unable to load property details");
+        }
+
+        if (!isMounted) return;
+
+        setProperty(data);
+        setSelectedImage(0);
+      } catch (err) {
+        if (!isMounted) return;
+        setError(err.message || "Unable to load property details");
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchProperty();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [propertyId]);
+
+  const images = useMemo(() => {
+    if (!property) return [];
+    return parseImages(property.images);
+  }, [property]);
 
   const sections = [
     "Overview",
@@ -88,28 +163,60 @@ export default function PropertyDetails() {
   const format = (num) =>
     num?.toLocaleString("en-LK", { maximumFractionDigits: 0 });
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#f4f7fb]">
+        <Navbar />
+        <div className="mx-auto max-w-6xl px-4 py-16 text-center text-slate-600">
+          Loading property details...
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[#f4f7fb]">
+        <Navbar />
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {error}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const title = property?.title || "Property Details";
+  const location = property?.district_name || property?.city || property?.address || "—";
+  const priceText = property?.price ? `LKR ${format(property.price)}` : "Price on request";
+  const mainImage = images[selectedImage] || property?.cover_image;
+
   return (
     <div className="min-h-screen bg-[#f4f7fb]">
       <Navbar />
 
-      <div className="max-w-[1500px] mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="max-w-375 mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
         {/* MAIN CONTENT */}
         <main className="lg:col-span-8 space-y-6">
 
           {/* IMAGES */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-            <img
-              src={images[0]}
-              className="lg:col-span-2 h-[320px] md:h-[380px] w-full object-cover rounded-2xl shadow-md"
+            <ImageWithFallback
+              src={resolveImage(mainImage)}
+              alt={title}
+              className="lg:col-span-2 h-80 md:h-95 w-full object-cover rounded-2xl shadow-md"
             />
 
             <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
-              {images.slice(1).map((img, i) => (
-                <img
+              {images.slice(0, 3).map((img, i) => (
+                <ImageWithFallback
                   key={i}
-                  src={img}
-                  className="h-[150px] md:h-[180px] w-full object-cover rounded-2xl shadow-md"
+                  src={resolveImage(img)}
+                  alt={`${title} ${i + 1}`}
+                  className="h-37.5 md:h-45 w-full object-cover rounded-2xl shadow-md"
+                  onClick={() => setSelectedImage(i)}
                 />
               ))}
             </div>
@@ -117,7 +224,7 @@ export default function PropertyDetails() {
 
           {/* OVERVIEW */}
           <div className="bg-white rounded-2xl shadow-md p-6">
-            <h2 className="text-2xl font-bold text-[#08306B] mb-4">
+            <h2 className="text-2xl font-bold text-[#01343D] mb-4">
               Overview
             </h2>
 
@@ -125,31 +232,31 @@ export default function PropertyDetails() {
               <div>
                 <MapPin className="mx-auto text-[#2171B5]" />
                 <p className="text-sm text-gray-500">Location</p>
-                <h3 className="font-bold">Colombo 07</h3>
+                <h3 className="font-bold">{location}</h3>
               </div>
 
               <div>
                 <Building2 className="mx-auto text-[#2171B5]" />
                 <p className="text-sm text-gray-500">Units</p>
-                <h3 className="font-bold">228</h3>
+                <h3 className="font-bold">{property?.image_count || images.length || 1}</h3>
               </div>
 
               <div>
                 <Maximize className="mx-auto text-[#2171B5]" />
                 <p className="text-sm text-gray-500">Size</p>
-                <h3 className="font-bold">1038-2420 sqft</h3>
+                <h3 className="font-bold">{property?.floor_area || property?.land_area || property?.area || "—"}</h3>
               </div>
 
               <div>
                 <LayoutGrid className="mx-auto text-[#2171B5]" />
                 <p className="text-sm text-gray-500">Completion</p>
-                <h3 className="font-bold">2028</h3>
+                <h3 className="font-bold">{property?.status || "active"}</h3>
               </div>
             </div>
           </div>
 
           {/* HIGHLIGHTS */}
-          <div className="bg-[#101828] text-white rounded-2xl p-6">
+          <div className="bg-[#01343D] text-white rounded-2xl p-6">
             <h2 className="text-2xl font-bold mb-4">Highlights</h2>
             <div className="space-y-3">
               {highlights.map((h, i) => (
@@ -167,8 +274,7 @@ export default function PropertyDetails() {
               About
             </h2>
             <p className="text-gray-600 leading-8">
-              The Elizabeth Colombo 07 represents ultra-luxury living in one of Sri Lanka’s most prestigious addresses,
-              blending heritage, privacy, and modern architectural excellence.
+              {property?.description || "Property description is not available yet."}
             </p>
           </div>
 
@@ -261,7 +367,7 @@ export default function PropertyDetails() {
           </div>
 
           {/* CTA */}
-          <div className="bg-gradient-to-r from-[#2171B5] to-[#08306B] text-white p-6 rounded-2xl">
+          <div className="bg-linear-to-r from-[#0f7a8d] to-[#01343D] text-white p-6 rounded-2xl">
             <h2 className="text-2xl font-bold">Interested in this property?</h2>
             <p className="mt-2 text-white/80">Contact us for viewing or details.</p>
             <div className="flex gap-3 mt-4">
@@ -277,8 +383,8 @@ export default function PropertyDetails() {
           <div className="bg-white rounded-2xl shadow-md p-5 space-y-4">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h2 className="text-xl font-bold text-[#08306B]">The Elizabeth</h2>
-                <p className="text-gray-500 flex items-center gap-2 mt-1"><MapPin size={14} /> Kandy (example)</p>
+                <h2 className="text-xl font-bold text-[#08306B]">{title}</h2>
+                  <p className="text-gray-500 flex items-center gap-2 mt-1"><MapPin size={14} /> {location}</p>
               </div>
               <div className="flex gap-2">
                 <button className="rounded-md border px-3 py-2 text-sm">Save</button>
@@ -287,7 +393,7 @@ export default function PropertyDetails() {
             </div>
 
             <div>
-              <div className="text-2xl font-bold text-[#2171B5]">LKR 129.75 M</div>
+              <div className="text-2xl font-bold text-[#2171B5]">{priceText}</div>
               <div className="mt-3 grid grid-cols-3 gap-2 text-center">
                 <div className="bg-[#f4f7fb] p-2 rounded-lg"><BedDouble size={14} className="mx-auto text-[#2171B5]" /><p className="text-xs">4</p></div>
                 <div className="bg-[#f4f7fb] p-2 rounded-lg"><Bath size={14} className="mx-auto text-[#2171B5]" /><p className="text-xs">3</p></div>
@@ -296,7 +402,7 @@ export default function PropertyDetails() {
             </div>
 
             <div className="pt-2">
-              <button className="w-full rounded-md bg-[#2171B5] px-4 py-3 text-white font-semibold">Contact Agent</button>
+              <button className="w-full rounded-md bg-[#01343d] px-4 py-3 text-white font-semibold">Contact Agent</button>
               <button className="w-full mt-2 rounded-md border px-4 py-3">Request Call</button>
             </div>
 
@@ -305,9 +411,9 @@ export default function PropertyDetails() {
               <div className="mt-3 flex items-center gap-3">
                 <div className="h-12 w-12 rounded-full bg-slate-200" />
                 <div>
-                  <div className="font-semibold">John Doe</div>
-                  <div className="text-xs text-gray-500">ABC Realtors</div>
-                  <div className="mt-2 text-sm font-medium text-[#08306B]">077 123 4567</div>
+                  <div className="font-semibold">{property?.owner_name || "Property Owner"}</div>
+                  <div className="text-xs text-gray-500">{property?.district_name || property?.city || "Listing Owner"}</div>
+                  <div className="mt-2 text-sm font-medium text-[#08306B]">{property?.owner_phone || property?.phone || "—"}</div>
                 </div>
               </div>
             </div>

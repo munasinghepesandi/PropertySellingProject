@@ -25,6 +25,37 @@ const upload = multer({
   },
 });
 
+function normalizeImagesFromFiles(files = [], fallbackImage = null) {
+  const fileImages = files.map((file) => `/uploads/${file.filename}`);
+
+  if (fileImages.length) {
+    return fileImages;
+  }
+
+  if (fallbackImage) {
+    return [fallbackImage];
+  }
+
+  return [];
+}
+
+function parseStoredImages(value) {
+  if (!value) {
+    return [];
+  }
+
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [value];
+  }
+}
+
 // ════════════════════════════════════════
 // DASHBOARD   GET /admin
 // ════════════════════════════════════════
@@ -122,8 +153,12 @@ router.get('/properties', async (req, res) => {
 
     const [properties] = await db.query(
       `SELECT p.id, p.title, p.type, p.listing_type, p.price, p.status,
-              p.city, p.address, p.bedrooms, p.bathrooms, p.created_at,
-              d.name AS district
+              p.city, p.address, p.bedrooms, p.bathrooms, p.created_at, p.images,
+              d.name AS district,
+              COALESCE(
+                JSON_UNQUOTE(JSON_EXTRACT(p.images, '$[0]')),
+                (SELECT url FROM property_images WHERE property_id = p.id LIMIT 1)
+              ) AS cover_image
        FROM   properties p
        LEFT JOIN districts d ON d.id = p.district_id
        WHERE  ${where}
@@ -145,6 +180,8 @@ router.get('/properties', async (req, res) => {
       city:        p.city,
       address:     p.address,
       district:    p.district,
+      coverImage:  parseStoredImages(p.images)[0] || null,
+      imageCount:  parseStoredImages(p.images).length,
       createdAt:   p.created_at ? new Date(p.created_at).toLocaleDateString() : '—',
     }));
 
@@ -183,6 +220,7 @@ router.post('/properties/add', upload.array('images', 20), async (req, res) => {
       land_area, status, description, is_featured,
       allow_inquiries, agent_name, agent_phone, assigned_agent_id
     } = req.body;
+    const storedImages = normalizeImagesFromFiles(req.files, req.body.image_url || null);
 
     // Validation
     if (!title || !type || !listing_type || !price || !district_id || !city) {
@@ -199,8 +237,8 @@ router.post('/properties/add', upload.array('images', 20), async (req, res) => {
     const [result] = await db.query(
       `INSERT INTO properties
          (title, type, listing_type, district_id, city, address, price, price_type,
-          bedrooms, bathrooms, floor_area, land_area,
-          status, description, is_featured, allow_inquiries,
+         bedrooms, bathrooms, floor_area, land_area, images,
+         status, description, is_featured, allow_inquiries,
           agent_name, agent_phone, assigned_agent_id, created_at)
        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())`,
       [
@@ -216,6 +254,7 @@ router.post('/properties/add', upload.array('images', 20), async (req, res) => {
         bathrooms     || null,
         floor_area    || null,
         land_area     || null,
+        storedImages.length ? JSON.stringify(storedImages) : null,
         status        || 'active',
         description   || null,
         is_featured   ? 1 : 0,
@@ -227,8 +266,8 @@ router.post('/properties/add', upload.array('images', 20), async (req, res) => {
     );
 
     // Save uploaded images
-    if (req.files && req.files.length) {
-      const imageValues = req.files.map(f => [result.insertId, `/uploads/${f.filename}`]);
+    if (storedImages.length) {
+      const imageValues = storedImages.map((imagePath) => [result.insertId, imagePath]);
       await db.query('INSERT INTO property_images (property_id, url) VALUES ?', [imageValues]);
     }
 
@@ -255,7 +294,7 @@ router.get('/properties/:id/edit', async (req, res) => {
     const [agents]    = await db.query("SELECT id, name FROM agents WHERE status='active' ORDER BY name").catch(()=>[[]]);
     res.render('admin/add-property', {
       title:'Edit Property', page:'properties',
-      property, districts, agents:agents||[], error:null,
+      property: { ...property, images: parseStoredImages(property.images) }, districts, agents:agents||[], error:null,
     });
   } catch (err) {
     res.status(500).send('Error: ' + err.message);
@@ -271,12 +310,13 @@ router.post('/properties/:id/edit', upload.array('images', 20), async (req, res)
       land_area, status, description, is_featured,
       allow_inquiries, agent_name, agent_phone, assigned_agent_id
     } = req.body;
+    const storedImages = normalizeImagesFromFiles(req.files, req.body.image_url || null);
 
     await db.query(
       `UPDATE properties SET
          title=?, type=?, listing_type=?, district_id=?, city=?, address=?,
          price=?, price_type=?, bedrooms=?, bathrooms=?, floor_area=?,
-         land_area=?, status=?, description=?, is_featured=?,
+         land_area=?, images=?, status=?, description=?, is_featured=?,
          allow_inquiries=?, agent_name=?, agent_phone=?, assigned_agent_id=?
        WHERE id=?`,
       [
@@ -292,6 +332,7 @@ router.post('/properties/:id/edit', upload.array('images', 20), async (req, res)
         bathrooms     || null,
         floor_area    || null,
         land_area     || null,
+        storedImages.length ? JSON.stringify(storedImages) : null,
         status        || 'active',
         description   || null,
         is_featured   ? 1 : 0,
@@ -304,8 +345,8 @@ router.post('/properties/:id/edit', upload.array('images', 20), async (req, res)
     );
 
     // Add new images if uploaded
-    if (req.files && req.files.length) {
-      const imageValues = req.files.map(f => [req.params.id, `/uploads/${f.filename}`]);
+    if (storedImages.length) {
+      const imageValues = storedImages.map((imagePath) => [req.params.id, imagePath]);
       await db.query('INSERT INTO property_images (property_id, url) VALUES ?', [imageValues]);
     }
 

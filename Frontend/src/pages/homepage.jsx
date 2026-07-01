@@ -1,53 +1,38 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";    
+import { useNavigate, Link } from "react-router-dom";    
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
+import { API_BASE_URL } from "../utils/auth";
+
+// custom image fallback structure helper
+function ImageWithFallback({ src, alt, className }) {
+  return (
+    <img 
+      src={src} 
+      alt={alt} 
+      className={className} 
+      onError={(e) => {
+        e.target.src = "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1200&auto=format&fit=crop";
+      }}
+    />
+  );
+}
 
 const HERO_SLIDES = [
   {
-    image:
-      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1600&auto=format&fit=crop",
     title: "Find Your Dream Luxury Home",
     subtitle: "Exclusive Properties Await You",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop",
     title: "Modern Living Spaces",
     subtitle: "Experience Comfort & Style",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1600&auto=format&fit=crop",
     title: "Invest in Premium Real Estate",
     subtitle: "High Value Properties Worldwide",
-  },
-];
-
-const LATEST_PROPERTIES = [
-  {
-    id: 101,
-    title: "Minimalist Concrete Estate",
-    location: "Colombo, Sri Lanka",
-    price: "Rs. 185,000,000",
-    image:
-      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?q=80&w=600&auto=format&fit=crop",
-  },
-  {
-    id: 102,
-    title: "Serene Lakeside Manor",
-    location: "Kandy, Sri Lanka",
-    price: "Rs. 95,000,000",
-    image:
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600&auto=format&fit=crop",
-  },
-  {
-    id: 103,
-    title: "Tropical Coastal Pavilion",
-    location: "Galle, Sri Lanka",
-    price: "Rs. 240,000,000",
-    image:
-      "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=600&auto=format&fit=crop",
   },
 ];
 
@@ -60,8 +45,7 @@ const FEATURED_PROPERTIES = [
     beds: 6,
     baths: 7,
     sqft: "6,100",
-    image:
-      "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=600&auto=format&fit=crop",
   },
   {
     id: 2,
@@ -71,8 +55,7 @@ const FEATURED_PROPERTIES = [
     beds: 4,
     baths: 5,
     sqft: "4,500",
-    image:
-      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=600&auto=format&fit=crop",
   },
   {
     id: 3,
@@ -82,19 +65,20 @@ const FEATURED_PROPERTIES = [
     beds: 5,
     baths: 5,
     sqft: "3,800",
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop",
   },
 ];
+
+const LAST_POSTED_LISTING_KEY = "lanka_property_last_posted_listing"; 
+
 
 export default function CompleteHomepage() {
   const [activeTab, setActiveTab] = useState("SALES");
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [filters, setFilters] = useState({
-    location: "",
-    type: "",
-    maxPrice: "",
-  });
+  const [filters, setFilters] = useState({ location: "", type: "", maxPrice: "" });
+  const [latestListings, setLatestListings] = useState([]);
+  const [latestLoading, setLatestLoading] = useState(false);
+  const [latestError, setLatestError] = useState("");
 
   const navigate = useNavigate();
 
@@ -104,6 +88,80 @@ export default function CompleteHomepage() {
     }, 4000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchLatestListings = async () => {
+      try {
+        setLatestLoading(true);
+        setLatestError("");
+
+        const response = await fetch(`${API_BASE_URL}/properties?status=active&limit=6`);
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data?.message || "Failed to load listings");
+        }
+
+        if (!isMounted) return;
+
+        const apiListings = Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : [];
+        let cachedListing = null;
+
+        try {
+          const stored = window.localStorage.getItem(LAST_POSTED_LISTING_KEY);
+          cachedListing = stored ? JSON.parse(stored) : null;
+        } catch {
+          cachedListing = null;
+        }
+
+        const mergedListings = cachedListing?.id
+          ? [cachedListing, ...apiListings.filter((item) => item.id !== cachedListing.id)]
+          : apiListings;
+
+        setLatestListings(mergedListings);
+      } catch (error) {
+        if (!isMounted) return;
+        setLatestError(error.message || "Failed to load listings");
+      } {
+        if (isMounted) {
+          setLatestLoading(false);
+        }
+      }
+    };
+
+    fetchLatestListings();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const apiOrigin = API_BASE_URL.replace(/\/api\/?$/, "");
+
+  const parseListingImages = (value) => {
+    if (!value) return [];
+    if (Array.isArray(value)) return value;
+    if (typeof value !== "string") return [];
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [value];
+    }
+  };
+
+  const resolveImage = (imagePath) => {
+    if (!imagePath) return "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1200&auto=format&fit=crop";
+    if (imagePath.startsWith("http")) return imagePath;
+    return `${apiOrigin}${imagePath}`;
+  };
+
+  const getListingImage = (property) => {
+    const storedImages = parseListingImages(property?.images);
+    return property?.cover_image || storedImages[0] || property?.image || null;
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -117,7 +175,6 @@ export default function CompleteHomepage() {
 
   return (
     <div className="w-full min-h-screen bg-[#f8f9fa] text-gray-800">
-
       <Navbar />
 
       {/* HERO */}
@@ -196,7 +253,7 @@ export default function CompleteHomepage() {
             
             <button 
               type="submit" 
-              className="bg-[#b3925c] hover:bg-[#9c7b49] text-white !text-white font-bold p-3 rounded transition-colors duration-200"
+              className="bg-[#b3925c] hover:bg-[#9c7b49] text-white font-bold p-3 rounded transition-colors duration-200"
             >
               Search
             </button>
@@ -212,33 +269,84 @@ export default function CompleteHomepage() {
         <div><h3 className="text-4xl font-black">320+</h3><p className="text-xs uppercase">Properties Listed</p></div>
       </section>
 
-      {/* LATEST PROPERTIES SECTION (Styled identical to Featured) */}
-      <section className="max-w-6xl mx-auto px-4 pt-20 pb-10">
-        <h2 className="text-3xl font-bold mb-10 text-[#1a3a4b]">Latest Properties</h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          {LATEST_PROPERTIES.map((p) => (
-            <div
-              key={`latest-${p.id}`}
-              onClick={() => navigate(`/properties/${p.id}`)}
-              className="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer flex flex-col justify-between h-full"
-            >
-              <div>
-                <img src={p.image} alt={p.title} className="h-56 w-full object-cover" />
-                <div className="p-5">
-                  <p className="text-xs text-gray-500">{p.location}</p>
-                  <h3 className="font-bold text-gray-800">{p.title}</h3>
-                </div>
-              </div>
-              <div className="px-5 pb-5">
-                <p className="text-lg font-black text-[#1a3a4b]">{p.price}</p>
-              </div>
-            </div>
-          ))}
+      {/* LATEST PROPERTIES SECTION */}
+      <section className="max-w-6xl mx-auto px-4 py-20">
+        <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#b3925c]">
+              Fresh from Post Ad
+            </p>
+            <h2 className="mt-2 text-3xl font-bold text-[#1a3a4b]">
+              Latest Posted Properties
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm text-gray-600">
+              These listings are pulled straight from the backend, including the cover image uploaded when the ad was published.
+            </p>
+          </div>
         </div>
+
+        {latestLoading ? (
+          <div className="grid gap-6 md:grid-cols-3">
+            {[...Array(3)].map((_, index) => (
+              <div key={index} className="h-88 animate-pulse rounded-xl bg-white shadow" />
+            ))}
+          </div>
+        ) : latestError ? (
+          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {latestError}
+          </div>
+        ) : latestListings.length ? (
+          <div className="grid gap-6 md:grid-cols-3">
+            {latestListings.map((property) => {
+              const storedImages = parseListingImages(property.images);
+              const coverImage = getListingImage(property);
+              const priceText = typeof property.price === "number"
+                ? `Rs. ${Number(property.price).toLocaleString("en-LK")}`
+                : property.price || "Price on request";
+
+              return (
+                <Link
+                  key={property.id}
+                  to={`/viewmore?id=${property.id}`}
+                  className="block overflow-hidden rounded-xl bg-white shadow-lg transition hover:shadow-2xl flex flex-col justify-between h-full"
+                >
+                  <div>
+                    <div className="relative">
+                      <ImageWithFallback
+                        src={resolveImage(coverImage)}
+                        alt={property.title}
+                        className="h-56 w-full object-cover"
+                      />
+                      {Math.max(storedImages.length, Number(property.image_count || 0)) > 1 && (
+                        <span className="absolute left-4 top-4 rounded-full bg-[#1a3a4b]/90 px-3 py-1 text-xs font-bold text-white">
+                          {Math.max(storedImages.length, Number(property.image_count || 0))} photos
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="p-5">
+                      <p className="text-xs text-gray-500">
+                        {property.district_name || property.location || property.city || "Sri Lanka"}
+                      </p>
+                      <h3 className="font-bold text-gray-800">{property.title}</h3>
+                    </div>
+                  </div>
+                  <div className="px-5 pb-5">
+                    <p className="text-lg font-black text-[#1a3a4b]">{priceText}</p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="rounded-xl border border-dashed border-slate-300 bg-white px-4 py-10 text-center text-sm text-slate-500">
+            No posted properties yet. Submit one from the Post Ad page and it will appear here.
+          </div>
+        )}
       </section>
 
-      {/* FEATURED PROPERTIES */}
-      <section className="max-w-6xl mx-auto px-4 pt-10 pb-20">
+      {/* FEATURED PROPERTIES SECTION */}
+      <section className="max-w-6xl mx-auto px-4 pb-20">
         <h2 className="text-3xl font-bold mb-10 text-[#1a3a4b]">Featured Properties</h2>
         <div className="grid md:grid-cols-3 gap-6">
           {FEATURED_PROPERTIES.map((p) => (
@@ -333,7 +441,7 @@ export default function CompleteHomepage() {
           </p>
           <button
             onClick={() => navigate("/properties")}
-            className="mt-10 bg-[#b3925c] hover:bg-[#9c7b49] px-10 py-4 rounded-lg font-semibold text-lg transition text-white !text-white"
+            className="mt-10 bg-[#b3925c] hover:bg-[#9c7b49] px-10 py-4 rounded-lg font-semibold text-lg transition text-white"
           >
             Explore Properties
           </button>

@@ -1,5 +1,36 @@
 const pool = require('../config/db');
 
+function normalizeImagesFromFiles(files = [], fallbackImage = null) {
+  const fileImages = files.map((file) => `/uploads/${file.filename}`);
+
+  if (fileImages.length) {
+    return fileImages;
+  }
+
+  if (fallbackImage) {
+    return [fallbackImage];
+  }
+
+  return [];
+}
+
+function parseStoredImages(value) {
+  if (!value) {
+    return [];
+  }
+
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [value];
+  }
+}
+
 // ── GET /api/properties ──────────────────────────────────────
 const getProperties = async (req, res) => {
   try {
@@ -26,8 +57,11 @@ const getProperties = async (req, res) => {
     const sql = `
       SELECT p.*, d.name AS district_name,
              u.name AS owner_name,
-             (SELECT url FROM property_images
-              WHERE property_id = p.id LIMIT 1) AS cover_image
+             COALESCE(
+               JSON_UNQUOTE(JSON_EXTRACT(p.images, '$[0]')),
+               (SELECT url FROM property_images
+                WHERE property_id = p.id LIMIT 1)
+             ) AS cover_image
              ,(SELECT COUNT(*) FROM property_images
               WHERE property_id = p.id) AS image_count
       FROM properties p
@@ -75,12 +109,18 @@ const getPropertyById = async (req, res) => {
     if (!rows.length)
       return res.status(404).json({ message: 'Property not found' });
 
-    const [images] = await pool.query(
+    const storedImages = parseStoredImages(rows[0].images);
+
+    const [imageRows] = await pool.query(
       'SELECT * FROM property_images WHERE property_id = ?',
       [req.params.id]
     );
 
-    res.json({ ...rows[0], images });
+    res.json({
+      ...rows[0],
+      images: storedImages.length ? storedImages : imageRows.map((image) => image.url),
+      image_records: imageRows,
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -96,6 +136,7 @@ const createProperty = async (req, res) => {
       agent_name, agent_phone, is_featured, allow_inquiries,
       status
     } = req.body;
+    const storedImages = normalizeImagesFromFiles(req.files, req.body.image_url || null);
 
     if (!title || !type || !price || !district_id)
       return res.status(400).json({ message: 'title, type, price, district_id are required' });
@@ -104,9 +145,9 @@ const createProperty = async (req, res) => {
       `INSERT INTO properties
         (title, description, type, listing_type, price, price_type,
          district_id, city, address, bedrooms, bathrooms,
-         land_area, floor_area, agent_name, agent_phone,
+         land_area, floor_area, images, agent_name, agent_phone,
          is_featured, allow_inquiries, user_id, status)
-       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
         title,
         description || null,
@@ -121,6 +162,7 @@ const createProperty = async (req, res) => {
         bathrooms || null,
         land_area || null,
         floor_area || null,
+        storedImages.length ? JSON.stringify(storedImages) : null,
         agent_name || null,
         agent_phone || null,
         is_featured ? 1 : 0,
@@ -131,15 +173,23 @@ const createProperty = async (req, res) => {
     );
 
     // Save uploaded images
-    if (req.files && req.files.length) {
-      const imageValues = req.files.map(f => [result.insertId, `/uploads/${f.filename}`]);
+    if (storedImages.length) {
+      const imageValues = storedImages.map((imagePath) => [result.insertId, imagePath]);
       await pool.query(
         'INSERT INTO property_images (property_id, url) VALUES ?',
         [imageValues]
       );
     }
 
-    res.status(201).json({ id: result.insertId, message: 'Property created successfully' });
+    res.status(201).json({
+      id: result.insertId,
+      message: 'Property created successfully',
+      images: storedImages,
+      cover_image: storedImages[0] || null,
+      title,
+      location: req.body.location || req.body.district || null,
+      price,
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -155,6 +205,7 @@ const createProperty = async (req, res) => {
           agent_name, agent_phone, is_featured, allow_inquiries,
           status
         } = req.body;
+        const storedImages = normalizeImagesFromFiles(req.files, req.body.image_url || null);
 
         if (!title || !type || !price)
           return res.status(400).json({ message: 'title, type and price are required' });
@@ -176,9 +227,9 @@ const createProperty = async (req, res) => {
           `INSERT INTO properties
             (title, description, type, listing_type, price, price_type,
              district_id, city, address, bedrooms, bathrooms,
-             land_area, floor_area, agent_name, agent_phone,
+             land_area, floor_area, images, agent_name, agent_phone,
              is_featured, allow_inquiries, user_id, status)
-           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
           [
             title,
             description || null,
@@ -194,6 +245,7 @@ const createProperty = async (req, res) => {
             // map provided area to floor_area if present
             land_area || null,
             floor_area || req.body.area || null,
+            storedImages.length ? JSON.stringify(storedImages) : null,
             agent_name || null,
             agent_phone || null,
             is_featured ? 1 : 0,
@@ -204,15 +256,23 @@ const createProperty = async (req, res) => {
         );
 
         // Save uploaded images
-        if (req.files && req.files.length) {
-          const imageValues = req.files.map(f => [result.insertId, `/uploads/${f.filename}`]);
+        if (storedImages.length) {
+          const imageValues = storedImages.map((imagePath) => [result.insertId, imagePath]);
           await pool.query(
             'INSERT INTO property_images (property_id, url) VALUES ?',
             [imageValues]
           );
         }
 
-        res.status(201).json({ id: result.insertId, message: 'Property created successfully' });
+        res.status(201).json({
+          id: result.insertId,
+          message: 'Property created successfully',
+          images: storedImages,
+          cover_image: storedImages[0] || null,
+          title,
+          location: req.body.location || districtName || null,
+          price,
+        });
       } catch (err) {
         res.status(500).json({ message: err.message });
       }

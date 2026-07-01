@@ -41,6 +41,11 @@
   .ap-img-sub{font-size:11px;color:#6BAED6;margin-top:3px;}
   .ap-img-preview{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
   .ap-img-thumb{width:70px;height:70px;border-radius:8px;object-fit:cover;border:1.5px solid #DEEBF7;}
+  .ap-img-thumb-wrap{position:relative;}
+  .ap-img-thumb-remove{
+    position:absolute;top:-6px;right:-6px;width:20px;height:20px;border:none;border-radius:999px;
+    background:#DC2626;color:#fff;font-size:12px;line-height:20px;cursor:pointer;
+  }
   .ap-btn-publish{width:100%;padding:12px;background:#083068;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;}
   .ap-btn-publish:hover{background:#08519C;}
   .ap-btn-draft{width:100%;padding:10px;background:#fff;color:#083068;border:1.5px solid #DEEBF7;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px;transition:.15s;}
@@ -230,11 +235,20 @@
       <div class="ap-img-drop" onclick="document.getElementById('img-upload').click()">
         <div class="ap-img-icon">&#128247;</div>
         <div class="ap-img-text">Click to upload or drag & drop</div>
-        <div class="ap-img-sub">PNG, JPG up to 10MB each &middot; Max 20 images</div>
+        <div class="ap-img-sub">PNG, JPG, JPEG, WEBP up to 10MB each &middot; Max 20 images</div>
         <input id="img-upload" type="file" name="images" multiple accept="image/*"
           style="display:none;" onchange="previewImages(this)"/>
       </div>
       <div class="ap-img-preview" id="img-preview"></div>
+      <% if(property && property.images && property.images.length) { %>
+        <div class="ap-img-preview" style="margin-top:16px;">
+          <% property.images.forEach(function(img){ %>
+            <div class="ap-img-thumb-wrap">
+              <img class="ap-img-thumb" src="<%= img %>" alt="Property image" />
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
     </div>
 
     <!-- Listing Settings -->

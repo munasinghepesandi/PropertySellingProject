@@ -61,6 +61,16 @@
     font-size: 11px; font-weight: 700;
     letter-spacing: .8px; text-transform: uppercase; color: #4a6380;
   }
+  .prop-thumb-cell { width: 84px; }
+  .prop-thumb {
+    width: 62px; height: 44px; border-radius: 8px; object-fit: cover;
+    border: 1px solid #DEEBF7; background: #F8FBFF;
+  }
+  .prop-thumb-placeholder {
+    width: 62px; height: 44px; border-radius: 8px; border: 1px dashed #DEEBF7;
+    background: #F8FBFF; color: #6BAED6; display:flex; align-items:center; justify-content:center;
+    font-size: 18px;
+  }
   .prop-table tbody tr {
     border-bottom: 1px solid #F0F6FF; transition: background .12s;
   }
@@ -183,6 +193,7 @@
   <table class="prop-table">
     <thead>
       <tr>
+        <th>Image</th>
         <th>No</th>
         <th>Property</th>
         <th>District</th>
@@ -198,6 +209,13 @@
       <% if(properties && properties.length > 0) { %>
         <% properties.forEach(function(p, i) { %>
         <tr>
+          <td class="prop-thumb-cell">
+            <% if (p.coverImage) { %>
+              <img class="prop-thumb" src="<%= p.coverImage %>" alt="<%= p.title %>" />
+            <% } else { %>
+              <div class="prop-thumb-placeholder">🖼️</div>
+            <% } %>
+          </td>
           <td class="prop-num"><%= (currentPage-1)*perPage + i + 1 %></td>
           <td>
             <div class="prop-name"><%= p.title %></div>
@@ -232,7 +250,7 @@
         <% }) %>
       <% } else { %>
         <tr>
-          <td colspan="9">
+          <td colspan="10">
             <div class="prop-empty">
               <div class="prop-empty-icon">🏠</div>
               <div>No properties found.</div>

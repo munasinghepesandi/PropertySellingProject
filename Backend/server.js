@@ -34,7 +34,10 @@ app.use(ejsLayouts);
 app.set('layout', 'admin/layout');            
 
 // ── Core Middleware ──────────────────────────────────────────
-app.use(helmet({ contentSecurityPolicy: false }));             // ← CHANGED (false = allow inline styles/scripts)
+app.use(helmet({
+  contentSecurityPolicy: false,
+  crossOriginResourcePolicy: false,
+}));
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173',
   credentials: true,

@@ -24,6 +24,8 @@ const typeLabels = {
   commercial: "Commercial",
 };
 
+const LAST_POSTED_LISTING_KEY = "lanka_property_last_posted_listing";
+
 function toPositiveNumber(value) {
   const numeric = Number(value);
   if (Number.isNaN(numeric) || numeric <= 0) return null;
@@ -130,6 +132,23 @@ export function PostAd() {
         const serverMessage =
           data?.message || data?.error || response.statusText;
         throw new Error(serverMessage || "Failed to post advertisement.");
+      }
+
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(
+          LAST_POSTED_LISTING_KEY,
+          JSON.stringify({
+            id: data?.id,
+            title: form.title.trim(),
+            description: form.description.trim(),
+            location: form.location.trim(),
+            price: Number(form.price),
+            images: Array.isArray(data?.images) ? data.images : [],
+            cover_image: data?.cover_image || null,
+            status: "active",
+            created_at: new Date().toISOString(),
+          }),
+        );
       }
 
       setSuccessMessage(
@@ -461,3 +480,4 @@ export function PostAd() {
     </div>
   );
 }
+
