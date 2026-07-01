@@ -194,7 +194,7 @@ export function Navbar() {
   const menuStyle = {
     display: "flex",
     alignItems: "center",
-    gap: "18px",
+    gap: "12px",
     flexWrap: "wrap",
   };
 
@@ -814,7 +814,7 @@ export function Navbar() {
           </div>
 
           <div
-            style={{ position: "relative", order: navItemOrder["Our Services"] }}
+            style={{ position: "relative", order: navItemOrder["Our Services"] ,display: "none"}}
             onMouseEnter={() => setOurServicesMenuOpen(true)}
             onMouseLeave={() => setOurServicesMenuOpen(false)}
           >
@@ -894,7 +894,7 @@ export function Navbar() {
           </div>
 
           <div
-            style={{ position: "relative", order: navItemOrder["Home Loans"] }}
+            style={{ position: "relative", order: navItemOrder["Home Loans"] ,display: "none"}}
             onMouseEnter={() => setHomeLoansMenuOpen(true)}
             onMouseLeave={() => setHomeLoansMenuOpen(false)}
           >
