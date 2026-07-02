@@ -79,6 +79,9 @@ export default function CompleteHomepage() {
   const [latestListings, setLatestListings] = useState([]);
   const [latestLoading, setLatestLoading] = useState(false);
   const [latestError, setLatestError] = useState("");
+  const [latestTotal, setLatestTotal] = useState(0);
+  const [latestLimit, setLatestLimit] = useState(6);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const navigate = useNavigate();
 
@@ -92,12 +95,12 @@ export default function CompleteHomepage() {
   useEffect(() => {
     let isMounted = true;
 
-    const fetchLatestListings = async () => {
+    const fetchLatestListings = async (limit = 6) => {
       try {
         setLatestLoading(true);
         setLatestError("");
 
-        const response = await fetch(`${API_BASE_URL}/properties?status=active&limit=6`);
+        const response = await fetch(`${API_BASE_URL}/properties?status=active&limit=${limit}`);
         const data = await response.json();
 
         if (!response.ok) {
@@ -107,31 +110,36 @@ export default function CompleteHomepage() {
         if (!isMounted) return;
 
         const apiListings = Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : [];
-        let cachedListing = null;
+        const total = data?.total ?? apiListings.length;
 
+        // Validate cached listing against DB — clear if deleted
         try {
           const stored = window.localStorage.getItem(LAST_POSTED_LISTING_KEY);
-          cachedListing = stored ? JSON.parse(stored) : null;
+          const cachedListing = stored ? JSON.parse(stored) : null;
+          if (cachedListing?.id) {
+            const existsInDb = apiListings.some((item) => item.id === cachedListing.id);
+            if (!existsInDb) {
+              window.localStorage.removeItem(LAST_POSTED_LISTING_KEY);
+            }
+          }
         } catch {
-          cachedListing = null;
+          // ignore
         }
 
-        const mergedListings = cachedListing?.id
-          ? [cachedListing, ...apiListings.filter((item) => item.id !== cachedListing.id)]
-          : apiListings;
-
-        setLatestListings(mergedListings);
+        setLatestListings(apiListings);
+        setLatestTotal(total);
       } catch (error) {
         if (!isMounted) return;
         setLatestError(error.message || "Failed to load listings");
-      } {
+      } finally {
         if (isMounted) {
           setLatestLoading(false);
+          setLoadingMore(false);
         }
       }
     };
 
-    fetchLatestListings();
+    fetchLatestListings(6);
 
     return () => {
       isMounted = false;
@@ -288,19 +296,24 @@ export default function CompleteHomepage() {
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#b3925c]">
               Fresh from Post Ad
             </p>
-            <h2 className="mt-2 text-3xl font-bold text-[#1a3a4b]">
+            <h2 className="mt-2 text-2xl sm:text-3xl font-bold text-[#1a3a4b]">
               Latest Posted Properties
             </h2>
             <p className="mt-2 max-w-2xl text-sm text-gray-600">
               These listings are pulled straight from the backend, including the cover image uploaded when the ad was published.
             </p>
           </div>
+          {latestTotal > 0 && (
+            <p className="text-sm text-gray-400 font-medium whitespace-nowrap">
+              Showing {latestListings.length} of {latestTotal}
+            </p>
+          )}
         </div>
 
-        {latestLoading ? (
+        {latestLoading && latestListings.length === 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {[...Array(3)].map((_, index) => (
-              <div key={index} className="h-88 animate-pulse rounded-xl bg-white shadow" />
+            {[...Array(6)].map((_, index) => (
+              <div key={index} className="h-72 animate-pulse rounded-xl bg-slate-100" />
             ))}
           </div>
         ) : latestError ? (
@@ -308,49 +321,129 @@ export default function CompleteHomepage() {
             {latestError}
           </div>
         ) : latestListings.length ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {latestListings.map((property) => {
-              const storedImages = parseListingImages(property.images);
-              const coverImage = getListingImage(property);
-              const numericPrice = Number(property.price);
-              const priceText = !isNaN(numericPrice) && numericPrice > 0
-                ? `Rs. ${numericPrice.toLocaleString("en-LK")}`
-                : property.price || "Price on request";
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {latestListings.map((property) => {
+                const storedImages = parseListingImages(property.images);
+                const coverImage = getListingImage(property);
+                const numericPrice = Number(property.price);
+                const priceText = !isNaN(numericPrice) && numericPrice > 0
+                  ? `Rs. ${numericPrice.toLocaleString("en-LK")}`
+                  : property.price || "Price on request";
 
-              return (
-                <Link
-                  key={property.id}
-                  to={`/viewmore?id=${property.id}`}
-                  className="block overflow-hidden rounded-xl bg-white shadow-lg transition hover:shadow-2xl flex flex-col justify-between h-full"
+                return (
+                  <Link
+                    key={property.id}
+                    to={`/viewmore?id=${property.id}`}
+                    className="block overflow-hidden rounded-xl bg-white shadow-lg transition hover:shadow-2xl hover:-translate-y-1 flex flex-col justify-between h-full"
+                    style={{ transitionDuration: "250ms" }}
+                  >
+                    <div>
+                      <div className="relative">
+                        <ImageWithFallback
+                          src={resolveImage(coverImage)}
+                          alt={property.title}
+                          className="h-56 w-full object-cover"
+                        />
+                        {Math.max(storedImages.length, Number(property.image_count || 0)) > 1 && (
+                          <span className="absolute left-4 top-4 rounded-full bg-[#1a3a4b]/90 px-3 py-1 text-xs font-bold text-white">
+                            {Math.max(storedImages.length, Number(property.image_count || 0))} photos
+                          </span>
+                        )}
+                      </div>
+                      <div className="p-5">
+                        <p className="text-xs text-gray-500">
+                          {property.district_name || property.location || property.city || "Sri Lanka"}
+                        </p>
+                        <h3 className="font-bold text-gray-800 line-clamp-2">{property.title}</h3>
+                      </div>
+                    </div>
+                    <div className="px-5 pb-5">
+                      <p className="text-lg font-black text-[#1a3a4b]">{priceText}</p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* LOAD MORE / SHOW LESS BUTTONS */}
+            <div className="mt-12 flex flex-col items-center gap-3">
+              {latestListings.length < latestTotal && (
+                <button
+                  onClick={() => {
+                    const newLimit = latestLimit + 6;
+                    setLatestLimit(newLimit);
+                    setLoadingMore(true);
+                    let isMounted = true;
+                    fetch(`${API_BASE_URL}/properties?status=active&limit=${newLimit}`)
+                      .then((r) => r.json())
+                      .then((data) => {
+                        if (!isMounted) return;
+                        const listings = Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : [];
+                        setLatestListings(listings);
+                        setLatestTotal(data?.total ?? listings.length);
+                      })
+                      .catch(() => {})
+                      .finally(() => { if (isMounted) setLoadingMore(false); });
+                    return () => { isMounted = false; };
+                  }}
+                  disabled={loadingMore}
+                  className="group flex items-center gap-3 bg-[#1a3a4b] hover:bg-[#b3925c] text-white px-8 py-4 rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  <div>
-                    <div className="relative">
-                      <ImageWithFallback
-                        src={resolveImage(coverImage)}
-                        alt={property.title}
-                        className="h-56 w-full object-cover"
-                      />
-                      {Math.max(storedImages.length, Number(property.image_count || 0)) > 1 && (
-                        <span className="absolute left-4 top-4 rounded-full bg-[#1a3a4b]/90 px-3 py-1 text-xs font-bold text-white">
-                          {Math.max(storedImages.length, Number(property.image_count || 0))} photos
-                        </span>
-                      )}
-                    </div>
+                  {loadingMore ? (
+                    <>
+                      <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                      </svg>
+                      Loading...
+                    </>
+                  ) : (
+                    <>
+                      See More Properties
+                      <svg
+                        className="h-5 w-5 transition-transform duration-300 group-hover:translate-y-1"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </>
+                  )}
+                </button>
+              )}
 
-                    <div className="p-5">
-                      <p className="text-xs text-gray-500">
-                        {property.district_name || property.location || property.city || "Sri Lanka"}
-                      </p>
-                      <h3 className="font-bold text-gray-800 line-clamp-2">{property.title}</h3>
-                    </div>
-                  </div>
-                  <div className="px-5 pb-5">
-                    <p className="text-lg font-black text-[#1a3a4b]">{priceText}</p>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+              {latestListings.length >= latestTotal && latestTotal > 6 && (
+                <button
+                  onClick={() => {
+                    setLatestLimit(6);
+                    fetch(`${API_BASE_URL}/properties?status=active&limit=6`)
+                      .then((r) => r.json())
+                      .then((data) => {
+                        const listings = Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : [];
+                        setLatestListings(listings);
+                        setLatestTotal(data?.total ?? listings.length);
+                      })
+                      .catch(() => {});
+                  }}
+                  className="group flex items-center gap-3 border-2 border-[#1a3a4b] text-[#1a3a4b] hover:bg-[#1a3a4b] hover:text-white px-8 py-3 rounded-full font-bold text-sm transition-all duration-300"
+                >
+                  Show Less
+                  <svg
+                    className="h-5 w-5 transition-transform duration-300 group-hover:-translate-y-1"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+                  </svg>
+                </button>
+              )}
+
+              {latestListings.length < latestTotal && (
+                <p className="text-xs text-gray-400">
+                  {latestTotal - latestListings.length} more {latestTotal - latestListings.length === 1 ? "property" : "properties"} available
+                </p>
+              )}
+            </div>
+          </>
         ) : (
           <div className="rounded-xl border border-dashed border-slate-300 bg-white px-4 py-10 text-center text-sm text-slate-500">
             No posted properties yet. Submit one from the Post Ad page and it will appear here.

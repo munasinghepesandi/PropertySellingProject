@@ -2,7 +2,7 @@
   position: fixed;
   right: 20px;
   bottom: 20px;
-  z-index: 60;
+  z-index: 99999 !important;
   font-family: inherit;
 }
 
@@ -263,7 +263,7 @@
   }
 
   .qa-chatbot-panel {
-    width: 100%;
+    width: min(380px, calc(100vw - 24px));
     max-height: calc(100vh - 24px);
     border-radius: 20px;
   }
