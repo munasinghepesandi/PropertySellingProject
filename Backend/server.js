@@ -45,6 +45,12 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+// for dev only; helps cookie visibility and session-like behavior in some setups
+app.set('trust proxy', true);
+
+
 
 // ── Static files ─────────────────────────────────────────────
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));

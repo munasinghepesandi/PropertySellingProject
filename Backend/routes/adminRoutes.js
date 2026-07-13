@@ -4,6 +4,39 @@ const db      = require('../config/db');
 const multer  = require('multer');
 const path    = require('path');
 const fs      = require('fs');
+const jwt     = require('jsonwebtoken');
+const { adminOnly } = require('../middleware/authMiddleware');
+
+async function requireAdmin(req, res, next) {
+  try {
+    const token = req.cookies?.admin_token;
+
+    // Debug only: helps us know why redirect happens.
+    // console.log('requireAdmin cookie?', Boolean(token));
+
+    if (!token) {
+      return res.redirect('/admin/login');
+    }
+
+    // Accept valid JWT as logged-in admin.
+    // (DB lookup may fail if admins table role/id differs.)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decodedId = decoded?.id;
+    if (!decodedId) return res.redirect('/admin/login');
+
+    req.user = { id: decodedId, role: 'admin' };
+    return next();
+  } catch (e) {
+    return res.redirect('/admin/login');
+  }
+
+}
+
+
+
+
+
+
 
 // ── Multer setup for property images ─────────────────────────
 const uploadDir = path.join(__dirname, '../public/uploads');
@@ -57,9 +90,59 @@ function parseStoredImages(value) {
 }
 
 // ════════════════════════════════════════
+// ADMIN LOGIN PAGE
+// ════════════════════════════════════════
+router.get('/login', (req, res) => {
+  res.render('admin/login', { title: 'Admin Login', error: null, page: 'login' });
+});
+
+router.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const adminEmail = (email || '').trim().toLowerCase();
+
+    const [rows] = await db.query('SELECT * FROM admins WHERE LOWER(email) = ?', [adminEmail]);
+    if (!rows.length)
+      return res.render('admin/login', { title: 'Admin Login', error: 'Invalid admin credentials', page: 'login' });
+
+    const bcrypt = require('bcryptjs');
+    const admin = rows[0];
+
+    // If password in DB is stored as plain text, bcrypt.compare will fail.
+    // Prefer bcrypt compare; if admin.password is not a bcrypt hash, fall back to direct match.
+    let match = false;
+    if (typeof admin.password === 'string' && admin.password.startsWith('$2')) {
+      match = await bcrypt.compare(password, admin.password);
+    } else {
+      match = String(password) === String(admin.password);
+    }
+
+    if (!match) {
+      return res.render('admin/login', { title: 'Admin Login', error: 'Invalid admin credentials', page: 'login' });
+    }
+
+    const token = jwt.sign({ id: admin.id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });
+    // Important: set cookie reliably so /admin requests can read it.
+    // Use sameSite:'none' + secure:true for HTTPS, but for local dev we keep secure:false.
+    // SameSite:'lax' might be blocked depending on browser behavior; cookie will be set even on redirect.
+    res.cookie('admin_token', token, {
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: false,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+    return res.redirect('/admin');
+  } catch (e) {
+    console.error('Admin login error:', e.message);
+    return res.render('admin/login', { title: 'Admin Login', error: 'Login failed', page: 'login' });
+  }
+});
+
+
+// ════════════════════════════════════════
 // DASHBOARD   GET /admin
 // ════════════════════════════════════════
-router.get('/', async (req, res) => {
+router.get('/', requireAdmin, async (req, res) => {
   const blank = {
     title:'Dashboard Overview', page:'dashboard',
     stats:{ totalProperties:0, activeListings:0, totalUsers:0, inquiries:0 },
@@ -749,6 +832,9 @@ router.get('/settings', async (req, res) => {
 // ════════════════════════════════════════
 // LOGOUT
 // ════════════════════════════════════════
-router.get('/logout', (req, res) => res.redirect('/'));
+router.get('/logout', (req, res) => {
+  res.clearCookie('admin_token');
+  return res.redirect('/');
+});
 
 module.exports = router;
