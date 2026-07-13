@@ -78,19 +78,12 @@ export default function BecomeAgentPage() {
     },
   ]
 
-  const addOns = [
-    { title: 'Featured Ad', icon: '✦', desc: 'High visibility boost' },
-    { title: 'Showcase Ad', icon: '◆', desc: 'Homepage placement' },
-    { title: 'Platinum Ad', icon: '★', desc: 'Top ranking placement' },
-    { title: 'Boosting', icon: '▲', desc: 'Instant boost to top' },
-  ]
-
   return (
     <div className="min-h-screen bg-[#FFFFFF] text-[#4A4A4A]">
       <Navbar />
 
       {/* HERO */}
-      <section className="bg-gradient-to-r from-[#203F52] to-[#2D4F63] py-20 text-white">
+      <section className="bg-linear-to-r from-[#203F52] to-[#2D4F63] py-20 text-white">
         <div className="max-w-6xl mx-auto px-6">
           <h1 className="text-4xl sm:text-5xl font-extrabold mb-6">
             Grow Your Real Estate Business
@@ -201,6 +194,14 @@ export default function BecomeAgentPage() {
                 value={contact.email}
                 onChange={handleChange}
                 placeholder="Email"
+                className="w-full border border-[#B8B8B8] p-3 rounded"
+              />
+
+              <input
+                name="phone"
+                value={contact.phone}
+                onChange={handleChange}
+                placeholder="Mobile"
                 className="w-full border border-[#B8B8B8] p-3 rounded"
               />
 
